@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies;
+namespace App\Policies\Lib;
 
 use App\User;
 use App\Model\SysUserType;
@@ -8,7 +8,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 
 use App\Model\SysCompanyType;
 
-class CompanyPolicy {
+class LibCommonPolicy {
     use HandlesAuthorization;
 
     public function __construct(){

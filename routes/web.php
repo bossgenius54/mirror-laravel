@@ -83,8 +83,8 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('delete/{item}', 'DirectorController@getDelete')->middleware('can:delete,item');
         });
 
-         // branch
-         Route::group(['prefix' => 'branch'], function () {
+        // branch
+        Route::group(['prefix' => 'branch'], function () {
             Route::get('/', 'BranchController@getIndex')->middleware('can:list,App\Model\Branch');
             Route::get('create', 'BranchController@getCreate')->middleware('can:create,App\Model\Branch');
             Route::post('create', 'BranchController@postCreate')->middleware('can:create,App\Model\Branch');

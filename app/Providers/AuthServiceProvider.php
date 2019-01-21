@@ -14,16 +14,14 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model\LibCompanyCat'       => 'App\Policies\MainPolicy',
-        'App\Model\LibProductCat'       => 'App\Policies\MainPolicy',
-        'App\Model\LibProductType'      => 'App\Policies\MainPolicy',
-        'App\Model\LibProductOption'    => 'App\Policies\MainPolicy',
-        'App\Model\Company'             => 'App\Policies\CompanyPolicy',
-        'App\Model\CompanyData'         => 'App\Policies\CompanyPolicy',
-        'App\Model\View\Director'       => 'App\Policies\MainPolicy',
+        'App\Model\Branch'              => 'App\Policies\Lib\LibCommonPolicy',
+        'App\Model\View\Director'       => 'App\Policies\Lib\LibCommonPolicy',
+        'App\Model\Company'             => 'App\Policies\Lib\CompanyPolicy',
+        'App\Model\LibProductCat'       => 'App\Policies\Lib\LibCommonPolicy',
+        'App\Model\LibProductType'      => 'App\Policies\Lib\LibCommonPolicy',
+        'App\Model\LibProductOption'    => 'App\Policies\Lib\LibCommonPolicy',
+        'App\Model\LibCompanyCat'       => 'App\Policies\Lib\LibCommonPolicy',
 
-
-        'App\Model\Branch'              => 'App\Policies\MainPolicy',
         'App\Model\Client'              => 'App\Policies\MainPolicy',
         'App\Model\CompanyService'      => 'App\Policies\MainPolicy',
         'App\Model\Finance'             => 'App\Policies\MainPolicy',
