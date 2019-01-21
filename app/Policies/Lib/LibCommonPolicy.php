@@ -16,6 +16,9 @@ class LibCommonPolicy {
     }
 
     private function mainCheck($user){
+        if ($user->type_id != SysUserType::ADMIN)
+            return false;
+            
         return true;
     }
 
@@ -54,22 +57,5 @@ class LibCommonPolicy {
         return true;
     }
 
-    public function upgradeToHalfPermission($user, $item){
-        if ($item->type_id != SysCompanyType::EMPTY)
-            return false;
-
-        if ( !$this->mainCheck($user))
-            return false;
-
-        return true;
-    }
-    public function upgradeToFullPermission($user, $item){
-        if ($item->type_id != SysCompanyType::HALF)
-            return false;
-
-        if ( !$this->mainCheck($user))
-            return false;
-
-        return true;
-    }
+ 
 }

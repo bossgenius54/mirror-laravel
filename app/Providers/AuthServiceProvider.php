@@ -22,8 +22,11 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model\LibProductOption'    => 'App\Policies\Lib\LibCommonPolicy',
         'App\Model\LibCompanyCat'       => 'App\Policies\Lib\LibCommonPolicy',
 
+        'App\Model\CompanyService'      => 'App\Policies\Lib\DirectorPolicy',
+        'App\Model\View\Manager'        => 'App\Policies\Lib\DirectorPolicy',
+        'App\Model\View\Doctor'         => 'App\Policies\Lib\DirectorPolicy',
+        
         'App\Model\Client'              => 'App\Policies\MainPolicy',
-        'App\Model\CompanyService'      => 'App\Policies\MainPolicy',
         'App\Model\Finance'             => 'App\Policies\MainPolicy',
         'App\Model\FinancePosition'     => 'App\Policies\MainPolicy',
         'App\Model\FinanceService'      => 'App\Policies\MainPolicy',

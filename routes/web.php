@@ -92,6 +92,36 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::post('update/{item}', 'BranchController@postUpdate')->middleware('can:update,item');
             Route::get('delete/{item}', 'BranchController@getDelete')->middleware('can:delete,item');
         });
+
+        // company services
+        Route::group(['prefix' => 'company-service'], function () {
+            Route::get('/', 'CompanyServiceController@getIndex')->middleware('can:list,App\Model\CompanyService');
+            Route::get('create', 'CompanyServiceController@getCreate')->middleware('can:create,App\Model\CompanyService');
+            Route::post('create', 'CompanyServiceController@postCreate')->middleware('can:create,App\Model\CompanyService');
+            Route::get('update/{item}', 'CompanyServiceController@getUpdate')->middleware('can:update,item');
+            Route::post('update/{item}', 'CompanyServiceController@postUpdate')->middleware('can:update,item');
+            Route::get('delete/{item}', 'CompanyServiceController@getDelete')->middleware('can:delete,item');
+        });
+
+        // manager
+        Route::group(['prefix' => 'manager'], function () {
+            Route::get('/', 'ManagerController@getIndex')->middleware('can:list,App\Model\View\Manager');
+            Route::get('create', 'ManagerController@getCreate')->middleware('can:create,App\Model\View\Manager');
+            Route::post('create', 'ManagerController@postCreate')->middleware('can:create,App\Model\View\Manager');
+            Route::get('update/{item}', 'ManagerController@getUpdate')->middleware('can:update,item');
+            Route::post('update/{item}', 'ManagerController@postUpdate')->middleware('can:update,item');
+            Route::get('delete/{item}', 'ManagerController@getDelete')->middleware('can:delete,item');
+        });
+
+        // doctor
+        Route::group(['prefix' => 'doctor'], function () {
+            Route::get('/', 'DoctorController@getIndex')->middleware('can:list,App\Model\View\Doctor');
+            Route::get('create', 'DoctorController@getCreate')->middleware('can:create,App\Model\View\Doctor');
+            Route::post('create', 'DoctorController@postCreate')->middleware('can:create,App\Model\View\Doctor');
+            Route::get('update/{item}', 'DoctorController@getUpdate')->middleware('can:update,item');
+            Route::post('update/{item}', 'DoctorController@postUpdate')->middleware('can:update,item');
+            Route::get('delete/{item}', 'DoctorController@getDelete')->middleware('can:delete,item');
+        });
     });
 
     Route::get('profile', 'ProfileController@getIndex');

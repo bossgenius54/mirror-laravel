@@ -1,6 +1,7 @@
 <?php
 namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Branch extends Model{
     protected $table = 'branch';
@@ -14,6 +15,8 @@ class Branch extends Model{
         return $this->hasOne('App\Model\BranchData', 'branch_id');
     }
 
-
+    static function getArForCompany(Request $request){
+        return static::where('company_id', $request->user()->company_id)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+    }
 
 }

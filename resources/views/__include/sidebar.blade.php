@@ -32,6 +32,36 @@
                     </a>
                 </li>
                 <li class="nav-small-cap">Справочники</li>
+                @can('list', App\Model\View\Doctor::class)
+                    <li>
+                        <a class="" href="{{ action('Lib\DoctorController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Доктора
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+                @can('list', App\Model\View\Manager::class)
+                    <li>
+                        <a class="" href="{{ action('Lib\ManagerController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Менеджеры
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+                @can('list', App\Model\CompanyService::class)
+                    <li>
+                        <a class="" href="{{ action('Lib\CompanyServiceController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Услуги
+                            </span>
+                        </a>
+                    </li>
+                @endcan
                 @can('list', App\Model\Branch::class)
                     <li>
                         <a class="" href="{{ action('Lib\BranchController@getIndex') }}">

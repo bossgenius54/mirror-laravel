@@ -8,7 +8,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 
 use App\Model\SysCompanyType;
 
-class CompanyPolicy {
+class DirectorPolicy {
     use HandlesAuthorization;
 
     public function __construct(){
@@ -16,7 +16,7 @@ class CompanyPolicy {
     }
 
     private function mainCheck($user){
-        if ($user->type_id != SysUserType::ADMIN)
+        if ($user->type_id != SysUserType::DIRECTOR)
             return false;
             
         return true;
