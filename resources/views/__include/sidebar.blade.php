@@ -7,30 +7,20 @@
                     <a class="waves-effect waves-dark" href="/">
                         <i class="mdi mdi-gauge"></i>
                         <span class="hide-menu">
-                            Cards
+                            Главная
                         </span>
                     </a>
                 </li>
-                <li> 
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-gauge"></i>
-                        <span class="hide-menu">
-                            Справочники 
-                            <span class="label label-rouded label-themecolor pull-right">4</span>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="/">Minimal </a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="waves-effect waves-dark" href="ui-cards.html">
-                        <i class="mdi mdi-gauge"></i>
-                        <span class="hide-menu">
-                            Cards
-                        </span>
-                    </a>
-                </li>
+                @can('list', App\Model\Product::class)
+                    <li>
+                        <a class="waves-effect waves-dark" href="{{ action('Stock\ProductController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Ассортимент товаров
+                            </span>
+                        </a>
+                    </li>
+                @endcan
                 <li class="nav-small-cap">Справочники</li>
                 @can('list', App\Model\View\Doctor::class)
                     <li>

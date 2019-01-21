@@ -27,4 +27,8 @@ class LibProductType extends Model{
         return $ar;
     } 
 
+    function relOptions(){
+        return $this->hasMany('App\Model\LibProductOption', 'type_id');
+    }
+
 }

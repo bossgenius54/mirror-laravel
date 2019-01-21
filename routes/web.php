@@ -20,6 +20,20 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
         return view('welcome');
     });
 
+    Route::group(['prefix' => 'stock', 'namespace' => 'Stock'], function () {
+        /// product
+        Route::group(['prefix' => 'product'], function () {
+            Route::get('/', 'ProductController@getIndex')->middleware('can:list,App\Model\Product');
+            Route::get('create/{cat}', 'ProductController@getCreate')->middleware('can:create,App\Model\Product');
+            Route::post('create/{cat}', 'ProductController@postCreate')->middleware('can:create,App\Model\Product');
+            Route::get('update/{item}', 'ProductController@getUpdate')->middleware('can:update,item');
+            Route::post('update/{item}', 'ProductController@postUpdate')->middleware('can:update,item');
+            Route::get('delete/{item}', 'ProductController@getDelete')->middleware('can:delete,item');
+        });
+
+    });
+
+
     Route::group(['prefix' => 'lib', 'namespace' => 'Lib'], function () {
         /// company categories 
         Route::group(['prefix' => 'company-cat'], function () {
