@@ -31,6 +31,13 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('delete/{item}', 'ProductController@getDelete')->middleware('can:delete,item');
         });
 
+        /// income-from-company
+        Route::group(['prefix' => 'income-from-company'], function () {
+            Route::get('/', 'IncomeFromCompanyController@getIndex')->middleware('can:list,App\Model\View\IncomeFromCompany');
+            Route::get('create', 'IncomeFromCompanyController@getCreate')->middleware('can:create,App\Model\View\IncomeFromCompany');
+            Route::post('create', 'IncomeFromCompanyController@postCreate')->middleware('can:create,App\Model\View\IncomeFromCompany');
+        });
+
     });
 
 

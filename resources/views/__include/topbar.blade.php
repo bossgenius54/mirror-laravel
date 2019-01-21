@@ -31,15 +31,17 @@
                                         <img src="{{ Auth::user()->photo ? Auth::user()->photo : '/assets/images/users/1.jpg' }}" alt="user">
                                     </div>
                                     <div class="u-text">
-                                        <h4>{{ Auth::user()->name }}</h4>
+                                        <h4 style="max-width: 140px;">{{ Auth::user()->name }}</h4>
                                         <p class="text-muted">{{ Auth::user()->email }}</p>
-                                        <a href="{{ action('ProfileController@getIndex') }}" class="btn btn-rounded btn-danger btn-sm">
-                                            Профиль
-                                        </a>
                                     </div>
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="{{ action('ProfileController@getIndex') }}">
+                                    <i class="fa fa-power-off"></i> Профиль
+                                </a>
+                            </li>
                             <li>
                                 <a href="{{ action('LoginController@getLogout') }}">
                                     <i class="fa fa-power-off"></i> Выйти

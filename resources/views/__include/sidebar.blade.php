@@ -11,6 +11,16 @@
                         </span>
                     </a>
                 </li>
+                @can('list', App\Model\View\IncomeFromCompany::class)
+                    <li>
+                        <a class="waves-effect waves-dark" href="{{ action('Stock\IncomeFromCompanyController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Оприходование
+                            </span>
+                        </a>
+                    </li>
+                @endcan
                 @can('list', App\Model\Product::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Stock\ProductController@getIndex') }}">
