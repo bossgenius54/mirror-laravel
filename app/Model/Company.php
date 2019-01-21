@@ -24,4 +24,12 @@ class Company extends Model{
         return static::whereIn('type_id', [SysCompanyType::HALF, SysCompanyType::FULL])->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
     }
 
+    function relClients(){
+        return $this->hasMany('App\Model\Client', 'company_id');
+    }
+
+    function relSeller(){
+        return $this->hasMany('App\Model\Client', 'client_company_id');
+    }
+
 }
