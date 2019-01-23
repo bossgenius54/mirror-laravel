@@ -100,4 +100,14 @@ class IncomeFromCompanyController extends Controller{
         return redirect()->action("Stock\IncomeFromCompanyController@getIndex")->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$income->id);
     }
 
+    function getDelete(Request $request, IncomeFromCompany $item){
+        if (Position::where('income_id', $item->id)->where('status_id', '<>', SysPositionStatus::ACTIVE)->count() > 0)
+            return redirect()->back()->with('error', 'У указанного оприходования позиции в обороте');
+
+        $id = $item->id;
+        $item->delete();
+
+        return redirect()->back()->with('success', 'Удален елемент списка "'.$this->title.'" № '.$id);
+    }
+
 }

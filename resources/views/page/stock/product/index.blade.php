@@ -66,6 +66,9 @@
                                         <i class="ti-settings"></i>
                                     </button>
                                     <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{{ action('Stock\PositionController@getIndex', ['product_id' => $i->id]) }}">
+                                            Позиции/Товары
+                                        </a>
                                         @can('update', $i)
                                             <a class="dropdown-item" href="{{ action('Stock\ProductController@getUpdate', $i) }}">
                                                 Изменить

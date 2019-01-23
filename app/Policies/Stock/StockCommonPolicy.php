@@ -51,28 +51,10 @@ class StockCommonPolicy {
     }
 
     public function delete($user, $item){
-        if ( !$this->mainCheck($user))
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR]))
             return false;
-
+            
         return true;
     }
 
-    public function upgradeToHalfPermission($user, $item){
-        if ($item->type_id != SysCompanyType::EMPTY)
-            return false;
-
-        if ( !$this->mainCheck($user))
-            return false;
-
-        return true;
-    }
-    public function upgradeToFullPermission($user, $item){
-        if ($item->type_id != SysCompanyType::HALF)
-            return false;
-
-        if ( !$this->mainCheck($user))
-            return false;
-
-        return true;
-    }
 }

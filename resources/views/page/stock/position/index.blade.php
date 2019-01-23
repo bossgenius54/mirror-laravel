@@ -9,13 +9,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">
-                    {{ $title }}  
-                    @can('create', App\Model\View\IncomeFromCompany::class)
-                        <a href="{{ action('Stock\IncomeFromCompanyController@getCreate') }}" type="button" 
-                            class="btn btn-sm btn-info btn-rounded pull-right" >
-                            Добавить
-                        </a>
-                    @endcan
+                    {{ $title }} 
                 </h4>
             </div>
             
@@ -23,12 +17,12 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>В филиал</th>
-                        <th>От компании</th>
-                        <th>Сумма</th>
-                        <th>Наименование</th>
-                        <th>Заметка</th>
-                        <th>Наименование</th>
+                        <th>Ассортимент</th>
+                        <th>Филиал</th>
+                        <th>Статус</th>
+                        <th>Себестоимость</th>
+                        <th>Срок годности</th>
+                        <th>Оприходование</th>
                         <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>
@@ -38,11 +32,12 @@
                     @foreach ($items as $i)
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                             <td>{{ $i->id }}</td>
-                            <td>{{ $i->relBranch ? $i->relBranch->name : '' }}</td>
-                            <td>{{ $i->relFromCompany ? $i->relFromCompany->name : '' }}</td>
-                            <td>{{ $i->related_cost }}</td>
-                            <td>{{ $i->name }}</td>
-                            <td>{{ $i->note }}</td>
+                            <td>{{ $i->relProduct->name }} ({{ $i->relProduct->sys_num }})</td>
+                            <td>{{ isset($ar_branch[$i->branch_id]) ? $ar_branch[$i->branch_id] : 'не указано' }}</td>
+                            <td>{{ isset($ar_status[$i->status_id]) ? $ar_status[$i->status_id] : 'не указано' }}</td>
+                            <td>{{ $i->price_cost }}</td>
+                            <td>{{ $i->expired_at ? $i->expired_at : 'бессрочна' }}</td>
+                            <td>{{ $i->relIncome->name }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>
@@ -51,13 +46,9 @@
                                         <i class="ti-settings"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ action('Stock\PositionController@getIndex', ['income_id' => $i->id]) }}">
-                                            Позиции/Товары
-                                        </a>
-                                        @can('delete', $i)
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{{ action('Stock\IncomeFromCompanyController@getDelete', $i) }}">
-                                                Удалить
+                                        @can('update', $i)
+                                            <a class="dropdown-item" href="{{ action('Stock\PositionController@getUpdate', $i) }}">
+                                                Изменить
                                             </a>
                                         @endcan
                                     </div>
