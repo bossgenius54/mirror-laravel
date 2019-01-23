@@ -162,6 +162,16 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::post('update/{item}', 'DoctorController@postUpdate')->middleware('can:update,item');
             Route::get('delete/{item}', 'DoctorController@getDelete')->middleware('can:delete,item');
         });
+
+        // individ
+        Route::group(['prefix' => 'individ'], function () {
+            Route::get('/', 'IndividController@getIndex')->middleware('can:list,App\Model\View\Individ');
+            Route::get('create', 'IndividController@getCreate')->middleware('can:create,App\Model\View\Individ');
+            Route::post('create', 'IndividController@postCreate')->middleware('can:create,App\Model\View\Individ');
+            Route::get('update/{item}', 'IndividController@getUpdate')->middleware('can:update,item');
+            Route::post('update/{item}', 'IndividController@postUpdate')->middleware('can:update,item');
+            Route::get('delete/{item}', 'IndividController@getDelete')->middleware('can:delete,item');
+        });
     });
 
     Route::get('profile', 'ProfileController@getIndex');

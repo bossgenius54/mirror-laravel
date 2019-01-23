@@ -30,6 +30,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model\View\IncomeFromCompany'      => 'App\Policies\Stock\StockCommonPolicy',
         'App\Model\Position'                    => 'App\Policies\Stock\PositionPolicy',
         'App\Model\Motion'                      => 'App\Policies\Stock\MotionPolicy',
+
+        'App\Model\View\Individ'                 => 'App\Policies\Lib\IndividPolicy',
         
         'App\Model\Client'                      => 'App\Policies\MainPolicy',
         'App\Model\Finance'                     => 'App\Policies\MainPolicy',

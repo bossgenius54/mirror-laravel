@@ -52,6 +52,16 @@
                     </li>
                 @endcan
                 <li class="nav-small-cap">Справочники</li>
+                @can('list', App\Model\View\Individ::class)
+                    <li>
+                        <a class="" href="{{ action('Lib\IndividController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Физ. лица
+                            </span>
+                        </a>
+                    </li>
+                @endcan
                 @can('list', App\Model\View\Doctor::class)
                     <li>
                         <a class="" href="{{ action('Lib\DoctorController@getIndex') }}">

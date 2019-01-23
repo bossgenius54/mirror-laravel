@@ -158,7 +158,7 @@ class MotionController extends Controller{
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->back("Stock\ProductController@getIndex")->with('success', 'Изменен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->back()->with('success', 'Изменен елемент списка "'.$this->title.'" № '.$item->id);
     }
 
     function getCanceled(Request $request, Motion $item){

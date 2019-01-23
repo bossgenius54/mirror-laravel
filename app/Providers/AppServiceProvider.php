@@ -7,6 +7,9 @@ use Illuminate\Support\ServiceProvider;
 use App\Model\Company;
 use App\Observers\CompanyObserver;
 
+use App\Model\View\Individ;
+use App\Observers\IndividObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -16,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(){
         Company::observe(CompanyObserver::class);
+        Individ::observe(IndividObserver::class);
     }
 
     /**
