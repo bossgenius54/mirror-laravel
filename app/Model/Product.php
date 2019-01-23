@@ -10,4 +10,7 @@ class Product extends Model{
         return $this->hasMany('App\Model\ProductOption', 'product_id');
     }
 
+    function relPositions(){
+        return $this->hasMany('App\Model\Position', 'product_id');
+    }
 }

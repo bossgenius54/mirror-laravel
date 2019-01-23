@@ -46,8 +46,17 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::post('update/{item}', 'PositionController@postUpdate')->middleware('can:update,item');
         });
 
-        
-
+        /// product
+        Route::group(['prefix' => 'motion'], function () {
+            Route::get('/', 'MotionController@getIndex')->middleware('can:list,App\Model\Motion');
+            Route::get('create', 'MotionController@getCreate')->middleware('can:create,App\Model\Motion');
+            Route::post('create', 'MotionController@postCreate')->middleware('can:create,App\Model\Motion');
+            Route::get('update/{item}', 'MotionController@getUpdate')->middleware('can:update,item');
+            Route::post('update/{item}', 'MotionController@postUpdate')->middleware('can:update,item');
+            Route::get('unset-product/{item}/{motion_product}', 'MotionController@getUnsetProduct')->middleware('can:update,item');
+            Route::get('finish/{item}', 'MotionController@getFinish')->middleware('can:finish,item');
+            Route::get('canceleld/{item}', 'MotionController@getCanceled')->middleware('can:cancel,item');
+        });
     });
 
 
