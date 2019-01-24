@@ -32,6 +32,7 @@ class LoginController extends Controller{
             return back()->with('error', 'Не правильный email/пароль');
 
         $user = Auth::user();
+        $user->update(['had_enter' => 1]);
         SysAuthLog::createNote($user);
 
         return redirect()->to('/');

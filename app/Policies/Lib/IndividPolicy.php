@@ -22,12 +22,12 @@ class IndividPolicy {
     }
 
     private function itemCheck($user, $item){
+        
         if (in_array($user->type_id, [SysUserType::ADMIN]))
             return true;
-
-        if ($item->remember_token !== null)
+        if ($item->had_enter != 0)
             return false;
-        
+
         return true;
     }
 

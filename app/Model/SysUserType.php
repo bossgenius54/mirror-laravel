@@ -13,4 +13,6 @@ class SysUserType extends Model{
     CONST FIZ = 5;
     CONST ACCOUNTER = 6;
     CONST EXTERNAL_DOCTOR = 7;
+    CONST STOCK = 8;
+    
 }
