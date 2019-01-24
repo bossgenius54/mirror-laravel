@@ -41,7 +41,7 @@
                         <th>Наименование</th>
                         <th>Цена розницы</th>
                         <th>Цена оптов.</th>
-                        <th>Срок годности</th>
+                        <th>Мин. кол-во на складе</th>
                         <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>
@@ -57,7 +57,7 @@
                             <td>{{ $i->name }}</td>
                             <td>{{ $i->price_retail }}</td>
                             <td>{{ $i->price_opt }}</td>
-                            <td>{{ $i->expired_month }}</td>
+                            <td>{{ $i->min_stock_count }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>

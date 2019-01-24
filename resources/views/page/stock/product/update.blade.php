@@ -31,8 +31,8 @@
                                 <input type="number" class="form-control " name="price_opt" value="{{ $item->price_opt }}" required> 
                             </div>
                             <div class="form-group">
-                                <label>Срок годности</label>
-                                <input type="number" class="form-control " name="expired_month" value="{{ $item->expired_month }}" required> 
+                                <label>Мин. кол-во на складе</label>
+                                <input type="number" class="form-control " name="min_stock_count" value="{{ $item->min_stock_count }}" required> 
                             </div>  
                         </div>
                         <div class="col-md-8">
