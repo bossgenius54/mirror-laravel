@@ -2,11 +2,13 @@
 namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Helper\Traits\DateHelper;
 use App\Model\SysCompanyType;
 
 class Company extends Model{
     protected $table = 'company';
     protected $fillable = ['type_id', 'cat_id', 'name', 'created_user_id'];
+    use DateHelper;
     
     static function getAr(){
         return static::orderBy('name', 'asc')->pluck('name', 'id')->toArray();

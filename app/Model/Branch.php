@@ -1,11 +1,15 @@
 <?php
 namespace App\Model;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+
+use App\Helper\Traits\DateHelper;
 
 class Branch extends Model{
     protected $table = 'branch';
     protected $fillable = ['company_id', 'name', 'user_id', 'has_stock', 'has_front', 'has_resseler'];
+    use DateHelper;
     
     static function getAr(){
         return static::orderBy('name', 'asc')->pluck('name', 'id')->toArray();

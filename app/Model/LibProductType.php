@@ -4,10 +4,13 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Model\LibProductCat;
+use App\Helper\Traits\DateHelper;
+
 
 class LibProductType extends Model{
     protected $table = 'lib_product_type';
     protected $fillable = ['name', 'cat_id'];
+    use DateHelper;
     
     static function getAr(){
         return static::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
