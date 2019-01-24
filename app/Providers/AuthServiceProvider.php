@@ -31,21 +31,11 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model\Position'                    => 'App\Policies\Stock\PositionPolicy',
         'App\Model\Motion'                      => 'App\Policies\Stock\MotionPolicy',
 
-        'App\Model\View\Individ'                 => 'App\Policies\Lib\IndividPolicy',
-        
-        'App\Model\Client'                      => 'App\Policies\MainPolicy',
-        'App\Model\Finance'                     => 'App\Policies\MainPolicy',
-        'App\Model\FinancePosition'             => 'App\Policies\MainPolicy',
-        'App\Model\FinanceService'              => 'App\Policies\MainPolicy',
-        'App\Model\Income'                      => 'App\Policies\MainPolicy',
-        'App\Model\IncomingPosition'            => 'App\Policies\MainPolicy',
-        'App\Model\Order'                       => 'App\Policies\MainPolicy',
-        'App\Model\OrderPosition'               => 'App\Policies\MainPolicy',
-        'App\Model\OrderService'                => 'App\Policies\MainPolicy',
-        'App\Model\Outcome'                     => 'App\Policies\MainPolicy',
-        'App\Model\OutcomingPosition'           => 'App\Policies\MainPolicy',
-        'App\Model\Position'                    => 'App\Policies\MainPolicy',
-        'App\Model\User'                        => 'App\Policies\MainPolicy'
+        'App\Model\View\Individ'                => 'App\Policies\Lib\IndividPolicy',
+
+        'App\Model\Formula'                     => 'App\Policies\Common\FormulaPolicy',
+
+        'App\Model\SysAuthLog'                  => 'App\Policies\System\SystemCommonPolicy',
     ];
 
     /**

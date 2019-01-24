@@ -29,7 +29,11 @@
 
         @include('__include.topbar')
 
-        @include('__include.sidebar')
+        @if (Auth::user()->type_id == App\Model\SysUserType::FIZ)
+            @include('__include.sidebar_individ')
+        @else 
+            @include('__include.sidebar')
+        @endif
         
         <div class="page-wrapper">
 

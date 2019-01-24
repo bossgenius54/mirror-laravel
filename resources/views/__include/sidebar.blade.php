@@ -162,6 +162,18 @@
                         </a>
                     </li>
                 @endcan
+                
+                @can('list', App\Model\View\Individ::class)
+                    <li class="nav-small-cap">Системные</li>
+                    <li>
+                        <a class="" href="{{ action('System\AuthLogController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Логи авторизации
+                            </span>
+                        </a>
+                    </li>
+                @endcan
             </ul>
         </nav>
     </div>

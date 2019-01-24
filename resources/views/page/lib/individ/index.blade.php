@@ -48,6 +48,11 @@
                                         <i class="ti-settings"></i>
                                     </button>
                                     <div class="dropdown-menu">
+                                        @can('list', App\Model\Formula::class)
+                                            <a class="dropdown-item" href="{{ action('Common\FormulaController@getIndex', ['user_id'=> $i->id]) }}">
+                                                Рецепты
+                                            </a>
+                                        @endcan
                                         @can('update', $i)
                                             <a class="dropdown-item" href="{{ action('Lib\IndividController@getUpdate', $i) }}">
                                                 Изменить

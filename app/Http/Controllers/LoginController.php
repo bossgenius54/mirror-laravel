@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Hash;
 use Auth;
+use App\Model\SysAuthLog;
 
 class LoginController extends Controller{
 
@@ -31,6 +32,7 @@ class LoginController extends Controller{
             return back()->with('error', 'Не правильный email/пароль');
 
         $user = Auth::user();
+        SysAuthLog::createNote($user);
 
         return redirect()->to('/');
     }  

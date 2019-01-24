@@ -20,6 +20,18 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
         return view('welcome');
     });
 
+    
+    Route::group(['prefix' => 'common', 'namespace' => 'Common'], function () {
+        /// product
+        Route::group(['prefix' => 'formula'], function () {
+            Route::get('/', 'FormulaController@getIndex')->middleware('can:list,App\Model\Formula');
+            Route::get('create/{user}', 'FormulaController@getCreate')->middleware('can:create,App\Model\Formula');
+            Route::post('create/{user}', 'FormulaController@postCreate')->middleware('can:create,App\Model\Formula');
+            Route::get('delete/{item}', 'FormulaController@getDelete')->middleware('can:delete,item');
+        });
+
+    });
+
     Route::group(['prefix' => 'stock', 'namespace' => 'Stock'], function () {
         /// product
         Route::group(['prefix' => 'product'], function () {
@@ -172,6 +184,14 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::post('update/{item}', 'IndividController@postUpdate')->middleware('can:update,item');
             Route::get('delete/{item}', 'IndividController@getDelete')->middleware('can:delete,item');
         });
+    });
+
+    Route::group(['prefix' => 'system', 'namespace' => 'System'], function () {
+        /// product
+        Route::group(['prefix' => 'auth-log'], function () {
+            Route::get('/', 'AuthLogController@getIndex')->middleware('can:list,App\Model\SysAuthLog');
+        });
+
     });
 
     Route::get('profile', 'ProfileController@getIndex');
