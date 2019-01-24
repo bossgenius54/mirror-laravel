@@ -17,7 +17,7 @@ class DirectorController extends Controller{
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = Director::where('type_id', SysUserType::DIRECTOR)->latest()->paginate(24);
+        $ar['items'] = Director::where('type_id', SysUserType::DIRECTOR)->where('is_active', 1)->latest()->paginate(24);
         $ar['ar_company'] = Company::getArForDirectors();
 
         return view('page.lib.director.index', $ar);
@@ -81,7 +81,7 @@ class DirectorController extends Controller{
 
     function getDelete(Request $request, Director $item){
         $id = $item->id;
-        $item->delete();
+        $item->update(['is_active' => 0]);
 
         return redirect()->back()->with('success', 'Удален елемент списка "'.$this->title.'" № '.$id);
     }

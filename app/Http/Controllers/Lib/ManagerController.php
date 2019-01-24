@@ -17,7 +17,7 @@ class ManagerController extends Controller{
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = Manager::where('type_id', SysUserType::MANAGER)->latest()->paginate(24);
+        $ar['items'] = Manager::where('type_id', SysUserType::MANAGER)->where('is_active', 1)->latest()->paginate(24);
         $ar['ar_branch'] = Branch::getArForCompany($request);
 
         return view('page.lib.manager.index', $ar);
@@ -82,7 +82,7 @@ class ManagerController extends Controller{
 
     function getDelete(Request $request, Manager $item){
         $id = $item->id;
-        $item->delete();
+        $item->update(['is_active' => 0]);
 
         return redirect()->back()->with('success', 'Удален елемент списка "'.$this->title.'" № '.$id);
     }

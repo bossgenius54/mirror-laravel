@@ -22,6 +22,13 @@ class DirectorPolicy {
         return true;
     }
 
+    private function checkItem($user, $item){
+        if ($user->company_id != $item->company_id)
+            return false;
+
+        return true;
+    }
+
     public function list($user){
         if (!$this->mainCheck($user))
             return false;
@@ -47,11 +54,17 @@ class DirectorPolicy {
         if ( !$this->mainCheck($user))
             return false;
 
+        if ( !$this->checkItem($user, $item))
+            return false;
+
         return true;
     }
 
     public function delete($user, $item){
         if ( !$this->mainCheck($user))
+            return false;
+
+        if ( !$this->checkItem($user, $item))
             return false;
 
         return true;
@@ -62,6 +75,9 @@ class DirectorPolicy {
             return false;
 
         if ( !$this->mainCheck($user))
+            return false;
+
+        if ( !$this->checkItem($user, $item))
             return false;
 
         return true;

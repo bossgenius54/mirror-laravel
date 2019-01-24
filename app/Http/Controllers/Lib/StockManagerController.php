@@ -17,7 +17,7 @@ class StockManagerController extends Controller{
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = StockManager::where('type_id', SysUserType::STOCK_MANAGER)->latest()->paginate(24);
+        $ar['items'] = StockManager::where('type_id', SysUserType::STOCK_MANAGER)->where('is_active', 1)->latest()->paginate(24);
 
         return view('page.lib.stock_manager.index', $ar);
     }
@@ -79,7 +79,7 @@ class StockManagerController extends Controller{
 
     function getDelete(Request $request, StockManager $item){
         $id = $item->id;
-        $item->delete();
+        $item->update(['is_active' => 0]);
 
         return redirect()->back()->with('success', 'Удален елемент списка "'.$this->title.'" № '.$id);
     }
