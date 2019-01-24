@@ -174,6 +174,16 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::post('update/{item}', 'DoctorController@postUpdate')->middleware('can:update,item');
             Route::get('delete/{item}', 'DoctorController@getDelete')->middleware('can:delete,item');
         });
+        
+        // manager
+        Route::group(['prefix' => 'stock-manager'], function () {
+            Route::get('/', 'StockManagerController@getIndex')->middleware('can:list,App\Model\View\StockManager');
+            Route::get('create', 'StockManagerController@getCreate')->middleware('can:create,App\Model\View\StockManager');
+            Route::post('create', 'StockManagerController@postCreate')->middleware('can:create,App\Model\View\StockManager');
+            Route::get('update/{item}', 'StockManagerController@getUpdate')->middleware('can:update,item');
+            Route::post('update/{item}', 'StockManagerController@postUpdate')->middleware('can:update,item');
+            Route::get('delete/{item}', 'StockManagerController@getDelete')->middleware('can:delete,item');
+        });
 
         // individ
         Route::group(['prefix' => 'individ'], function () {

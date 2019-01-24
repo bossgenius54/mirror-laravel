@@ -26,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model\CompanyService'              => 'App\Policies\Lib\DirectorPolicy',
         'App\Model\View\Manager'                => 'App\Policies\Lib\DirectorPolicy',
         'App\Model\View\Doctor'                 => 'App\Policies\Lib\DirectorPolicy',
+        'App\Model\View\StockManager'           => 'App\Policies\Lib\DirectorPolicy',
         'App\Model\Product'                     => 'App\Policies\Lib\DirectorPolicy',
         'App\Model\View\IncomeFromCompany'      => 'App\Policies\Stock\StockCommonPolicy',
         'App\Model\Position'                    => 'App\Policies\Stock\PositionPolicy',

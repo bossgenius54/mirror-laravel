@@ -82,6 +82,16 @@
                         </a>
                     </li>
                 @endcan
+                @can('list', App\Model\View\StockManager::class)
+                    <li>
+                        <a class="" href="{{ action('Lib\StockManagerController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Зав. складом
+                            </span>
+                        </a>
+                    </li>
+                @endcan
                 @can('list', App\Model\CompanyService::class)
                     <li>
                         <a class="" href="{{ action('Lib\CompanyServiceController@getIndex') }}">
@@ -163,7 +173,7 @@
                     </li>
                 @endcan
                 
-                @can('list', App\Model\View\Individ::class)
+                @can('list', App\Model\SysAuthLog::class)
                     <li class="nav-small-cap">Системные</li>
                     <li>
                         <a class="" href="{{ action('System\AuthLogController@getIndex') }}">
