@@ -6,39 +6,36 @@ use Illuminate\Http\Request;
 use Hash;
 use App\Helper\UploadPhoto;
 
-use App\Model\View\Manager;
-use App\Model\Branch;
+use App\Model\View\ExternalDoctor;
 use App\Model\SysUserType;
-use App\ModelList\ManagerList;
+use App\ModelList\ExternalDoctorList;
 
-class ManagerController extends Controller{
-    private $title = 'Менеджеры';
+class ExternalDoctorController extends Controller{
+    private $title = 'Внешние врачи';
 
     function getIndex (Request $request){
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = ManagerList::get($request)->latest()->paginate(24);
-        $ar['ar_branch'] = Branch::getArForCompany($request);
-
-        return view('page.lib.manager.index', $ar);
+        $ar['items'] = ExternalDoctorList::get($request)->latest()->paginate(24);
+        
+        return view('page.lib.external_doctor.index', $ar);
     }
 
     function getCreate(Request $request){
         $ar = array();
         $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
-        $ar['action'] = action('Lib\ManagerController@postCreate');
-        $ar['ar_branch'] = Branch::getArForCompany($request);
+        $ar['action'] = action('Lib\ExternalDoctorController@postCreate');
 
-        return view('page.lib.manager.create', $ar);
+        return view('page.lib.external_doctor.create', $ar);
     }
 
     function postCreate(Request $request){
-        if (Manager::where(['email' => $request->email])->count() > 0)
+        if (ExternalDoctor::where(['email' => $request->email])->count() > 0)
             return redirect()->back()->with('error', 'Указанный почтовый адрес уже используется');
 
         $ar = $request->all();
-        $ar['type_id'] = SysUserType::MANAGER;
+        $ar['type_id'] = SysUserType::EXTERNAL_DOCTOR;
         $ar['is_active'] = 1;
         $ar['password'] = Hash::make($ar['password']);
         $ar['company_id'] = $request->user()->company_id;
@@ -47,22 +44,21 @@ class ManagerController extends Controller{
         if (!$ar['photo'])
             unset($ar['photo']);
 
-        $item = Manager::create($ar);
+        $item = ExternalDoctor::create($ar);
         
-        return redirect()->action("Lib\ManagerController@getIndex")->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Lib\ExternalDoctorController@getIndex")->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
     }
 
-    function getUpdate(Request $request, Manager $item){
+    function getUpdate(Request $request, ExternalDoctor $item){
         $ar = array();
         $ar['title'] = 'Изменить елемент № '. $item->id.' списка "'.$this->title.'"';
         $ar['item'] = $item;
-        $ar['ar_branch'] = Branch::getArForCompany($request);
-        $ar['action'] = action('Lib\ManagerController@postUpdate', $item);
+        $ar['action'] = action('Lib\ExternalDoctorController@postUpdate', $item);
 
-        return view('page.lib.manager.update', $ar);
+        return view('page.lib.external_doctor.update', $ar);
     }
 
-    function postUpdate(Request $request, Manager $item){
+    function postUpdate(Request $request, ExternalDoctor $item){
         $ar = $request->all();
         if ($request->has('email'))
             unset($ar['email']);
@@ -78,10 +74,10 @@ class ManagerController extends Controller{
         
         $item->update($ar);
 
-        return redirect()->action("Lib\ManagerController@getIndex")->with('success', 'Изменен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Lib\ExternalDoctorController@getIndex")->with('success', 'Изменен елемент списка "'.$this->title.'" № '.$item->id);
     }
 
-    function getDelete(Request $request, Manager $item){
+    function getDelete(Request $request, ExternalDoctor $item){
         $id = $item->id;
         $item->update(['is_active' => 0]);
 

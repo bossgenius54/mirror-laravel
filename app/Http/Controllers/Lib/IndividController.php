@@ -8,27 +8,16 @@ use App\Helper\UploadPhoto;
 
 use App\Model\View\Individ;
 use App\Model\SysUserType;
+use App\ModelList\IndividList;
 
 class IndividController extends Controller{
     private $title = 'Физ. лица';
-
-    function getItems(Request $request){
-        $user = $request->user();
-        
-        $items = Individ::where('type_id', SysUserType::FIZ);
-        if ($user->company_id)
-            $items->whereHas('relSeller', function($q) use ($user){
-                $q->where('company_id', $user->company_id);
-            });
-
-        return $items;
-    }
 
     function getIndex (Request $request){
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = $this->getItems($request)->latest()->paginate(24);
+        $ar['items'] = IndividList::get($request)->latest()->paginate(24);
 
         return view('page.lib.individ.index', $ar);
     }

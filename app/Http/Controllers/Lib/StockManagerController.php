@@ -9,6 +9,7 @@ use App\Helper\UploadPhoto;
 use App\Model\View\StockManager;
 use App\Model\Branch;
 use App\Model\SysUserType;
+use App\ModelList\StockManagerList;
 
 class StockManagerController extends Controller{
     private $title = 'Заведующие складом';
@@ -17,7 +18,7 @@ class StockManagerController extends Controller{
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = StockManager::where('type_id', SysUserType::STOCK_MANAGER)->where('is_active', 1)->latest()->paginate(24);
+        $ar['items'] = StockManagerList::get($request)->latest()->paginate(24);
 
         return view('page.lib.stock_manager.index', $ar);
     }

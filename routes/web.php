@@ -30,6 +30,11 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('delete/{item}', 'FormulaController@getDelete')->middleware('can:delete,item');
         });
 
+        /// external_doctor_salary
+        Route::group(['prefix' => 'external-doctor-salary'], function () {
+            Route::get('/', 'ExternalDoctorSalaryController@getIndex')->middleware('can:list,App\Model\ExternalDoctorSalary');
+        });
+
     });
 
     Route::group(['prefix' => 'stock', 'namespace' => 'Stock'], function () {
@@ -193,6 +198,16 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('update/{item}', 'IndividController@getUpdate')->middleware('can:update,item');
             Route::post('update/{item}', 'IndividController@postUpdate')->middleware('can:update,item');
             Route::get('delete/{item}', 'IndividController@getDelete')->middleware('can:delete,item');
+        });
+
+        // individ
+        Route::group(['prefix' => 'external-doctor'], function () {
+            Route::get('/', 'ExternalDoctorController@getIndex')->middleware('can:list,App\Model\View\ExternalDoctor');
+            Route::get('create', 'ExternalDoctorController@getCreate')->middleware('can:create,App\Model\View\ExternalDoctor');
+            Route::post('create', 'ExternalDoctorController@postCreate')->middleware('can:create,App\Model\View\ExternalDoctor');
+            Route::get('update/{item}', 'ExternalDoctorController@getUpdate')->middleware('can:update,item');
+            Route::post('update/{item}', 'ExternalDoctorController@postUpdate')->middleware('can:update,item');
+            Route::get('delete/{item}', 'ExternalDoctorController@getDelete')->middleware('can:delete,item');
         });
     });
 

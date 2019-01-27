@@ -51,6 +51,16 @@
                         </a>
                     </li>
                 @endcan
+                @can('list', App\Model\ExternalDoctorSalary::class)
+                    <li>
+                        <a class="waves-effect waves-dark" href="{{ action('Common\ExternalDoctorSalaryController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Комис. внеш. врача
+                            </span>
+                        </a>
+                    </li>
+                @endcan
                 <li class="nav-small-cap">Справочники</li>
                 @can('list', App\Model\View\Individ::class)
                     <li>
@@ -88,6 +98,17 @@
                             <i class="mdi mdi-gauge"></i>
                             <span class="hide-menu">
                                 Зав. складом
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+                
+                @can('list', App\Model\View\ExternalDoctor::class)
+                    <li>
+                        <a class="" href="{{ action('Lib\ExternalDoctorController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Внешние врачи
                             </span>
                         </a>
                     </li>

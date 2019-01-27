@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Model\CompanyService;
+use App\ModelList\CompanyServiceList;
 
 class CompanyServiceController extends Controller{
     private $title = 'Услуги';
@@ -13,7 +14,7 @@ class CompanyServiceController extends Controller{
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = CompanyService::where(['company_id' => $request->user()->company_id])->latest()->paginate(24);
+        $ar['items'] = CompanyServiceList::get($request)->latest()->paginate(24);
 
         return view('page.lib.company_service.index', $ar);
     }

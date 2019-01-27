@@ -9,6 +9,7 @@ use App\Helper\UploadPhoto;
 use App\Model\View\Doctor;
 use App\Model\Branch;
 use App\Model\SysUserType;
+use App\ModelList\DoctorList;
 
 class DoctorController extends Controller{
     private $title = 'Доктора';
@@ -17,7 +18,7 @@ class DoctorController extends Controller{
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = Doctor::where('type_id', SysUserType::DOCTOR)->where('is_active', 1)->latest()->paginate(24);
+        $ar['items'] = DoctorList::get($request)->latest()->paginate(24);
         $ar['ar_branch'] = Branch::getArForCompany($request);
 
         return view('page.lib.doctor.index', $ar);

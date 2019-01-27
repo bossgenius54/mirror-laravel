@@ -27,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model\View\Manager'                => 'App\Policies\Lib\DirectorPolicy',
         'App\Model\View\Doctor'                 => 'App\Policies\Lib\DirectorPolicy',
         'App\Model\View\StockManager'           => 'App\Policies\Lib\DirectorPolicy',
+        'App\Model\View\ExternalDoctor'         => 'App\Policies\Lib\DirectorPolicy',
         'App\Model\Product'                     => 'App\Policies\Lib\DirectorPolicy',
         'App\Model\View\IncomeFromCompany'      => 'App\Policies\Stock\StockCommonPolicy',
         'App\Model\Position'                    => 'App\Policies\Stock\PositionPolicy',
@@ -35,6 +36,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model\View\Individ'                => 'App\Policies\Lib\IndividPolicy',
 
         'App\Model\Formula'                     => 'App\Policies\Common\FormulaPolicy',
+        'App\Model\ExternalDoctorSalary'        => 'App\Policies\Common\ExternalDoctorSalaryPolicy',
 
         'App\Model\SysAuthLog'                  => 'App\Policies\System\SystemCommonPolicy',
     ];
