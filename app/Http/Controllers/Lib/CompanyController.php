@@ -9,6 +9,7 @@ use App\Model\CompanyData;
 use App\Model\LibCompanyCat;
 use App\Model\SysCompanyType;
 use App\Model\SysUserType;
+use App\ModelList\CompanyList;
 
 use DB;
 use Exception;
@@ -16,23 +17,12 @@ use Exception;
 class CompanyController extends Controller{
     private $title = 'Компании';
 
-    private function getItems(Request $request){
-        $user = $request->user();
-
-        $items = Company::where('id', '>', 0);
-        if (in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::MANAGER, SysUserType::ACCOUNTER]))
-            $items->whereHas('relSeller', function($q) use ($user){
-                $q->where('company_id', $user->company_id);
-            });
-
-        return $items;
-    }
-
     function getIndex (Request $request){
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = $this->getItems($request)->latest()->paginate(24);
+        $ar['items'] = CompanyList::get($request)->latest()->paginate(24);
+        
         $ar['ar_cat'] = LibCompanyCat::getAr();
         $ar['ar_type'] = SysCompanyType::getAr();
 

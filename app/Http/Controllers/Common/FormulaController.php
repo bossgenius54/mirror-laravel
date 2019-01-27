@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\Formula;
 use App\Model\View\Individ;
 use App\Model\SysUserType;
+use App\ModelList\FormulaList;
 
 class FormulaController extends Controller{
     private $title = 'Рецепты';
@@ -35,7 +36,7 @@ class FormulaController extends Controller{
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = $this->getItems($request)->latest()->paginate(24);
+        $ar['items'] = FormulaList::get($request)->latest()->paginate(24);
         $ar['ar_propose'] = Formula::getProposeAr();
 
         return view('page.common.formula.index', $ar);
