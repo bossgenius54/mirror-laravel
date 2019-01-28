@@ -3,15 +3,15 @@ namespace App\ModelList;
 
 use Illuminate\Http\Request;
 
-use App\Model\View\OfflineOrder;
+use App\Model\Order;
 use App\Model\SysUserType;
 
-class OfflineOrderList {
+class OrderList {
     private $items = null;
     private $request = null;
 
     static function get(Request $request){
-        $el = new OfflineOrderList();
+        $el = new OrderList();
         $el->start($request);
 
         return  $el->getResult();
@@ -21,7 +21,7 @@ class OfflineOrderList {
     private function getItems(){
         $user = $this->user;
 
-        $items = OfflineOrder::where('is_retail', 1);
+        $items = Order::where('id', '>', '0');
         if ($this->user->company_id)
             $items->where('company_id', $user->company_id);
 

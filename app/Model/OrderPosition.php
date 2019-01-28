@@ -9,5 +9,8 @@ class OrderPosition extends Model{
     protected $fillable = ['product_id', 'order_id', 'pos_count', 'pos_cost', 'total_sum'];
     use DateHelper;
     
+    function relProduct(){
+        return $this->belongsTo('App\Model\Product', 'product_id');
+    }
 
 }

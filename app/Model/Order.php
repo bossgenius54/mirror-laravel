@@ -38,4 +38,25 @@ class Order extends Model{
     function relCreatedUser(){
         return $this->belongsTo('App\User', 'created_user_id');
     }
+
+    function relStatus(){
+        return $this->belongsTo('App\Model\SysOrderStatus', 'status_id');
+    }
+
+    function relType(){
+        return $this->belongsTo('App\Model\SysOrderType', 'type_id');
+    }
+
+    function relBranch(){
+        return $this->belongsTo('App\Model\Branch', 'branch_id');
+    }
+
+    function relServices(){
+        return $this->hasMany('App\Model\OrderService', 'order_id');
+    }
+
+    function relProducts(){
+        return $this->hasMany('App\Model\OrderPosition', 'order_id');
+    }
+
 }

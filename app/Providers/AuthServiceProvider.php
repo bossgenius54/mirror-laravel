@@ -40,7 +40,7 @@ class AuthServiceProvider extends ServiceProvider
 
         'App\Model\SysAuthLog'                  => 'App\Policies\System\SystemCommonPolicy',
 
-        'App\Model\View\OfflineOrder'           => 'App\Policies\Order\OfflineOrderPolicy',
+        'App\Model\Order'           => 'App\Policies\Order\OrderPolicy',
     ];
 
     /**

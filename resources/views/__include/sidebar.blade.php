@@ -13,10 +13,10 @@
                 </li>
                 @can('list', App\Model\View\OfflineOrder::class)
                     <li>
-                        <a class="waves-effect waves-dark" href="{{ action('Order\OfflineOrderController@getIndex') }}">
+                        <a class="waves-effect waves-dark" href="{{ action('Order\ListOrderController@getIndex') }}">
                             <i class="mdi mdi-gauge"></i>
                             <span class="hide-menu">
-                                Заказы
+                                Заказы/Розница
                             </span>
                         </a>
                     </li>
