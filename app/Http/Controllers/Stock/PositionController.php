@@ -11,39 +11,20 @@ use App\Model\SysPositionStatus;
 use App\Model\Product;
 use App\Model\SysUserType;
 
+use App\ModelList\PositionList;
+
 use DB;
 use Exception;
 
 class PositionController extends Controller{
     private $title = 'Позиции/Товары';
 
-    private function getItems(Request $request){
-        $user = $request->user();
-        $items = Position::where('id', '>', 0);
-
-        if ($user->type_id != SysUserType::DIRECTOR)
-            $items->where('branch_id', $user->branch_id);
-
-        if ($request->has('branch_id') && $request->branch_id) 
-            $items->where('branch_id', $request->branch_id);
-
-        if ($request->has('status_id') && $request->status_id) 
-            $items->where('status_id', $request->status_id);
-
-        if ($request->has('product_id') && $request->product_id) 
-            $items->where('product_id', $request->product_id);
-
-        if ($request->has('income_id') && $request->income_id) 
-            $items->where('income_id', $request->income_id);
-
-        return $items;
-    }
 
     function getIndex (Request $request){
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = $this->getItems($request)->with('relProduct')->latest()->paginate(48);
+        $ar['items'] = PositionList::get($request)->with('relProduct')->latest()->paginate(48);
         $ar['ar_status'] = SysPositionStatus::pluck('name', 'id')->toArray();
         $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
 

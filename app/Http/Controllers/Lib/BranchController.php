@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Model\Branch;
 use App\Model\BranchData;
-use App\ModelFilters\FilterBranch;
+use App\ModelList\BranchList;
 
 use DB;
 use Exception;
@@ -15,13 +15,13 @@ class BranchController extends Controller{
     private $title = 'Филиалы';
 
     function getIndex (Request $request){
-        $items = FilterBranch::filter($request);
+        $items = BranchList::get($request);
 
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['items'] = $items->latest()->paginate(24);
-        $ar['ar_lib'] = FilterBranch::getLibAr();
+        $ar['ar_lib'] = BranchList::getLibAr();
 
         return view('page.lib.branch.index', $ar);
     }
@@ -30,7 +30,7 @@ class BranchController extends Controller{
         $ar = array();
         $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
         $ar['action'] = action('Lib\BranchController@postCreate');
-        $ar['ar_lib'] = FilterBranch::getLibAr();
+        $ar['ar_lib'] = BranchList::getLibAr();
 
         return view('page.lib.branch.create', $ar);
     }
@@ -62,7 +62,7 @@ class BranchController extends Controller{
         $ar['title'] = 'Изменить елемент № '. $item->id.' списка "'.$this->title.'"';
         $ar['item'] = $item;
         $ar['data'] = $item->relData;
-        $ar['ar_lib'] = FilterBranch::getLibAr();
+        $ar['ar_lib'] = BranchList::getLibAr();
         $ar['action'] = action('Lib\BranchController@postUpdate', $item);
 
         return view('page.lib.branch.update', $ar);
@@ -74,6 +74,7 @@ class BranchController extends Controller{
         try {
             $ar = $request->all();
             $item->update($ar);
+            
             $data = $item->relData;
             $data->update($ar);
             

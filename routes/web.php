@@ -20,7 +20,16 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
         return view('welcome');
     });
 
-    
+    Route::group(['prefix' => 'order', 'namespace' => 'Order'], function () {
+        /// offline
+        Route::group(['prefix' => 'offline'], function () {
+            Route::get('/', 'OfflineOrderController@getIndex')->middleware('can:list,App\Model\View\OfflineOrder');
+            Route::get('create/{type}', 'OfflineOrderController@getCreate')->middleware('can:create,App\Model\View\OfflineOrder');
+            Route::post('create/{type}', 'OfflineOrderController@postCreate')->middleware('can:create,App\Model\View\OfflineOrder');
+
+        });
+    });
+
     Route::group(['prefix' => 'common', 'namespace' => 'Common'], function () {
         /// product
         Route::group(['prefix' => 'formula'], function () {

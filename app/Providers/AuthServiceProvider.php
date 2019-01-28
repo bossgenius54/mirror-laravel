@@ -39,6 +39,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model\ExternalDoctorSalary'        => 'App\Policies\Common\ExternalDoctorSalaryPolicy',
 
         'App\Model\SysAuthLog'                  => 'App\Policies\System\SystemCommonPolicy',
+
+        'App\Model\View\OfflineOrder'           => 'App\Policies\Order\OfflineOrderPolicy',
     ];
 
     /**

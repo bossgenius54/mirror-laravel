@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Model\View\IncomeFromCompany;
-use App\ModelFilters\FilterIncomeFromCompany;
+use App\ModelList\IncomeFromCompanyList;
 use App\Model\Company;
 use App\Model\Branch;
 use App\Model\Product;
@@ -24,7 +24,7 @@ class IncomeFromCompanyController extends Controller{
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = FilterIncomeFromCompany::filter($request)->latest()->paginate(24);
+        $ar['items'] = IncomeFromCompanyList::get($request)->latest()->paginate(24);
 
         return view('page.stock.income_from_company.index', $ar);
     }

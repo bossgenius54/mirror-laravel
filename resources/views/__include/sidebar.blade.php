@@ -11,6 +11,28 @@
                         </span>
                     </a>
                 </li>
+                @can('list', App\Model\View\OfflineOrder::class)
+                    <li>
+                        <a class="waves-effect waves-dark" href="{{ action('Order\OfflineOrderController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Заказы
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+                @can('list', App\Model\ExternalDoctorSalary::class)
+                    <li>
+                        <a class="waves-effect waves-dark" href="{{ action('Common\ExternalDoctorSalaryController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Комис. внеш. врача
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+                
+                <li class="nav-small-cap">Склад</li>
                 @can('list', App\Model\View\IncomeFromCompany::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Stock\IncomeFromCompanyController@getIndex') }}">
@@ -47,16 +69,6 @@
                             <i class="mdi mdi-gauge"></i>
                             <span class="hide-menu">
                                 Ассортимент товаров
-                            </span>
-                        </a>
-                    </li>
-                @endcan
-                @can('list', App\Model\ExternalDoctorSalary::class)
-                    <li>
-                        <a class="waves-effect waves-dark" href="{{ action('Common\ExternalDoctorSalaryController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
-                            <span class="hide-menu">
-                                Комис. внеш. врача
                             </span>
                         </a>
                     </li>

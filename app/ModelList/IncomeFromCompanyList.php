@@ -1,5 +1,5 @@
 <?php
-namespace App\ModelFilters;
+namespace App\ModelList;
 
 use Illuminate\Http\Request;
 
@@ -8,12 +8,12 @@ use App\Model\SysIncomeType;
 use App\Model\SysUserType;
 use App\Model\Branch;
 
-class FilterIncomeFromCompany {
+class IncomeFromCompanyList {
     private $items = null;
     private $request = null;
 
-    static function filter(Request $request){
-        $el = new FilterIncomeFromCompany();
+    static function get(Request $request){
+        $el = new IncomeFromCompanyList();
         $el->start($request);
 
         return  $el->getResult();
@@ -21,8 +21,9 @@ class FilterIncomeFromCompany {
 
     private function getItems(){
         $items = IncomeFromCompany::where('type_id', SysIncomeType::FROM_COMPANY);
-        $items->where('company_id', $this->request->user()->company_id);
 
+        if ($this->request->user()->company_id)
+            $items->where('company_id', $this->request->user()->company_id);
         if (in_array($this->request->user()->type_id, [SysUserType::MANAGER]))
             $items->where('branch_id', $this->request->user()->branch_id);
 

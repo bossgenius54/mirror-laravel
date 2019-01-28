@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Stock;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\ModelList\MotionList;
 
 use App\Model\Motion;
 use App\Model\SysMotionStatus;
@@ -24,7 +25,7 @@ class MotionController extends Controller{
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = Motion::where('company_id', $request->user()->company_id)->latest()->paginate(24);
+        $ar['items'] = MotionList::get($request)->latest()->paginate(24);
         $ar['ar_status'] = SysMotionStatus::pluck('name', 'id')->toArray();
         $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
 

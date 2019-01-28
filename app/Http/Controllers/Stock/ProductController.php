@@ -10,6 +10,8 @@ use App\Model\LibProductCat;
 use App\Model\LibProductType;
 use App\Model\LibProductOption;
 
+use App\ModelList\ProductList;
+
 use DB;
 use Exception;
 
@@ -20,7 +22,7 @@ class ProductController extends Controller{
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = Product::where('company_id', $request->user()->company_id)->latest()->paginate(24);
+        $ar['items'] = ProductList::get($request)->latest()->paginate(24);
         $ar['ar_cat'] = LibProductCat::getAr();
 
         return view('page.stock.product.index', $ar);
