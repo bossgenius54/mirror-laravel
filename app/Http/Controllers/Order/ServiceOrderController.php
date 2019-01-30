@@ -4,21 +4,8 @@ namespace App\Http\Controllers\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Model\View\OfflineOrder;
-use App\ModelList\OfflineOrderList;
-
-use App\ModelList\BranchList;
-use App\ModelList\CompanyList;
-use App\ModelList\IndividList;
-use App\ModelList\CompanyServiceList;
-use App\ModelList\ProductList;
-
-use App\Model\SysOrderStatus;
-use App\Model\SysOrderType;
+use App\Model\Order;
 use App\Model\OrderService;
-use App\Model\OrderPosition;
-use App\Model\SysPositionStatus;
-use App\Model\Position;
 
 use DB;
 use Exception;
@@ -26,7 +13,7 @@ use Exception;
 class ServiceOrderController extends Controller{
     private $title = 'Заказы/Розница';
 
-    function postAddService(Request $request, OfflineOrder $item){
+    function postAddService(Request $request, Order $item){
         if (OrderService::where(['order_id' => $item->id, 'service_id' => $request->service_id])->count() > 0)
             return redirect()->back()->with('error', 'Указанная услуга уже есть ');
 
@@ -55,7 +42,7 @@ class ServiceOrderController extends Controller{
     }
 
     
-    function getDeleteService(Request $request, OfflineOrder $item, OrderService $order_service){
+    function getDeleteService(Request $request, Order $item, OrderService $order_service){
         DB::beginTransaction();
         try {
             $item->update([

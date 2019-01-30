@@ -4,21 +4,12 @@ namespace App\Http\Controllers\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Model\View\OfflineOrder;
-use App\ModelList\OfflineOrderList;
+use App\Model\Order;
 
-use App\ModelList\BranchList;
-use App\ModelList\CompanyList;
-use App\ModelList\IndividList;
-use App\ModelList\CompanyServiceList;
-use App\ModelList\ProductList;
-
-use App\Model\SysOrderStatus;
-use App\Model\SysOrderType;
-use App\Model\OrderService;
-use App\Model\OrderPosition;
 use App\Model\SysPositionStatus;
+use App\Model\OrderPosition;
 use App\Model\Position;
+
 
 use DB;
 use Exception;
@@ -26,7 +17,7 @@ use Exception;
 class PositionOrderController extends Controller{
     private $title = 'Заказы/Розница';
 
-    function postAddProduct(Request $request, OfflineOrder $item){
+    function postAddProduct(Request $request, Order $item){
         if (OrderPosition::where(['order_id' => $item->id, 'product_id' => $request->product_id])->count() > 0)
             return redirect()->back()->with('error', 'Указанный товар уже есть');
 
@@ -58,7 +49,7 @@ class PositionOrderController extends Controller{
         
     }
 
-    function getDeleteProduct(Request $request, OfflineOrder $item, OrderPosition $order_product){
+    function getDeleteProduct(Request $request, Order $item, OrderPosition $order_product){
         DB::beginTransaction();
         try {
             $item->update([

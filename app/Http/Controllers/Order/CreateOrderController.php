@@ -4,27 +4,20 @@ namespace App\Http\Controllers\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Model\View\OfflineOrder;
-use App\ModelList\OfflineOrderList;
+use App\Model\Order;
 
 use App\ModelList\BranchList;
 use App\ModelList\CompanyList;
 use App\ModelList\IndividList;
-use App\ModelList\CompanyServiceList;
-use App\ModelList\ProductList;
 
-use App\Model\SysOrderStatus;
 use App\Model\SysOrderType;
-use App\Model\OrderService;
-use App\Model\OrderPosition;
-use App\Model\SysPositionStatus;
-use App\Model\Position;
+use App\Model\SysOrderStatus;
 
 use DB;
 use Exception;
 
 class CreateOrderController extends Controller{
-    private $title = 'Заказы/Розница';
+    private $title = 'Заказы';
 
     function getCreate(Request $request, SysOrderType $type){
         $ar = array();
@@ -45,12 +38,12 @@ class CreateOrderController extends Controller{
         try {
             $ar = $request->all();
             $ar['type_id'] = $type->id;
-            $ar['status_id'] = SysOrderStatus::FORMATION;
+            $ar['status_id'] = SysOrderStatus::CREATED;
             $ar['company_id'] = $user->company_id;
             $ar['created_user_id'] = $user->id;
             $ar['is_retail'] = 1;
 
-            $item = OfflineOrder::create($ar);
+            $item = Order::create($ar);
 
             DB::commit();
         } catch (Exception $e) {

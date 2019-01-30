@@ -4,21 +4,10 @@ namespace App\Http\Controllers\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Model\View\OfflineOrder;
-use App\ModelList\OfflineOrderList;
+use App\Model\Order;
 
-use App\ModelList\BranchList;
-use App\ModelList\CompanyList;
-use App\ModelList\IndividList;
 use App\ModelList\CompanyServiceList;
 use App\ModelList\ProductList;
-
-use App\Model\SysOrderStatus;
-use App\Model\SysOrderType;
-use App\Model\OrderService;
-use App\Model\OrderPosition;
-use App\Model\SysPositionStatus;
-use App\Model\Position;
 
 use DB;
 use Exception;
@@ -26,7 +15,7 @@ use Exception;
 class ViewController extends Controller{
     private $title = 'Заказы/Розница';
 
-    function getView(Request $request, OfflineOrder $item){
+    function getView(Request $request, Order $item){
         $ar = array();
         $ar['title'] = 'Просмотр елемента списка "'.$this->title.'"';
         $ar['item'] = $item;
@@ -39,7 +28,7 @@ class ViewController extends Controller{
         return view('page.order.view.index', $ar);
     }
 
-    function postUpdate(Request $request, OfflineOrder $item){
+    function postUpdate(Request $request, Order $item){
         DB::beginTransaction();
         try {
             $ar = $request->all();

@@ -16,7 +16,7 @@
                         <a class="waves-effect waves-dark" href="{{ action('Order\ListOrderController@getIndex') }}">
                             <i class="mdi mdi-gauge"></i>
                             <span class="hide-menu">
-                                Заказы/Розница
+                                Заказы
                             </span>
                         </a>
                     </li>

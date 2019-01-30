@@ -27,6 +27,9 @@ class OrderList {
 
         if ($this->user->branch_id)
             $items->where('branch_id', $user->branch_id);
+        
+        if ($this->user->type_id == SysUserType::FIZ)
+            $items->where('from_user_id', $user->id);
 
         $this->items = $items;
     }

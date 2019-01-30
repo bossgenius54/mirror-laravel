@@ -10,7 +10,7 @@
             <div class="card-body">
                 <h4 class="card-title">
                     {{ $title }}  
-                    @can('create', App\Model\View\OfflineOrder::class)
+                    @can('create', App\Model\Order::class)
                         <div class="btn-group btn-group-sm pull-right">
                             <button type="button" class="btn btn-info btn-rounde dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Добавить
@@ -22,7 +22,7 @@
                                         Добавить "{{ $v }}"
                                     </a>
                                 @endforeach
-                            </div>
+                            </div> 
                         </div>
                     @endcan
                 </h4>
@@ -40,7 +40,6 @@
                         <th>Общая сумма</th>
                         <th>Предоплата</th>
                         <th>Создатель</th>
-                        <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>
                     </tr>
@@ -57,7 +56,6 @@
                             <td>{{ $i->total_sum }}</td>
                             <td>{{ $i->prepay_sum }}</td>
                             <td>{{ $i->relCreatedUser ? $i->relCreatedUser->name : 'не указано'  }}</td>
-                            <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>
                                 @can('view', $i)

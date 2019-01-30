@@ -22,6 +22,9 @@ class BranchList {
         $items = Branch::where('id', '>', 0);
         if ($this->user->company_id)
             $items->where('company_id', $this->user->company_id);
+        
+        if ($this->user->branch_id)
+            $items->where('id', $this->user->branch_id);
 
         $this->items = $items;
     }
