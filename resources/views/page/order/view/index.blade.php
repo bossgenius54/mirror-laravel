@@ -6,27 +6,15 @@
 @section('content')
 <div class="row">
     <div class="col-sm-8">
+        @include('page.order.view.__include.view_service_block')
 
-        <div class="card card-outline-info">
-            <div class="card-header">
-                <h4 class="m-b-0 text-white">Услуги</h4>
-            </div>
-            <div class="card-body" style="    padding-bottom: 0px;     padding-top: 0;">
-                @include('page.order.view.__include.view_service_add')
-            </div>
-            @include('page.order.view.__include.view_service_list')
-        </div>
-        <div class="card card-outline-info">
-            <div class="card-header">
-                <h4 class="m-b-0 text-white">Продукция</h4>
-            </div>
-            <div class="card-body" style="    padding-bottom: 0px;     padding-top: 0;">
-                @include('page.order.view.__include.view_product_add')
-            </div>
-            @include('page.order.view.__include.view_product_list')
-        </div>
+        @include('page.order.view.__include.view_product_block')
+       
     </div>
     <div class="col-sm-4">
+        <a href="?for_print=1" class="btn btn-block btn-outline-secondary" style="margin-bottom: 10px;">
+            Версия для печати
+        </a>
         @include('page.order.view.__include.view_change_status')
         @include('page.order.view.__include.view_main')
 

@@ -161,3 +161,11 @@ a.link:hover, a.link:focus {
 .topbar .profile-pic {
   height: 30px;
 }
+.dropdown-menu__full {
+  width: 100%;
+}
+.dropdown-menu__full .dropdown-item  {
+  padding: 10px 15px;
+  border-bottom: 1px solid #ccc;
+
+}

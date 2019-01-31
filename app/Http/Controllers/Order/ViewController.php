@@ -32,8 +32,12 @@ class ViewController extends Controller{
 
         $ar['can_status'] = SysOrderStatus::whereIn('id', $can_ar_status)->pluck('name', 'id')->toArray();
         $ar['can_status_class'] = SysOrderStatus::whereIn('id', $can_ar_status)->pluck('bootstrap_class', 'id')->toArray();
+        $ar['user'] = $request->user();
+        $ar['request'] = $request;
         
-
+        if ($request->for_print == 1)
+            return view('page.order.view.for_print', $ar);
+        
         return view('page.order.view.index', $ar);
     }
 

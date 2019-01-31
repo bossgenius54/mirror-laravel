@@ -3,7 +3,7 @@
         <button type="button" class="btn btn-outline-success btn-rounde btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Смена статуса
         </button>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu dropdown-menu__full">
             @foreach ($can_status as $id => $name)
                 <a href="{{ action('Order\StatusOrderController@getChangeStatus', [$item,  $id]) }}""
                     class="dropdown-item " >
