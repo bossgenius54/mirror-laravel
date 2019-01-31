@@ -24,7 +24,7 @@
                 <td>{{ $i->service_count }}</td>
                 <td>{{ $i->total_sum }}</td>
                 <td>
-                    @can('update', $item)
+                    @can('service', $item)
                         <a href="{{ action('Order\ServiceOrderController@getDeleteService', [$item, $i]) }}" class="btn btn-danger btn-sm">
                             Убрать
                         </a>

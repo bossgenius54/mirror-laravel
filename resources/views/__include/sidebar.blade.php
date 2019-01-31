@@ -11,7 +11,7 @@
                         </span>
                     </a>
                 </li>
-                @can('list', App\Model\View\OfflineOrder::class)
+                @can('list', App\Model\Order::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Order\ListOrderController@getIndex') }}">
                             <i class="mdi mdi-gauge"></i>

@@ -4,21 +4,12 @@ namespace App\Http\Controllers\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Model\View\OfflineOrder;
-use App\ModelList\OfflineOrderList;
-
-use App\ModelList\BranchList;
-use App\ModelList\CompanyList;
-use App\ModelList\IndividList;
-use App\ModelList\CompanyServiceList;
-use App\ModelList\ProductList;
-
+use App\Model\Order;
 use App\Model\SysOrderStatus;
-use App\Model\SysOrderType;
-use App\Model\OrderService;
-use App\Model\OrderPosition;
+
 use App\Model\SysPositionStatus;
 use App\Model\Position;
+
 
 use DB;
 use Exception;
@@ -26,7 +17,8 @@ use Exception;
 class StatusOrderController extends Controller{
     private $title = 'Заказы/Розница';
 
-    function getCanceled(Request $request, OfflineOrder $item){
+    /*
+    function getCanceled(Request $request, Order $item){
         DB::beginTransaction();
         try {
             Position::where(['status_id' => SysPositionStatus::RESERVE, 'order_id'=> $item->id])
@@ -44,5 +36,12 @@ class StatusOrderController extends Controller{
         } 
 
         return redirect()->back()->with('success', 'Ассортимент удален "'.$this->title.'" № '.$item->id);
+    }
+    */
+
+    function getChangeStatus(Request $request, Order $item, SysOrderStatus $status){
+        $item->update(['status_id' => $status->id]);
+
+        return redirect()->back()->with('success', 'Статус заказа изменен ');
     }
 }

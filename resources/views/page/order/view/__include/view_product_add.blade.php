@@ -1,5 +1,5 @@
-@can('update', $item)
-    <form class="form-material row" action="{{ action('Order\PositionOrderController@postAddProduct', $item) }}" method="post"  enctype="multipart/form-data">
+@can('position', $item)
+    <form class="form-material row" action="{{ action('Order\PositionOrderController@postAddProduct', $item) }}" method="post"  enctype="multipart/form-data" style="margin-top: 15px;">
         <div class="form-group col-md-4">
             <label>Продукция</label>
             <select name="product_id" class="form-control" id="product_id" required>

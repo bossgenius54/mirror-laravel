@@ -4,11 +4,13 @@
     </div>
     <div class="card-body">
         <small class="text-muted">Тип</small>
-        <h6>{{ $item->is_retail ? 'Розница' : 'Оптовая' }}</h6>
+        <h6>{{ $item->is_retail ? 'Розница' : 'Оптовая' }} {{ $item->is_onlain ? '(онлайн)' : '' }}</h6>
         <small class="text-muted">От</small>
         <h6>{{ $item->relType ? $item->relType->name : '' }}</h6>
         <small class="text-muted">Статус</small>
         <h6>{{ $item->relStatus ? $item->relStatus->name : '' }}</h6>
+        <small class="text-muted">Компания</small>
+        <h6>{{ $item->relCompany ? $item->relCompany->name : '' }}</h6>
         <small class="text-muted">Филиал</small>
         <h6>{{ $item->relBranch ? $item->relBranch->name : '' }}</h6>
         <small class="text-muted">Клиент</small>

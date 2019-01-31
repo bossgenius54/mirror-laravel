@@ -22,48 +22,32 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
 
     Route::group(['prefix' => 'order', 'namespace' => 'Order'], function () {
         
-        Route::group(['prefix' => 'list'], function () {
-            Route::get('/', 'ListOrderController@getIndex')->middleware('can:list,App\Model\Order');
+        Route::get('/', 'ListOrderController@getIndex')->middleware('can:list,App\Model\Order');
 
-            Route::group(['prefix' => 'create'], function () {
-                Route::get('{type}', 'CreateOrderController@getCreate')->middleware('can:create,App\Model\Order');
-                Route::post('{type}', 'CreateOrderController@postCreate')->middleware('can:create,App\Model\Order');
-            });
-    
-            Route::group(['prefix' => 'item'], function () {
-                Route::get('view/{item}', 'ViewController@getView')->middleware('can:view,item');
-                Route::post('update/{item}', 'ViewController@postUpdate')->middleware('can:update,item');
-            });
-    
-            Route::group(['prefix' => 'service'], function () {
-                Route::post('add/{item}', 'ServiceOrderController@postAddService')->middleware('can:update,item');
-                Route::get('delete/{item}/{order_service}', 'ServiceOrderController@getDeleteService')->middleware('can:update,item');
-            });
-    
-            Route::group(['prefix' => 'product'], function () {
-                Route::post('add/{item}', 'PositionOrderController@postAddProduct')->middleware('can:update,item');
-                Route::get('delete/{item}/{order_product}', 'PositionOrderController@getDeleteProduct')->middleware('can:update,item');
-            });
-            
+        Route::group(['prefix' => 'create'], function () {
+            Route::get('{type}', 'CreateOrderController@getCreate')->middleware('can:create,App\Model\Order');
+            Route::post('{type}', 'CreateOrderController@postCreate')->middleware('can:create,App\Model\Order');
         });
 
+        Route::group(['prefix' => 'item'], function () {
+            Route::get('view/{item}', 'ViewController@getView')->middleware('can:view,item');
+            Route::post('update/{item}', 'ViewController@postUpdate')->middleware('can:update,item');
+        });
+
+        Route::group(['prefix' => 'service'], function () {
+            Route::post('add/{item}', 'ServiceOrderController@postAddService')->middleware('can:service,item');
+            Route::get('delete/{item}/{order_service}', 'ServiceOrderController@getDeleteService')->middleware('can:service,item');
+        });
+
+        Route::group(['prefix' => 'product'], function () {
+            Route::post('add/{item}', 'PositionOrderController@postAddProduct')->middleware('can:position,item');
+            Route::get('delete/{item}/{order_product}', 'PositionOrderController@getDeleteProduct')->middleware('can:position,item');
+        });
         
-
-        /// offline
-        /*
-        Route::group(['prefix' => 'list'], function () {
-            
-           
-            
-            Route::post('add-service/{item}', 'OfflineOrderController@postAddService')->middleware('can:update,item');
-            Route::get('delete-service/{item}/{order_service}', 'OfflineOrderController@getDeleteService')->middleware('can:update,item');
-            
-            Route::post('add-product/{item}', 'OfflineOrderController@postAddProduct')->middleware('can:update,item');
-            Route::get('delete-product/{item}/{order_product}', 'OfflineOrderController@getDeleteProduct')->middleware('can:update,item');
-
-            Route::get('canceled-product/{item}', 'OfflineOrderController@getCanceled')->middleware('can:update,item');
+        Route::group(['prefix' => 'status'], function () {
+            Route::get('change/{item}/{status}', 'StatusOrderController@getChangeStatus')->middleware('can:status,item,status');
         });
-        */
+
     });
 
     Route::group(['prefix' => 'common', 'namespace' => 'Common'], function () {

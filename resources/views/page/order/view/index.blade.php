@@ -6,11 +6,12 @@
 @section('content')
 <div class="row">
     <div class="col-sm-8">
+
         <div class="card card-outline-info">
             <div class="card-header">
                 <h4 class="m-b-0 text-white">Услуги</h4>
             </div>
-            <div class="card-body" style="    padding-bottom: 0px;">
+            <div class="card-body" style="    padding-bottom: 0px;     padding-top: 0;">
                 @include('page.order.view.__include.view_service_add')
             </div>
             @include('page.order.view.__include.view_service_list')
@@ -19,13 +20,14 @@
             <div class="card-header">
                 <h4 class="m-b-0 text-white">Продукция</h4>
             </div>
-            <div class="card-body" style="    padding-bottom: 0px;">
+            <div class="card-body" style="    padding-bottom: 0px;     padding-top: 0;">
                 @include('page.order.view.__include.view_product_add')
             </div>
             @include('page.order.view.__include.view_product_list')
         </div>
     </div>
     <div class="col-sm-4">
+        @include('page.order.view.__include.view_change_status')
         @include('page.order.view.__include.view_main')
 
         @include('page.order.view.__include.view_main_edit')

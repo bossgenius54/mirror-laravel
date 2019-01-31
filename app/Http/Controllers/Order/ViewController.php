@@ -9,6 +9,9 @@ use App\Model\Order;
 use App\ModelList\CompanyServiceList;
 use App\ModelList\ProductList;
 
+use App\Services\Order\CanChangeOrderStatusRules;
+use App\Model\SysOrderStatus;
+
 use DB;
 use Exception;
 
@@ -16,6 +19,8 @@ class ViewController extends Controller{
     private $title = 'Заказы/Розница';
 
     function getView(Request $request, Order $item){
+        $can_ar_status = CanChangeOrderStatusRules::getArStatus($request->user(), $item);
+
         $ar = array();
         $ar['title'] = 'Просмотр елемента списка "'.$this->title.'"';
         $ar['item'] = $item;
@@ -24,7 +29,11 @@ class ViewController extends Controller{
         $ar['order_services'] = $item->relServices()->with('relService')->get();
         $ar['products'] = ProductList::get($request)->get();
         $ar['order_products'] = $item->relProducts()->with('relProduct')->get();
+
+        $ar['can_status'] = SysOrderStatus::whereIn('id', $can_ar_status)->pluck('name', 'id')->toArray();
+        $ar['can_status_class'] = SysOrderStatus::whereIn('id', $can_ar_status)->pluck('bootstrap_class', 'id')->toArray();
         
+
         return view('page.order.view.index', $ar);
     }
 

@@ -1,5 +1,5 @@
-@can('update', $item)
-    <form class="form-material row" action="{{ action('Order\ServiceOrderController@postAddService', $item) }}" method="post"  enctype="multipart/form-data">
+@can('service', $item)
+    <form class="form-material row" action="{{ action('Order\ServiceOrderController@postAddService', $item) }}" method="post" style="margin-top: 15px;" enctype="multipart/form-data">
         <div class="form-group col-md-4">
             <label>Услуга</label>
             <select name="service_id" class="form-control" id="service_id" required>

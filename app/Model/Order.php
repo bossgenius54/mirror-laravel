@@ -26,6 +26,11 @@ class Order extends Model{
         return  $this->client_obj;
     }
 
+    
+    function relCompany(){
+        return $this->belongsTo('App\Model\Company', 'company_id');
+    }
+
     function relCompanyCLient(){
         return $this->belongsTo('App\Model\Company', 'from_company_id');
     }

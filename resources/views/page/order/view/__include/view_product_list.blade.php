@@ -25,7 +25,7 @@
                 <td>{{ $i->pos_count }}</td>
                 <td>{{ $i->total_sum }}</td>
                 <td>
-                    @can('update', $item)
+                    @can('position', $item)
                         <a href="{{ action('Order\PositionOrderController@getDeleteProduct', [$item, $i]) }}" class="btn btn-danger btn-sm">
                             Убрать
                         </a>
