@@ -23,11 +23,14 @@ class CanChangeOrderStatusRules {
     }
 
     function calc(){
-        if (!in_array($this->user->type_id, [SysUserType::MANAGER, SysUserType::DIRECTOR, SysUserType::FIZ]))
+        if (!in_array($this->user->type_id, [SysUserType::MANAGER, SysUserType::DIRECTOR, SysUserType::FIZ, SysUserType::COMPANY_CLIENT]))
             return [];
 
         if ($this->user->type_id == SysUserType::FIZ)
             return $this->calcForFiz();
+        
+        if ($this->user->type_id == SysUserType::COMPANY_CLIENT)
+            return $this->calcForCompanyCLient();
 
         
         return $this->calcForCompanySaler();
@@ -39,6 +42,23 @@ class CanChangeOrderStatusRules {
             return [];
 
         if ($this->item->from_user_id != $this->user->id )
+            return [];
+
+        if ($this->item->status_id == SysOrderStatus::CREATED)
+            $ar[] = SysOrderStatus::NEED_APPROVE;
+        
+        if ($this->item->status_id == SysOrderStatus::SENDED)
+            $ar[] = SysOrderStatus::CLOSED;
+
+        return $ar;
+    }
+
+    private function calcForCompanyCLient(){
+        $ar = [];
+        if (!$this->item->is_onlain)
+            return [];
+
+        if ($this->item->from_company_id != $this->user->company_id )
             return [];
 
         if ($this->item->status_id == SysOrderStatus::CREATED)

@@ -20,7 +20,7 @@ class ServiceOrderController extends Controller{
             return redirect()->back()->with('error', 'Указанная услуга уже есть ');
         
         $cost =  $request->service_cost;
-        if ($request->user()->type_id == SysUserType::FIZ){
+        if ($request->user()->type_id == SysUserType::FIZ || $request->user()->type_id == SysUserType::COMPANY_CLIENT){
             $service = CompanyService::findOrFail($request->service_id);
             $cost = $service->price;
         }

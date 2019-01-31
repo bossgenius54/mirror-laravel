@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Model\Order;
 
-use App\ModelList\CompanyServiceList;
-use App\ModelList\ProductList;
+use App\Model\CompanyService;
+use App\Model\Product;
 
 use App\Services\Order\CanChangeOrderStatusRules;
 use App\Model\SysOrderStatus;
@@ -25,9 +25,9 @@ class ViewController extends Controller{
         $ar['title'] = 'Просмотр елемента списка "'.$this->title.'"';
         $ar['item'] = $item;
         $ar['action'] = action('Order\ViewController@postUpdate', $item);
-        $ar['services'] = CompanyServiceList::get($request)->get();
+        $ar['services'] = CompanyService::where('company_id', $item->company_id)->get();
         $ar['order_services'] = $item->relServices()->with('relService')->get();
-        $ar['products'] = ProductList::get($request)->get();
+        $ar['products'] = Product::where('company_id', $item->company_id)->get();
         $ar['order_products'] = $item->relProducts()->with('relProduct')->get();
 
         $ar['can_status'] = SysOrderStatus::whereIn('id', $can_ar_status)->pluck('name', 'id')->toArray();

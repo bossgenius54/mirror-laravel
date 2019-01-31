@@ -22,7 +22,7 @@ class OrderList {
         $user = $this->user;
 
         $items = Order::where('id', '>', '0');
-        if ($this->user->company_id)
+        if ($this->user->company_id && $this->user->type_id != SysUserType::COMPANY_CLIENT)
             $items->where('company_id', $user->company_id);
 
         if ($this->user->branch_id)
@@ -30,6 +30,10 @@ class OrderList {
         
         if ($this->user->type_id == SysUserType::FIZ)
             $items->where('from_user_id', $user->id);
+
+        if ($this->user->type_id == SysUserType::COMPANY_CLIENT){
+            $items->where('from_company_id', $this->user->company_id);
+        }
 
         $this->items = $items;
     }

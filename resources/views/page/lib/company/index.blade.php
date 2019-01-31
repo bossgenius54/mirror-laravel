@@ -50,10 +50,18 @@
                                             <a class="dropdown-item" href="{{ action('Lib\CompanyController@getUpgradeToHalfPermission', $i) }}">
                                                 Дать возможность онлайн покупок 
                                             </a>
+
+                                            <a class="dropdown-item" href="{{ action('Lib\SimpleDirectorController@getIndex', $i) }}">
+                                                Аккаунты покупателей
+                                            </a>
                                         @endcan
                                         @can('upgradeToFullPermission', $i)
                                             <a class="dropdown-item" href="{{ action('Lib\CompanyController@getUpgradeToFullPermission', $i) }}">
                                                 Полный доступ
+                                            </a>
+                                            
+                                            <a class="dropdown-item" href="{{ action('Lib\SimpleDirectorController@getIndex', $i) }}">
+                                                Аккаунты покупателей
                                             </a>
                                         @endcan
                                         @can('update', $i)

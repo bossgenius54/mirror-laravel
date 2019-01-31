@@ -22,14 +22,15 @@ class PositionOrderController extends Controller{
         if (OrderPosition::where(['order_id' => $item->id, 'product_id' => $request->product_id])->count() > 0)
             return redirect()->back()->with('error', 'Указанный товар уже есть');
 
+        if ($request->pos_count > 5 && $request->is_retail)
+            return redirect()->back()->with('error', 'Запрещено покупать больше 5 товаров в розницу');
+
         $cost = $request->pos_cost;
-        if ($request->user()->type_id == SysUserType::FIZ){
+        if ($request->user()->type_id == SysUserType::FIZ || $request->user()->type_id == SysUserType::COMPANY_CLIENT){
             $product = Product::findOrFail($request->product_id);
             $cost = $product->price_retail;
-            if ($request->pos_count > 5)
-                return redirect()->back()->with('error', 'Запрещено покупать больше 5 товаров в розницу');
+            
         }
-
 
         DB::beginTransaction();
         try {

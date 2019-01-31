@@ -31,6 +31,8 @@
 
         @if (Auth::user()->type_id == App\Model\SysUserType::FIZ)
             @include('__include.sidebar_individ')
+        @elseif (Auth::user()->type_id == App\Model\SysUserType::COMPANY_CLIENT)
+            @include('__include.sidebar_company_client')
         @else 
             @include('__include.sidebar')
         @endif

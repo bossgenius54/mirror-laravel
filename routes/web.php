@@ -34,6 +34,11 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::post('/', 'CreateFizOrderController@postCreate')->middleware('can:createForFiz,App\Model\Order');
         });
 
+        Route::group(['prefix' => 'create-client-company'], function () {
+            Route::get('/', 'CreateSimpleCompanyOrderController@getCreate')->middleware('can:createForCompanyClient,App\Model\Order');
+            Route::post('/', 'CreateSimpleCompanyOrderController@postCreate')->middleware('can:createForCompanyClient,App\Model\Order');
+        });
+
         Route::group(['prefix' => 'item'], function () {
             Route::get('view/{item}', 'ViewController@getView')->middleware('can:view,item');
             Route::post('update/{item}', 'ViewController@postUpdate')->middleware('can:update,item');
@@ -242,6 +247,13 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('update/{item}', 'ExternalDoctorController@getUpdate')->middleware('can:update,item');
             Route::post('update/{item}', 'ExternalDoctorController@postUpdate')->middleware('can:update,item');
             Route::get('delete/{item}', 'ExternalDoctorController@getDelete')->middleware('can:delete,item');
+        });
+
+        // simple_director
+        Route::group(['prefix' => 'simple-director'], function () {
+            Route::get('/{company}', 'SimpleDirectorController@getIndex')->middleware('can:list,App\Model\View\SimpleDirector');
+            Route::get('create/{company}', 'SimpleDirectorController@getCreate')->middleware('can:create,App\Model\View\SimpleDirector');
+            Route::post('create/{company}', 'SimpleDirectorController@postCreate')->middleware('can:create,App\Model\View\SimpleDirector');
         });
     });
 

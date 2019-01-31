@@ -17,7 +17,7 @@ class OrderPolicy {
     }
 
     public function list($user){
-        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::MANAGER, SysUserType::ADMIN,  SysUserType::ACCOUNTER,  SysUserType::FIZ]))
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::MANAGER, SysUserType::ADMIN,  SysUserType::ACCOUNTER,  SysUserType::FIZ,  SysUserType::COMPANY_CLIENT]))
             return false;
         
         return true; 
@@ -38,9 +38,23 @@ class OrderPolicy {
         return true; 
     }
 
+    public function createForCompanyClient($user){
+        if (!in_array($user->type_id, [SysUserType::COMPANY_CLIENT]))
+            return false;
+        
+        return true; 
+    }
+
     public function view($user, $item){
         if (in_array($user->type_id, [SysUserType::ADMIN]))
             return true;
+
+        if ($user->type_id == SysUserType::COMPANY_CLIENT){
+            if ($user->company_id != $item->from_company_id)
+                return false;
+
+            return true;
+        }
             
         if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::MANAGER, SysUserType::ADMIN,  SysUserType::ACCOUNTER, SysUserType::FIZ]))
             return false;
@@ -74,7 +88,7 @@ class OrderPolicy {
     }
 
     public function service($user, $item){
-        if (!in_array($user->type_id, [SysUserType::MANAGER, SysUserType::DIRECTOR, SysUserType::FIZ]))
+        if (!in_array($user->type_id, [SysUserType::MANAGER, SysUserType::DIRECTOR, SysUserType::FIZ, SysUserType::COMPANY_CLIENT]))
             return false;
 
         if ($user->type_id == SysUserType::FIZ){
@@ -87,6 +101,20 @@ class OrderPolicy {
             return true;
         }
 
+        if ($user->type_id == SysUserType::COMPANY_CLIENT){
+            if ($item->is_onlain != 1)
+                return false;
+
+            if ($user->company_id != $item->from_company_id)
+                return false;
+
+            if ($item->status_id != SysOrderStatus::CREATED)
+                return false;
+                
+            return true;
+        }
+
+
         if ($item->is_onlain == 1 && $item->status_id == SysOrderStatus::CREATED)
             return false;
 
@@ -97,11 +125,24 @@ class OrderPolicy {
     }
 
     public function position($user, $item){
-        if (!in_array($user->type_id, [SysUserType::MANAGER, SysUserType::DIRECTOR, SysUserType::FIZ]))
+        if (!in_array($user->type_id, [SysUserType::MANAGER, SysUserType::DIRECTOR, SysUserType::FIZ, SysUserType::COMPANY_CLIENT]))
             return false;
 
         if ($user->type_id == SysUserType::FIZ){
             if ($item->is_onlain != 1)
+                return false;
+
+            if ($item->status_id != SysOrderStatus::CREATED)
+                return false;
+
+            return true;
+        }
+
+        if ($user->type_id == SysUserType::COMPANY_CLIENT){
+            if ($item->is_onlain != 1)
+                return false;
+                
+            if ($user->company_id != $item->from_company_id)
                 return false;
 
             if ($item->status_id != SysOrderStatus::CREATED)
