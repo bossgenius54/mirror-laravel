@@ -25,6 +25,12 @@
                             </div> 
                         </div>
                     @endcan
+                    @can('createForFiz', App\Model\Order::class)
+                        <a href="{{ action('Order\CreateFizOrderController@getCreate') }}" type="button" 
+                            class="btn btn-sm btn-info btn-rounded pull-right" >
+                            Добавить
+                        </a>
+                    @endcan
                 </h4>
             </div>
             

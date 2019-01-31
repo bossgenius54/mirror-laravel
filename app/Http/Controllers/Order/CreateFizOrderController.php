@@ -12,35 +12,39 @@ use App\ModelList\IndividList;
 
 use App\Model\SysOrderType;
 use App\Model\SysOrderStatus;
+use App\Model\Branch;
 
 use DB;
 use Exception;
 
-class CreateOrderController extends Controller{
+class CreateFizOrderController extends Controller{
     private $title = 'Заказы';
 
-    function getCreate(Request $request, SysOrderType $type){
+    function getCreate(Request $request){
         $ar = array();
         $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
-        $ar['action'] = action('Order\CreateOrderController@postCreate', $type);
+        $ar['action'] = action('Order\CreateFizOrderController@postCreate');
         $ar['ar_branch'] = BranchList::get($request)->pluck('name', 'id')->toArray();
         $ar['companies'] = CompanyList::get($request)->pluck('name', 'id')->toArray();
         $ar['individs'] = IndividList::get($request)->pluck('name', 'id')->toArray();
-        $ar['type'] = $type;
-
-        return view('page.order.create.index', $ar);
+        
+        return view('page.order.create_fiz.index', $ar);
     }
 
-    function postCreate(Request $request, SysOrderType $type){
+    function postCreate(Request $request){
         $user = $request->user();
+        $branch = Branch::findOrFail($request->branch_id);
 
         DB::beginTransaction();
         try {
             $ar = $request->all();
-            $ar['type_id'] = $type->id;
+            $ar['type_id'] = SysOrderType::PERSON;
             $ar['status_id'] = SysOrderStatus::CREATED;
-            $ar['company_id'] = $user->company_id;
+            $ar['company_id'] = $branch->company_id;
             $ar['created_user_id'] = $user->id;
+            $ar['from_user_id'] = $user->id;
+            $ar['is_onlain'] = 1;
+            $ar['is_retail'] = 1;
 
             $item = Order::create($ar);
 

@@ -38,7 +38,7 @@ class CanChangeOrderStatusRules {
         if (!$this->item->is_onlain)
             return [];
 
-        if ($this->item->from_user_id != $this->user_id )
+        if ($this->item->from_user_id != $this->user->id )
             return [];
 
         if ($this->item->status_id == SysOrderStatus::CREATED)

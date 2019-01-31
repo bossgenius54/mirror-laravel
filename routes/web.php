@@ -28,6 +28,11 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('{type}', 'CreateOrderController@getCreate')->middleware('can:create,App\Model\Order');
             Route::post('{type}', 'CreateOrderController@postCreate')->middleware('can:create,App\Model\Order');
         });
+        
+        Route::group(['prefix' => 'create-person'], function () {
+            Route::get('/', 'CreateFizOrderController@getCreate')->middleware('can:createForFiz,App\Model\Order');
+            Route::post('/', 'CreateFizOrderController@postCreate')->middleware('can:createForFiz,App\Model\Order');
+        });
 
         Route::group(['prefix' => 'item'], function () {
             Route::get('view/{item}', 'ViewController@getView')->middleware('can:view,item');

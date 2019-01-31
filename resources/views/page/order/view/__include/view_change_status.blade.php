@@ -7,7 +7,7 @@
             @foreach ($can_status as $id => $name)
                 <a href="{{ action('Order\StatusOrderController@getChangeStatus', [$item,  $id]) }}""
                     class="dropdown-item " >
-                    Сменаить на "{{ $name }}"
+                    Сменить на "{{ $name }}"
                 </a>
             @endforeach
         </div>

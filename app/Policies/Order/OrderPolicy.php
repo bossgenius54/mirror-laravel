@@ -24,7 +24,15 @@ class OrderPolicy {
     }
 
     public function create($user){
-        if (!in_array($user->type_id, [SysUserType::MANAGER,  SysUserType::FIZ,  SysUserType::DIRECTOR]))
+        if (!in_array($user->type_id, [SysUserType::MANAGER,  SysUserType::DIRECTOR]))
+            return false;
+        
+        return true; 
+    }
+
+    
+    public function createForFiz($user){
+        if (!in_array($user->type_id, [SysUserType::FIZ]))
             return false;
         
         return true; 
@@ -37,7 +45,7 @@ class OrderPolicy {
         if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::MANAGER, SysUserType::ADMIN,  SysUserType::ACCOUNTER, SysUserType::FIZ]))
             return false;
         
-        if ($user->type_id == SysUserType::FIZ && $item->from_user_id != $user_id)
+        if ($user->type_id == SysUserType::FIZ && $item->from_user_id != $user->id)
             return false;
 
         else if ($user->type_id == SysUserType::FIZ)

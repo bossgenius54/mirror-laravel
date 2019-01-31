@@ -22,8 +22,6 @@
 
 
     <div id="main-wrapper">
-
-        
         <div class="page-wrapper" style="margin-left: 0">
             <div class="container-fluid" style="padding-top: 15px;">
 

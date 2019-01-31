@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Branch;
 use App\Model\Company;
 use App\Model\SysUserType;
+use App\Model\Client;
 
 class BranchList {
     private $items = null;
@@ -25,6 +26,11 @@ class BranchList {
         
         if ($this->user->branch_id)
             $items->where('id', $this->user->branch_id);
+        
+        if ($this->user->type_id == SysUserType::FIZ){
+            $ar_company = Client::where('client_user_id', $this->user->id)->pluck('company_id')->toArray();
+            $items->whereIn('company_id', $ar_company);
+        }
 
         $this->items = $items;
     }

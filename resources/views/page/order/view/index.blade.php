@@ -56,7 +56,10 @@
                 let price = $( "#product_id option:selected" ).data('price');
                 let max_count = $( "#product_id option:selected" ).data('count');
                 $('#pos_cost').val(price);
-                $('#pos_count').attr('max', max_count);
+                if (!$( "#product_id" ).hasClass('js_cant_max')){
+                    $('#pos_count').attr('max', max_count);
+                }
+
                 $('#pos_count').val(1);
 
                 calcTotalProductSum();

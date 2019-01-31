@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Model\Order;
 use App\Model\OrderService;
+use App\Model\SysUserType;
+use App\Model\CompanyService;
 
 use DB;
 use Exception;
@@ -16,6 +18,12 @@ class ServiceOrderController extends Controller{
     function postAddService(Request $request, Order $item){
         if (OrderService::where(['order_id' => $item->id, 'service_id' => $request->service_id])->count() > 0)
             return redirect()->back()->with('error', 'Указанная услуга уже есть ');
+        
+        $cost =  $request->service_cost;
+        if ($request->user()->type_id == SysUserType::FIZ){
+            $service = CompanyService::findOrFail($request->service_id);
+            $cost = $service->price;
+        }
 
         DB::beginTransaction();
         try {
@@ -23,7 +31,7 @@ class ServiceOrderController extends Controller{
                 'order_id' => $item->id, 
                 'service_id' => $request->service_id, 
                 'service_count' => $request->service_count, 
-                'service_cost' => $request->service_cost, 
+                'service_cost' => $cost, 
                 'total_sum' => ($request->service_count * $request->service_cost)
             ]);
 
