@@ -51,6 +51,7 @@ class ClosedOrder {
         $el->name = $this->item->name;
         $el->note = $this->item->note;
         $el->related_cost = $this->item->total_sum;
+        $el->is_retail = $this->item->is_retail;
         $el->save();
 
         $this->outcome = $el;

@@ -8,7 +8,6 @@ class SysIncomeType extends Model{
     
     CONST FROM_COMPANY = 1;
     CONST FROM_PERSON = 2;
-    CONST RELOCATION = 3;
     CONST RETURN_COMPANY = 4;
     CONST RETURN_PERSON = 5;
 
