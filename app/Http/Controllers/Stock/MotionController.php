@@ -97,14 +97,14 @@ class MotionController extends Controller{
             $ar_position = Position::where('product_id', $request->product_id)
                                     ->where('branch_id', $item->from_branch_id)
                                     ->where('status_id', SysPositionStatus::ACTIVE)
-                                    ->orderBy('id', 'asc')->take($request->count_position)->pluck('id')->toArray();
+                                    ->orderBy('id', 'asc')->take($request->count_position)->pluck('sys_num')->toArray();
             
-            Position::whereIn('id', $ar_position)->update(['status_id'=>SysPositionStatus::IN_MOTION]);
+            Position::whereIn('sys_num', $ar_position)->update(['status_id'=>SysPositionStatus::IN_MOTION]);
             $insert = [];
             foreach ($ar_position as $pos_id){
                 $insert[] = [
                     'motion_id' => $item->id,
-                    'position_id' => $pos_id,
+                    'position_sys_num' => $pos_id,
                     'motion_product_id' => $motion_product->id
                 ];
             }
@@ -124,9 +124,9 @@ class MotionController extends Controller{
         DB::beginTransaction();
         try {
             $ar_position = MotionPosition::where(['motion_id' => $item->id,
-                                                'motion_product_id' => $motion_product->id])->pluck('position_id')->toArray();
+                                                'motion_product_id' => $motion_product->id])->pluck('position_sys_num')->toArray();
 
-            Position::whereIn('id', $ar_position)->update(['status_id'=>SysPositionStatus::ACTIVE]);
+            Position::whereIn('sys_num', $ar_position)->update(['status_id'=>SysPositionStatus::ACTIVE]);
             $motion_product->delete();
             
             DB::commit();
@@ -143,8 +143,8 @@ class MotionController extends Controller{
     function getFinish(Request $request, Motion $item){
         DB::beginTransaction();
         try {
-            $ar_position = MotionPosition::where(['motion_id' => $item->id])->pluck('position_id')->toArray();
-            Position::whereIn('id', $ar_position)->update([
+            $ar_position = MotionPosition::where(['motion_id' => $item->id])->pluck('position_sys_num')->toArray();
+            Position::whereIn('sys_num', $ar_position)->update([
                 'status_id' => SysPositionStatus::ACTIVE,
                 'branch_id' => $item->to_branh_id
             ]);
@@ -165,8 +165,8 @@ class MotionController extends Controller{
     function getCanceled(Request $request, Motion $item){
         DB::beginTransaction();
         try {
-            $ar_position = MotionPosition::where(['motion_id' => $item->id])->pluck('position_id')->toArray();
-            Position::whereIn('id', $ar_position)->update(['status_id'=>SysPositionStatus::ACTIVE]);
+            $ar_position = MotionPosition::where(['motion_id' => $item->id])->pluck('position_sys_num')->toArray();
+            Position::whereIn('sys_num', $ar_position)->update(['status_id'=>SysPositionStatus::ACTIVE]);
 
             MotionProduct::where([
                 'motion_id' => $item->id

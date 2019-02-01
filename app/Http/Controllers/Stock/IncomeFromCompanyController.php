@@ -13,6 +13,7 @@ use App\Model\SysUserType;
 use App\Model\SysIncomeType;
 use App\Model\SysPositionStatus;
 use App\Model\Position;
+use App\Model\IncomePosition;
 
 use DB;
 use Exception;
@@ -64,7 +65,10 @@ class IncomeFromCompanyController extends Controller{
         DB::beginTransaction();
         try {
             $income = IncomeFromCompany::create($ar);
+            $max_id = Position::max('id');
 
+            
+            $ar_income_position = [];
             $ar_posiiton = [];
 
             $ar_el = [];
@@ -77,13 +81,24 @@ class IncomeFromCompanyController extends Controller{
                 $ar_el['price_cost'] =  $ar['product_cost'][$k];
                 $ar_el['expired_at'] =  $ar['product_date'][$k];
                 for ($i = 1; $i <= $ar['product_count'][$k]; $i++) {
+                    $max_id++;
+                    $ar_el['sys_num'] = $max_id; 
+
                     $ar_posiiton[] = $ar_el;
+
+                    $ar_income_position[] = [
+                        'income_id' => $income->id,
+                        'position_sys_num' => $ar_el['sys_num']
+                    ];
+
                     $income->related_cost += $ar['product_cost'][$k];
                 }
             }
             $income->save();
 
             Position::insert($ar_posiiton); 
+
+            IncomePosition::insert($ar_income_position); 
 
             Position::where('income_id', $income->id)->update([
                 'created_at' => date('Y-m-d h:i:s'),

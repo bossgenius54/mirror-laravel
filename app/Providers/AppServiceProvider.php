@@ -10,6 +10,9 @@ use App\Observers\CompanyObserver;
 use App\Model\View\Individ;
 use App\Observers\IndividObserver;
 
+use App\Model\Order;
+use App\Observers\OrderObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -20,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(){
         Company::observe(CompanyObserver::class);
         Individ::observe(IndividObserver::class);
+        Order::observe(OrderObserver::class);
     }
 
     /**

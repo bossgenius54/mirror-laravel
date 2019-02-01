@@ -32,7 +32,7 @@ class BranchList {
             $items->whereIn('company_id', $ar_company);
         }
 
-        if ($this->user->type_id != SysUserType::COMPANY_CLIENT){
+        if ($this->user->type_id == SysUserType::COMPANY_CLIENT){
             $ar_company = Client::where('client_company_id', $this->user->company_id)->pluck('company_id')->toArray();
             $items->whereIn('company_id', $ar_company);
         }
