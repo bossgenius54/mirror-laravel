@@ -54,6 +54,10 @@ class ClosedOrder {
         $el->save();
 
         $this->outcome = $el;
+
+        $this->item->update([
+            'outcome_id' => $el->id
+        ]);
     }
 
     private function createOutcomeServices(){
@@ -68,8 +72,8 @@ class ClosedOrder {
                 'total_sum' => $i->total_sum
             ];
         }
-
-        OutcomeService::insert($ar);
+        if (count($ar) > 0)
+            OutcomeService::insert($ar);
     }
 
     private function createOutcomePositions(){
@@ -92,7 +96,9 @@ class ClosedOrder {
                 'updated_at' => date('Y-m-d h:i:s')
             ];
         }
-        OutcomePosition::insert($ar);
+        
+        if (count($ar) > 0)
+            OutcomePosition::insert($ar);
 
         Position::where('order_id', $this->item->id)->delete();
     }
