@@ -28,7 +28,7 @@ class ClosedOrder {
     }
 
     public function calc(){
-
+        
         $this->createOutcome();
         $this->createOutcomeServices();
         $this->createOutcomePositions();
@@ -54,10 +54,12 @@ class ClosedOrder {
         $el->save();
 
         $this->outcome = $el;
-
-        $this->item->update([
+        
+        Order::where('id', $this->item->id)->update([
             'outcome_id' => $el->id
         ]);
+
+
     }
 
     private function createOutcomeServices(){

@@ -12,6 +12,7 @@ use App\Model\IncomeService;
 use App\Model\Position;
 use App\Model\OutcomePosition;
 use App\Model\SysPositionStatus;
+use App\Model\IncomePosition;
 
 class ReturnedOrder {
     private $item = false;
@@ -60,10 +61,10 @@ class ReturnedOrder {
         foreach ($services as $s) {
             $ar [] = [
                 'income_id' => $this->income->id, 
-                'service_id' => $i->service_id, 
-                'service_count' => $i->service_count, 
-                'service_cost' => $i->service_cost, 
-                'total_sum' => $i->total_sum
+                'service_id' => $s->service_id, 
+                'service_count' => $s->service_count, 
+                'service_cost' => $s->service_cost, 
+                'total_sum' => $s->total_sum
             ];
         }
         
@@ -85,7 +86,7 @@ class ReturnedOrder {
             $ar_el['product_id'] = $s->product_id;
             $ar_el['price_cost'] = $s->price_cost;
             $ar_el['expired_at'] = $s->expired_at;
-            $ar_el['sys_num'] = $s->sys_num;
+            $ar_el['sys_num'] = $s->position_sys_num;
             $ar_el['created_at'] = date('Y-m-d h:i:s');
             $ar_el['updated_at'] = date('Y-m-d h:i:s');
             $ar [] = $ar_el;
