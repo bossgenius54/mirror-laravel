@@ -10,14 +10,20 @@ use App\Model\View\Director;
 use App\Model\Company;
 use App\Model\SysUserType;
 
+use App\ModelFilter\UserFilter;
+
 class DirectorController extends Controller{
     private $title = 'Директора';
 
     function getIndex (Request $request){
+        $items = Director::where('type_id', SysUserType::DIRECTOR)->where('is_active', 1);
+        $items = UserFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = Director::where('type_id', SysUserType::DIRECTOR)->where('is_active', 1)->latest()->paginate(24);
+        $ar['filter_block'] = UserFilter::getFilterBlock($request);
+        $ar['items'] = $items->latest()->paginate(24);
         $ar['ar_company'] = Company::getArForDirectors();
 
         return view('page.lib.director.index', $ar);

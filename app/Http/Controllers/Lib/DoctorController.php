@@ -11,14 +11,20 @@ use App\Model\Branch;
 use App\Model\SysUserType;
 use App\ModelList\DoctorList;
 
+use App\ModelFilter\UserFilter;
+
 class DoctorController extends Controller{
     private $title = 'Доктора';
 
     function getIndex (Request $request){
+        $items = DoctorList::get($request);
+        $items = UserFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = DoctorList::get($request)->latest()->paginate(24);
+        $ar['filter_block'] = UserFilter::getFilterBlock($request);
+        $ar['items'] = $items->latest()->paginate(24);
         $ar['ar_branch'] = Branch::getArForCompany($request);
 
         return view('page.lib.doctor.index', $ar);

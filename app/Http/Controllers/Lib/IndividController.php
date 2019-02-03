@@ -10,14 +10,20 @@ use App\Model\View\Individ;
 use App\Model\SysUserType;
 use App\ModelList\IndividList;
 
+use App\ModelFilter\UserFilter;
+
 class IndividController extends Controller{
     private $title = 'Физ. лица';
 
     function getIndex (Request $request){
+        $items = IndividList::get($request);
+        $items = UserFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = IndividList::get($request)->latest()->paginate(24);
+        $ar['filter_block'] = UserFilter::getFilterBlock($request);
+        $ar['items'] = $items->latest()->paginate(24);
 
         return view('page.lib.individ.index', $ar);
     }

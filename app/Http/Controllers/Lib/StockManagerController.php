@@ -11,14 +11,20 @@ use App\Model\Branch;
 use App\Model\SysUserType;
 use App\ModelList\StockManagerList;
 
+use App\ModelFilter\UserFilter;
+
 class StockManagerController extends Controller{
     private $title = 'Заведующие складом';
 
     function getIndex (Request $request){
+        $items = StockManagerList::get($request);
+        $items = UserFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = StockManagerList::get($request)->latest()->paginate(24);
+        $ar['filter_block'] = UserFilter::getFilterBlock($request);
+        $ar['items'] = $items->latest()->paginate(24);
 
         return view('page.lib.stock_manager.index', $ar);
     }

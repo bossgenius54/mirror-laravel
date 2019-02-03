@@ -10,14 +10,20 @@ use App\Model\View\ExternalDoctor;
 use App\Model\SysUserType;
 use App\ModelList\ExternalDoctorList;
 
+use App\ModelFilter\UserFilter;
+
 class ExternalDoctorController extends Controller{
     private $title = 'Внешние врачи';
 
     function getIndex (Request $request){
+        $items = ExternalDoctorList::get($request);
+        $items = UserFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['filter_block'] = UserFilter::getFilterBlock($request);
         $ar['request'] = $request;
-        $ar['items'] = ExternalDoctorList::get($request)->latest()->paginate(24);
+        $ar['items'] = $items->latest()->paginate(24);
         
         return view('page.lib.external_doctor.index', $ar);
     }

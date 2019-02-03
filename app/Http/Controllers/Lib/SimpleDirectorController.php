@@ -10,14 +10,20 @@ use App\Model\View\SimpleDirector;
 use App\Model\SysUserType;
 use App\Model\Company;
 
+use App\ModelFilter\UserFilter;
+
 class SimpleDirectorController extends Controller{
     private $title = 'Клиент/Юр лица';
 
     function getIndex (Request $request, Company $company){
+        $items = SimpleDirector::where('company_id', $company->id)->where('is_active', 1)->where('type_id', SysUserType::COMPANY_CLIENT);
+        $items = UserFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = SimpleDirector::where('company_id', $company->id)->where('is_active', 1)->where('type_id', SysUserType::COMPANY_CLIENT)->latest()->paginate(24);
+        $ar['filter_block'] = UserFilter::getFilterBlock($request);
+        $ar['items'] = $items->latest()->paginate(24);
         $ar['company'] = $company;
 
         return view('page.lib.simple_director.index', $ar);

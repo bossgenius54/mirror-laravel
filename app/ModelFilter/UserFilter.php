@@ -9,7 +9,11 @@ class UserFilter {
     private $items = null;
     private $request = null;
 
-    static function get(Request $request, $items){
+    static function getFilterBlock(){
+        return 'page.__filter.user';
+    }
+
+    static function filter(Request $request, $items){
         $el = new UserFilter();
         $el->start($request, $items);
 

@@ -4,6 +4,9 @@
 @section('title', $title)
 
 @section('content')
+
+@include($filter_block)
+
 <div class="row">
     <div class="col-12">
         <div class="card">

@@ -10,14 +10,21 @@ use App\Model\View\Accounter;
 use App\Model\SysUserType;
 use App\ModelList\AccounterList;
 
+use App\ModelFilter\UserFilter;
+
 class AccounterController extends Controller{
     private $title = 'Бухгалтера';
 
     function getIndex (Request $request){
+        $items = AccounterList::get($request);
+        $items = UserFilter::filter($request, $items);
+        
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['filter_block'] = UserFilter::getFilterBlock($request);
         $ar['request'] = $request;
-        $ar['items'] = AccounterList::get($request)->latest()->paginate(24);
+        $ar['items'] = $items->latest()->paginate(24);
+
 
         return view('page.lib.accounter.index', $ar);
     }
