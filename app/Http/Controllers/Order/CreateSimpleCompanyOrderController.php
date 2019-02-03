@@ -54,7 +54,7 @@ class CreateSimpleCompanyOrderController extends Controller{
             return redirect()->back()->with('error', $e->getMessage());
         }
         
-        return redirect()->action("Order\ListOrderController@getIndex")->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Order\ViewController@getView", $item)->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
     }
 
 }
