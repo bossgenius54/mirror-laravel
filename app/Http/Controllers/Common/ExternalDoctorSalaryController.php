@@ -10,6 +10,9 @@ use App\ModelList\ExternalDoctorSalaryList;
 use App\Model\ExternalDoctorSalary;
 use App\Model\SysUserType;
 
+use App\ModelList\OrderList;
+use App\ModelList\ExternalDoctorList;
+
 class ExternalDoctorSalaryController  extends Controller{
     private $title = 'Комисионные внешнего врача';
 
@@ -22,6 +25,33 @@ class ExternalDoctorSalaryController  extends Controller{
         $ar['items'] = ExternalDoctorSalaryList::get($request)->paginate(24);
 
         return view('page.common.external_doctor_salary.index', $ar);
+    }
+
+    function getCreate(Request $request){
+        $ar = array();
+        $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
+        $ar['action'] = action('Common\ExternalDoctorSalaryController@postCreate');
+
+        $ar['orders'] = OrderList::get($request)->pluck('name', 'id')->toArray();
+        $ar['doctors'] = ExternalDoctorList::get($request)->pluck('name', 'id')->toArray();
+
+        return view('page.common.external_doctor_salary.create', $ar);
+    }
+
+    function postCreate(Request $request){
+        $ar = $request->all();
+        $ar['company_id'] = $request->user()->company_id;
+
+        $item = ExternalDoctorSalary::create($ar);
+        
+        return redirect()->action("Common\ExternalDoctorSalaryController@getIndex")->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
+    }
+
+    function getDelete(Request $request, ExternalDoctorSalary $item){
+        $id = $item->id;
+        $item->delete();
+
+        return redirect()->back()->with('success', 'Удален елемент списка "'.$this->title.'" № '.$id);
     }
 
 }

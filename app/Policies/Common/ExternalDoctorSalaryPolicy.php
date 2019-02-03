@@ -38,7 +38,7 @@ class ExternalDoctorSalaryPolicy  {
     }
 
     public function create($user){
-        if ( !$this->mainCheck($user))
+        if (!in_array($user->type_id, [SysUserType::ADMIN, SysUserType::DIRECTOR, SysUserType::MANAGER]))
             return false;
 
         return true;
@@ -53,7 +53,7 @@ class ExternalDoctorSalaryPolicy  {
     }
 
     public function delete($user, $item){
-        if ( !$this->mainCheck($user))
+        if (!in_array($user->type_id, [SysUserType::ADMIN, SysUserType::DIRECTOR, SysUserType::MANAGER]))
             return false;
 
         return true;

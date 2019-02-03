@@ -72,6 +72,9 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
         /// external_doctor_salary
         Route::group(['prefix' => 'external-doctor-salary'], function () {
             Route::get('/', 'ExternalDoctorSalaryController@getIndex')->middleware('can:list,App\Model\ExternalDoctorSalary');
+            Route::get('create', 'ExternalDoctorSalaryController@getCreate')->middleware('can:create,App\Model\ExternalDoctorSalary');
+            Route::post('create', 'ExternalDoctorSalaryController@postCreate')->middleware('can:create,App\Model\ExternalDoctorSalary');
+            Route::get('delete/{item}', 'ExternalDoctorSalaryController@getDelete')->middleware('can:delete,item');
         });
 
     });

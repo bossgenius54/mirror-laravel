@@ -5,6 +5,20 @@
 
 @section('content')
 <div class="row">
+    @can('cancel', $item)
+        <div class="col-md-6">
+            <a class="btn btn-danger btn-block" href="{{ action('Stock\MotionController@getCanceled', $item) }}">
+                Отменить
+            </a>
+        </div>
+    @endcan
+    @can('finish', $item)
+        <div class="col-md-6" style="margin-bottom: 10px;">
+            <a class="btn btn-success btn-block" href="{{ action('Stock\MotionController@getFinish', $item) }}">
+                Завершить
+            </a>
+        </div>
+    @endcan
     <div class="col-sm-12">
         <div class="card card-outline-info">
             <div class="card-header">

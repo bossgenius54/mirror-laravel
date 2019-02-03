@@ -10,6 +10,12 @@
             <div class="card-body">
                 <h4 class="card-title">
                     {{ $title }}  
+                    @can('create', App\Model\ExternalDoctorSalary::class)
+                        <a href="{{ action('Common\ExternalDoctorSalaryController@getCreate') }}" type="button" 
+                            class="btn btn-sm btn-info btn-rounded pull-right" >
+                            Добавить
+                        </a>
+                    @endcan
                 </h4>
             </div>
             
@@ -22,6 +28,7 @@
                         <th>Сумма</th>
                         <th>Изменен</th>
                         <th>Создан</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,6 +40,22 @@
                             <td>{{ $i->salary }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="ti-settings"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                       
+                                        @can('delete', $i)
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="{{ action('Common\ExternalDoctorSalaryController@getDelete', $i) }}">
+                                                Удалить
+                                            </a>
+                                        @endcan
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
