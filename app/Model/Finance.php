@@ -13,4 +13,8 @@ class Finance extends Model{
         return $this->belongsTo('App\Model\Income', 'income_id');
     }
 
+    function relOutcome(){
+        return $this->belongsTo('App\Model\Outcome', 'outcome_id');
+    }
+    
 }

@@ -13,6 +13,7 @@ use App\Model\Position;
 use App\Model\OrderPosition;
 use App\Model\OutcomePosition;
 
+use App\Services\Finance\CreateFinanceModel;
 
 class ClosedOrder {
     private $item = false;
@@ -32,6 +33,8 @@ class ClosedOrder {
         $this->createOutcome();
         $this->createOutcomeServices();
         $this->createOutcomePositions();
+
+        CreateFinanceModel::createSell($this->outcome);
     }
 
     private function createOutcome(){
