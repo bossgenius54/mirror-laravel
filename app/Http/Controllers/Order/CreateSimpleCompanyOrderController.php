@@ -24,7 +24,7 @@ class CreateSimpleCompanyOrderController extends Controller{
         $ar = array();
         $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
         $ar['action'] = action('Order\CreateSimpleCompanyOrderController@postCreate');
-        $ar['ar_branch'] = BranchList::get($request)->pluck('name', 'id')->toArray();
+        $ar['ar_branch'] = BranchList::get($request)->where('has_onlain', 1)->pluck('name', 'id')->toArray();
         $ar['companies'] = CompanyList::get($request)->pluck('name', 'id')->toArray();
         $ar['individs'] = IndividList::get($request)->pluck('name', 'id')->toArray();
         

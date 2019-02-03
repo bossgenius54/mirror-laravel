@@ -8,7 +8,7 @@ use App\Helper\Traits\DateHelper;
 
 class Branch extends Model{
     protected $table = 'branch';
-    protected $fillable = ['company_id', 'name', 'user_id', 'has_stock', 'has_front', 'has_resseler'];
+    protected $fillable = ['company_id', 'name', 'user_id', 'has_onlain'];
     use DateHelper;
     
     static function getAr(){

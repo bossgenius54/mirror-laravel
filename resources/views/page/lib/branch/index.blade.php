@@ -25,9 +25,7 @@
                         <th>id</th>
                         <th>Компания</th>
                         <th>Наименование</th>
-                        <th>Есть склад</th>
-                        <th>Есть розница</th>
-                        <th>Есть оптовики</th>
+                        <th>Есть онлайн продажи</th>
                         <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>
@@ -39,9 +37,7 @@
                             <td>{{ $i->id }}</td>
                             <td>{{ isset($ar_lib['ar_company'][$i->company_id]) ? $ar_lib['ar_company'][$i->company_id] : 'не указано' }}</td>
                             <td>{{ $i->name }}</td>
-                            <td>{{ $i->has_stock ? 'да' : 'нет' }}</td>
-                            <td>{{ $i->has_front ? 'да' : 'нет' }}</td>
-                            <td>{{ $i->has_resseler ? 'да' : 'нет' }}</td>
+                            <td>{{ $i->has_onlain ? 'да' : 'нет' }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>

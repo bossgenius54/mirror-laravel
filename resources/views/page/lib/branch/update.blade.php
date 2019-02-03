@@ -25,26 +25,10 @@
                         <input type="text" class="form-control " name="name" value="{{ $item->name }}" required> 
                     </div>
                     <div class="form-group">
-                        <label>Есть склад</label>
-                        <select name="has_stock" class="form-control" required>
+                        <label>Есть онлайн продажи</label>
+                        <select name="has_onlain" class="form-control" required>
                             @foreach ($ar_lib['ar_bool'] as $id => $name)
-                                <option value="{{ $id }}" {{ $item->has_stock == $id ? 'selected' : '' }}>{{ $name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Есть розница</label>
-                        <select name="has_front" class="form-control" required>
-                            @foreach ($ar_lib['ar_bool'] as $id => $name)
-                                <option value="{{ $id }}" {{ $item->has_front == $id ? 'selected' : '' }}>{{ $name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Есть оптовики</label>
-                        <select name="has_resseler" class="form-control" required>
-                            @foreach ($ar_lib['ar_bool'] as $id => $name)
-                                <option value="{{ $id }}" {{ $item->has_resseler == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                <option value="{{ $id }}" {{ $item->has_onlain == $id ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
                     </div>

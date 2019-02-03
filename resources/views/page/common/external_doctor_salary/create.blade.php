@@ -14,7 +14,7 @@
                 <form class="form-material" action="{{ $action }}" method="post"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Заказ</label>
-                        <select name="order_id" class="form-control" required>
+                        <select name="order_id" class="form-control select2" required>
                             @foreach ($orders as $id => $name)
                                 <option value="{{ $id }}">Заказ "{{ $name }}"" № {{ $id }}</option>
                             @endforeach
@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group">
                         <label>Врач</label>
-                        <select name="doctor_id" class="form-control" required>
+                        <select name="doctor_id" class="form-control select2" required>
                             @foreach ($doctors as $id => $name)
                                 <option value="{{ $id }}">{{ $name }}</option>
                             @endforeach
