@@ -36,7 +36,6 @@ class CompanyList {
 
         $this->getItems();
 
-        $this->filterName();
     }
 
     function getResult(){
@@ -44,10 +43,4 @@ class CompanyList {
     }
 
 
-    private  function filterName(){
-        if (!$this->request->has('name') || !$this->request->name)
-            return;
-
-        $this->items->where('name', 'like', '%'.$this->request->name.'%');
-    }
 }

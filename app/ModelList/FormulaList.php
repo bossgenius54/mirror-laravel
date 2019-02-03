@@ -42,7 +42,6 @@ class FormulaList {
 
         $this->getItems();
 
-        $this->filterUser();
     }
 
     function getResult(){
@@ -50,10 +49,4 @@ class FormulaList {
     }
 
 
-    private  function filterUser(){
-        if (!$this->request->has('user_id') || !$this->request->user_id)
-            return;
-
-        $this->items->where('user_id', $this->request->user_id);
-    }
 }

@@ -33,28 +33,10 @@ class ExternalDoctorSalaryList {
         $this->user = $request->user();
 
         $this->getItems();
-
-        $this->filterDoctor();
-        $this->filterOrder();
     }
 
     function getResult(){
         return $this->items;
-    }
-
-
-    private  function filterDoctor(){
-        if (!$this->request->has('doctor_id') || !$this->request->doctor_id)
-            return;
-
-        $this->items->where('doctor_id', $this->request->doctor_id);
-    }
-
-    private  function filterOrder(){
-        if (!$this->request->has('order_id') || !$this->request->order_id)
-            return;
-
-        $this->items->where('order_id', $this->request->order_id);
     }
 
 

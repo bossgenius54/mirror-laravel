@@ -32,19 +32,10 @@ class MotionList {
 
         $this->getItems();
 
-        $this->filterName();
     }
 
     function getResult(){
         return $this->items;
-    }
-
-
-    private  function filterName(){
-        if (!$this->request->has('name') || !$this->request->name)
-            return;
-
-        $this->items->where('name', 'like', '%'.$this->request->name.'%');
     }
 
 

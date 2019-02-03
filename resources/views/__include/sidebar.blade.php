@@ -3,18 +3,10 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="nav-devider"></li>
-                <li>
-                    <a class="waves-effect waves-dark" href="/">
-                        <i class="mdi mdi-gauge"></i>
-                        <span class="hide-menu">
-                            Главная
-                        </span>
-                    </a>
-                </li>
                 @can('list', App\Model\Order::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Order\ListOrderController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-cart-plus"></i>
                             <span class="hide-menu">
                                 Заказы
                             </span>
@@ -24,7 +16,7 @@
                 @can('list', App\Model\ExternalDoctorSalary::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Common\ExternalDoctorSalaryController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-account-plus"></i>
                             <span class="hide-menu">
                                 Комис. внеш. врача
                             </span>
@@ -36,7 +28,7 @@
                 @can('list', App\Model\View\IncomeFromCompany::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Stock\IncomeFromCompanyController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-format-horizontal-align-right"></i>
                             <span class="hide-menu">
                                 Оприходование
                             </span>
@@ -46,7 +38,7 @@
                 @can('list', App\Model\Motion::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Stock\MotionController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-folder-move"></i>
                             <span class="hide-menu">
                                 Перемещение
                             </span>
@@ -56,7 +48,7 @@
                 @can('list', App\Model\Position::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Stock\PositionController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-book-open"></i>
                             <span class="hide-menu">
                                 Позиции/Товары
                             </span>
@@ -66,7 +58,7 @@
                 @can('list', App\Model\Product::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Stock\ProductController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-barcode"></i>
                             <span class="hide-menu">
                                 Ассортимент товаров
                             </span>
@@ -74,10 +66,20 @@
                     </li>
                 @endcan
                 <li class="nav-small-cap">Справочники</li>
+                @can('list', App\Model\Company::class)
+                    <li>
+                        <a class="" href="{{ action('Lib\CompanyController@getIndex') }}">
+                            <i class="mdi mdi-alphabetical"></i>
+                            <span class="hide-menu">
+                                Компании
+                            </span>
+                        </a>
+                    </li>
+                @endcan
                 @can('list', App\Model\View\Individ::class)
                     <li>
                         <a class="" href="{{ action('Lib\IndividController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-account-box-outline"></i>
                             <span class="hide-menu">
                                 Физ. лица
                             </span>
@@ -87,7 +89,7 @@
                 @can('list', App\Model\View\Doctor::class)
                     <li>
                         <a class="" href="{{ action('Lib\DoctorController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-account"></i>
                             <span class="hide-menu">
                                 Доктора
                             </span>
@@ -97,7 +99,7 @@
                 @can('list', App\Model\View\Manager::class)
                     <li>
                         <a class="" href="{{ action('Lib\ManagerController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-account"></i>
                             <span class="hide-menu">
                                 Менеджеры
                             </span>
@@ -107,7 +109,7 @@
                 @can('list', App\Model\View\StockManager::class)
                     <li>
                         <a class="" href="{{ action('Lib\StockManagerController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-account"></i>
                             <span class="hide-menu">
                                 Зав. складом
                             </span>
@@ -117,18 +119,17 @@
                 @can('list', App\Model\View\Accounter::class)
                     <li>
                         <a class="" href="{{ action('Lib\AccounterController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-account"></i>
                             <span class="hide-menu">
                                 Бухгалтера
                             </span>
                         </a>
                     </li>
                 @endcan
-                
                 @can('list', App\Model\View\ExternalDoctor::class)
                     <li>
                         <a class="" href="{{ action('Lib\ExternalDoctorController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-account"></i>
                             <span class="hide-menu">
                                 Внешние врачи
                             </span>
@@ -138,7 +139,7 @@
                 @can('list', App\Model\CompanyService::class)
                     <li>
                         <a class="" href="{{ action('Lib\CompanyServiceController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-alert-octagram"></i>
                             <span class="hide-menu">
                                 Услуги
                             </span>
@@ -148,7 +149,7 @@
                 @can('list', App\Model\Branch::class)
                     <li>
                         <a class="" href="{{ action('Lib\BranchController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-archive"></i>
                             <span class="hide-menu">
                                 Филиалы
                             </span>
@@ -158,19 +159,9 @@
                 @can('list', App\Model\View\Director::class)
                     <li>
                         <a class="" href="{{ action('Lib\DirectorController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-account-box"></i>
                             <span class="hide-menu">
                                 Директора
-                            </span>
-                        </a>
-                    </li>
-                @endcan
-                @can('list', App\Model\Company::class)
-                    <li>
-                        <a class="" href="{{ action('Lib\CompanyController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
-                            <span class="hide-menu">
-                                Компании
                             </span>
                         </a>
                     </li>
@@ -178,7 +169,7 @@
                 @can('list', App\Model\LibProductCat::class)
                     <li>
                         <a class="" href="{{ action('Lib\LibProductCatController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-alert-octagram"></i>
                             <span class="hide-menu">
                                 Категории товаров
                             </span>
@@ -188,7 +179,7 @@
                 @can('list', App\Model\LibProductType::class)
                     <li>
                         <a class="" href="{{ action('Lib\LibProductTypeController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-alert-octagram"></i>
                             <span class="hide-menu">
                                 Виды опций товаров
                             </span>
@@ -198,7 +189,7 @@
                 @can('list', App\Model\LibProductOption::class)
                     <li>
                         <a class="" href="{{ action('Lib\LibProductOptionController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-alert-octagram"></i>
                             <span class="hide-menu">
                                 Опции товаров
                             </span>
@@ -208,19 +199,18 @@
                 @can('list', App\Model\LibCompanyCat::class)
                     <li>
                         <a class="" href="{{ action('Lib\LibCompanyCatController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-alert-octagram"></i>
                             <span class="hide-menu">
                                 Формы собственности
                             </span>
                         </a>
                     </li>
                 @endcan
-                
                 @can('list', App\Model\SysAuthLog::class)
                     <li class="nav-small-cap">Системные</li>
                     <li>
                         <a class="" href="{{ action('System\AuthLogController@getIndex') }}">
-                            <i class="mdi mdi-gauge"></i>
+                            <i class="mdi mdi-account-check"></i>
                             <span class="hide-menu">
                                 Логи авторизации
                             </span>

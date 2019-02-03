@@ -47,28 +47,11 @@ class BranchList {
         $this->getItems();
 
         
-            $this->filterName();
-            $this->filterCompany();
        
     }
 
     function getResult(){
         return $this->items;
-    }
-
-
-    private  function filterName(){
-        if (!$this->request->has('name') || !$this->request->name)
-            return;
-
-        $this->items->where('name', 'like', '%'.$this->request->name.'%');
-    }
-
-    private  function filterCompany(){
-        if (!$this->request->has('company_id') || !$this->request->company_id)
-            return;
-
-        $this->items->where('company_id', $this->request->company_id);
     }
 
     static function getLibAr(){
