@@ -10,8 +10,11 @@ use App\Model\Branch;
 use App\Model\SysPositionStatus;
 use App\Model\Product;
 use App\Model\SysUserType;
+use App\Model\LibProductCat;
 
 use App\ModelList\PositionList;
+
+use App\ModelFilter\PositionFilter;
 
 use DB;
 use Exception;
@@ -21,10 +24,15 @@ class PositionController extends Controller{
 
 
     function getIndex (Request $request){
+        $items = PositionList::get($request);
+        $items = PositionFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = PositionList::get($request)->with('relProduct')->latest()->paginate(48);
+        $ar['filter_block'] = PositionFilter::getFilterBlock($request);
+        $ar['items'] = $items->with('relProduct')->latest()->paginate(48);
+        $ar['ar_cat'] = LibProductCat::pluck('name', 'id')->toArray();
         $ar['ar_status'] = SysPositionStatus::pluck('name', 'id')->toArray();
         $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
 

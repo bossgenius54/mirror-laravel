@@ -12,6 +12,8 @@ use App\Model\LibProductOption;
 
 use App\ModelList\ProductList;
 
+use App\ModelFilter\ProductFilter;
+
 use DB;
 use Exception;
 
@@ -19,10 +21,14 @@ class ProductController extends Controller{
     private $title = 'Ассортимент товаров';
 
     function getIndex (Request $request){
+        $items = ProductList::get($request);
+        $items = ProductFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = ProductList::get($request)->latest()->paginate(24);
+        $ar['filter_block'] = ProductFilter::getFilterBlock($request);
+        $ar['items'] = $items->latest()->paginate(24);
         $ar['ar_cat'] = LibProductCat::getAr();
 
         return view('page.stock.product.index', $ar);

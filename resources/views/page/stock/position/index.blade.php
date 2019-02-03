@@ -4,6 +4,9 @@
 @section('title', $title)
 
 @section('content')
+
+@include($filter_block)
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -16,13 +19,11 @@
             <table class="table  table-hover color-table muted-table" >
                 <thead>
                     <tr>
-                        <th>id</th>
                         <th>Ассортимент</th>
                         <th>Филиал</th>
                         <th>Статус</th>
                         <th>Себестоимость</th>
                         <th>Срок годности</th>
-                        <th>Оприходование</th>
                         <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>
@@ -31,13 +32,11 @@
                 <tbody>
                     @foreach ($items as $i)
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
-                            <td>{{ $i->id }}</td>
                             <td>{{ $i->relProduct->name }} ({{ $i->relProduct->sys_num }})</td>
                             <td>{{ isset($ar_branch[$i->branch_id]) ? $ar_branch[$i->branch_id] : 'не указано' }}</td>
                             <td>{{ isset($ar_status[$i->status_id]) ? $ar_status[$i->status_id] : 'не указано' }}</td>
                             <td>{{ $i->price_cost }}</td>
                             <td>{{ $i->expired_at ? $i->expired_at : 'бессрочна' }}</td>
-                            <td>{{ $i->relIncome->name }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>

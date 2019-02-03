@@ -7,14 +7,20 @@ use Illuminate\Http\Request;
 use App\Model\CompanyService;
 use App\ModelList\CompanyServiceList;
 
+use App\ModelFilter\CompanyServiceFilter;
+
 class CompanyServiceController extends Controller{
     private $title = 'Услуги';
 
     function getIndex (Request $request){
+        $items = CompanyServiceList::get($request);
+        $items = CompanyServiceFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = CompanyServiceList::get($request)->latest()->paginate(24);
+        $ar['filter_block'] = CompanyServiceFilter::getFilterBlock($request);
+        $ar['items'] = $items->latest()->paginate(24);
 
         return view('page.lib.company_service.index', $ar);
     }
