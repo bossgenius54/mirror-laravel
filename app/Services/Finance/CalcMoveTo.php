@@ -3,11 +3,12 @@ namespace App\Services\Finance;
 
 use App\Model\Finance;
 use App\Model\FinancePosition;
+use App\Model\FinanceService;
 use App\Model\Position;
 
-class CalcBeginIncome {
+class CalcMoveTo {
     private $item = false;
-    private $income = false;
+    private $move = false;
 
     function __construct(Finance $item) {
         $this->item = $item;
@@ -15,23 +16,23 @@ class CalcBeginIncome {
     }
 
     static function create(Finance $item){
-       $el = new CalcBeginIncome($item);
+       $el = new CalcMoveTo($item);
     }
 
     private function start(){
-        $this->calcIncome();
+        $this->calcMove();
         $this->createPosition();
     }
     
-    private function calcIncome(){
-        $this->income = $this->item->relIncome;
+    private function calcMove(){
+        $this->move = $this->item->relMove;
     }
 
     private function createPosition(){
-        $items = Position::where('income_id', $this->income->id)->get();
+        $items = Position::where('motion_id', $this->move->id)->get();
 
         $ar = [];
-
+        
         $ar_el = [];
         $ar_el['finance_id'] = $this->item->id;
         $ar_el['branch_id'] = $this->item->branch_id;
@@ -49,4 +50,5 @@ class CalcBeginIncome {
         if (count($ar) > 0)
             FinancePosition::insert($ar);
     }
+
 }

@@ -6,7 +6,7 @@ use App\Helper\Traits\DateHelper;
 
 class Position extends Model{
     protected $table = 'positions';
-    protected $fillable = ['product_id', 'branch_id', 'status_id', 'income_id', 'price_cost', 'expired_at', 'order_id', 'sys_num'];
+    protected $fillable = ['product_id', 'branch_id', 'status_id', 'income_id', 'price_cost', 'expired_at', 'order_id', 'sys_num', 'motion_id'];
     use DateHelper;
     
     function relProduct(){

@@ -14,6 +14,10 @@ use App\Model\OutcomePosition;
 use App\Model\SysPositionStatus;
 use App\Model\IncomePosition;
 
+
+use App\Model\Outcome;
+use App\Services\Finance\CreateFinanceModel;
+
 class ReturnedOrder {
     private $item = false;
     private $income = false;
@@ -31,6 +35,9 @@ class ReturnedOrder {
         $this->createIncome();
         $this->createIncomeServices();
         $this->createIncomePosition();
+
+        $outcome = Outcome::findOrFail($this->item->outcome_id); 
+        CreateFinanceModel::createReturn($this->income, $outcome);
     }
 
     private function createIncome(){

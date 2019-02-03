@@ -16,5 +16,8 @@ class Finance extends Model{
     function relOutcome(){
         return $this->belongsTo('App\Model\Outcome', 'outcome_id');
     }
-    
+
+    function relMove(){
+        return $this->belongsTo('App\Model\Motion', 'motion_id');
+    }
 }
