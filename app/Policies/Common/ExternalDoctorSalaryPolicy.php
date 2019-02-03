@@ -16,7 +16,7 @@ class ExternalDoctorSalaryPolicy  {
     }
 
     private function mainCheck($user){
-        if (!in_array($user->type_id, [SysUserType::ADMIN, SysUserType::DIRECTOR, SysUserType::MANAGER, SysUserType::EXTERNAL_DOCTOR]))
+        if (!in_array($user->type_id, [SysUserType::ADMIN, SysUserType::DIRECTOR, SysUserType::MANAGER, SysUserType::EXTERNAL_DOCTOR, SysUserType::ACCOUNTER]))
             return false;
             
         return true;

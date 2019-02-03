@@ -232,6 +232,17 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('delete/{item}', 'StockManagerController@getDelete')->middleware('can:delete,item');
         });
 
+        // manager
+        Route::group(['prefix' => 'accounter'], function () {
+            Route::get('/', 'AccounterController@getIndex')->middleware('can:list,App\Model\View\Accounter');
+            Route::get('create', 'AccounterController@getCreate')->middleware('can:create,App\Model\View\Accounter');
+            Route::post('create', 'AccounterController@postCreate')->middleware('can:create,App\Model\View\Accounter');
+            Route::get('update/{item}', 'AccounterController@getUpdate')->middleware('can:update,item');
+            Route::post('update/{item}', 'AccounterController@postUpdate')->middleware('can:update,item');
+            Route::get('delete/{item}', 'AccounterController@getDelete')->middleware('can:delete,item');
+        });
+
+
         // individ
         Route::group(['prefix' => 'individ'], function () {
             Route::get('/', 'IndividController@getIndex')->middleware('can:list,App\Model\View\Individ');

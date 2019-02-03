@@ -114,6 +114,16 @@
                         </a>
                     </li>
                 @endcan
+                @can('list', App\Model\View\Accounter::class)
+                    <li>
+                        <a class="" href="{{ action('Lib\AccounterController@getIndex') }}">
+                            <i class="mdi mdi-gauge"></i>
+                            <span class="hide-menu">
+                                Бухгалтера
+                            </span>
+                        </a>
+                    </li>
+                @endcan
                 
                 @can('list', App\Model\View\ExternalDoctor::class)
                     <li>
