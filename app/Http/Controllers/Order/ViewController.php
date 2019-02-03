@@ -25,10 +25,14 @@ class ViewController extends Controller{
         $ar['title'] = 'Просмотр елемента списка "'.$this->title.'"';
         $ar['item'] = $item;
         $ar['action'] = action('Order\ViewController@postUpdate', $item);
+
         $ar['services'] = CompanyService::where('company_id', $item->company_id)->get();
         $ar['order_services'] = $item->relServices()->with('relService')->get();
+        $ar['ar_order_service'] = $item->relServices()->pluck('service_id')->toArray();
+        
         $ar['products'] = Product::where('company_id', $item->company_id)->get();
         $ar['order_products'] = $item->relProducts()->with('relProduct')->get();
+        $ar['ar_order_product'] = $item->relProducts()->pluck('product_id')->toArray();
 
         $ar['can_status'] = SysOrderStatus::whereIn('id', $can_ar_status)->pluck('name', 'id')->toArray();
         $ar['can_status_class'] = SysOrderStatus::whereIn('id', $can_ar_status)->pluck('bootstrap_class', 'id')->toArray();

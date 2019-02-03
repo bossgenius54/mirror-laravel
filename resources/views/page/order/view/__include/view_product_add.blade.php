@@ -6,6 +6,9 @@
                 <select name="product_id" class="form-control js_cant_max" id="product_id" required>
                     <option value=""></option>
                     @foreach ($products as $product)
+                        @if (in_array($product->id, $ar_order_product))
+                            @continue
+                        @endif
                         @php 
                             $position_count = $product->relPositions()->where('branch_id', $item->branch_id)->where('status_id', App\Model\SysPositionStatus::ACTIVE)->count();
                         @endphp
@@ -44,6 +47,9 @@
                 <select name="product_id" class="form-control {{ $item->is_retail ? 'js_cant_max' : '' }}" id="product_id" required>
                     <option value=""></option>
                     @foreach ($products as $product)
+                        @if (in_array($product->id, $ar_order_product))
+                            @continue
+                        @endif
                         @php 
                             $position_count = $product->relPositions()->where('branch_id', $item->branch_id)->where('status_id', App\Model\SysPositionStatus::ACTIVE)->count();
                         @endphp
@@ -82,6 +88,10 @@
                 <select name="product_id" class="form-control" id="product_id" required>
                     <option value=""></option>
                     @foreach ($products as $product)
+                        @if (in_array($product->id, $ar_order_product))
+                            @continue
+                        @endif
+
                         @php 
                             $position_count = $product->relPositions()->where('branch_id', $item->branch_id)->where('status_id', App\Model\SysPositionStatus::ACTIVE)->count();
                         @endphp

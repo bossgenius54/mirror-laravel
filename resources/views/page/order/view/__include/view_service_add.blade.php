@@ -6,6 +6,9 @@
                 <select name="service_id" class="form-control" id="service_id" required>
                     <option value=""></option>
                     @foreach ($services as $s)
+                        @if (in_array($s->id, $ar_order_service))
+                            @continue
+                        @endif
                         <option value="{{ $s->id }}" data-price="{{ $s->price }}">{{ $s->name }}. Цена {{ $s->price }}</option>
                     @endforeach
                 </select>
@@ -35,6 +38,9 @@
                 <select name="service_id" class="form-control" id="service_id" required>
                     <option value=""></option>
                     @foreach ($services as $s)
+                        @if (in_array($s->id, $ar_order_service))
+                            @continue
+                        @endif
                         <option value="{{ $s->id }}" data-price="{{ $s->price }}">{{ $s->name }}. Цена {{ $s->price }}</option>
                     @endforeach
                 </select>
@@ -64,6 +70,9 @@
                 <select name="service_id" class="form-control" id="service_id" required>
                     <option value=""></option>
                     @foreach ($services as $s)
+                        @if (in_array($s->id, $ar_order_service))
+                            @continue
+                        @endif
                         <option value="{{ $s->id }}" data-price="{{ $s->price }}">{{ $s->name }}. Цена {{ $s->price }}</option>
                     @endforeach
                 </select>
