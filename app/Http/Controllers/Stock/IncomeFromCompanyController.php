@@ -15,6 +15,8 @@ use App\Model\SysPositionStatus;
 use App\Model\Position;
 use App\Model\IncomePosition;
 
+use App\Services\Finance\CreateFinanceModel;
+
 use DB;
 use Exception;
 
@@ -104,6 +106,8 @@ class IncomeFromCompanyController extends Controller{
                 'created_at' => date('Y-m-d h:i:s'),
                 'updated_at' => date('Y-m-d h:i:s'),
             ]);
+
+            CreateFinanceModel::createBeginIncome($income);
 
             DB::commit();
         } catch (Exception $e) {

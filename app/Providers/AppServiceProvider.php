@@ -13,6 +13,9 @@ use App\Observers\IndividObserver;
 use App\Model\Order;
 use App\Observers\OrderObserver;
 
+use App\Model\View\IncomeFromCompany;
+use App\Observers\IncomeFromCompanyObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         Company::observe(CompanyObserver::class);
         Individ::observe(IndividObserver::class);
         Order::observe(OrderObserver::class);
+        //IncomeFromCompany::observe(IncomeFromCompanyObserver::class);
     }
 
     /**
