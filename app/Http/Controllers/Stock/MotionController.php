@@ -17,6 +17,8 @@ use App\Model\Branch;
 
 use App\Services\Finance\CreateFinanceModel;
 
+use App\ModelFilter\MotionFilter;
+
 use DB;
 use Exception;
 
@@ -24,10 +26,14 @@ class MotionController extends Controller{
     private $title = 'Перемещение';
 
     function getIndex (Request $request){
+        $items = MotionList::get($request);
+        $items = MotionFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = MotionList::get($request)->latest()->paginate(24);
+        $ar['filter_block'] = MotionFilter::getFilterBlock($request);
+        $ar['items'] = $items->latest()->paginate(24);
         $ar['ar_status'] = SysMotionStatus::pluck('name', 'id')->toArray();
         $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
 
