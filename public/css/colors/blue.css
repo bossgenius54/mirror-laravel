@@ -169,3 +169,6 @@ a.link:hover, a.link:focus {
   border-bottom: 1px solid #ccc;
 
 }
+.js_change_status_name{
+  font-weight: 600;
+}

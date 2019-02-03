@@ -80,6 +80,15 @@
                 calcTotalProductSum();
             });
 
+            let link = false;
+            $('.js_accept_change_status').click(function(evt){
+                evt.preventDefault();
+                $('.js_change_status_name').html($(this).data('status'));
+
+                $('.js_change_status_form').attr('action', $(this).attr('href'))
+                $('#modal_change_status').modal("show");
+            })
+
         });
 	</script>
 @endsection
