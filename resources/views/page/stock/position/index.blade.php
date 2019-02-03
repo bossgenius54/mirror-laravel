@@ -50,6 +50,11 @@
                                                 Изменить
                                             </a>
                                         @endcan
+                                        @can('delete', $i)
+                                            <a class="dropdown-item" href="{{ action('Stock\PositionController@getDelete', $i) }}">
+                                                Списать
+                                            </a>
+                                        @endcan
                                     </div>
                                 </div>
                             </td>

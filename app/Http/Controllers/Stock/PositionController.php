@@ -64,4 +64,21 @@ class PositionController extends Controller{
     }
 
 
+    function getDelete(Request $request, Position $item){
+        DB::beginTransaction();
+        try {
+            $item->update([
+                'status_id' => SysPositionStatus::DELETED
+            ]);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->back()->with('success', 'Списан елемент списка "'.$this->title.'" № '.$item->id);
+    }
+
 }

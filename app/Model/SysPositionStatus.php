@@ -9,4 +9,5 @@ class SysPositionStatus extends Model{
     CONST ACTIVE = 1;
     CONST RESERVE = 2;
     CONST IN_MOTION = 4;
+    CONST DELETED = 5;
 }
