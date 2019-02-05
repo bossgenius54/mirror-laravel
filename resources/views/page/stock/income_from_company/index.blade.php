@@ -51,9 +51,13 @@
                                         <i class="ti-settings"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ action('Stock\PositionController@getIndex', ['income_id' => $i->id]) }}">
-                                            Позиции/Товары
-                                        </a>
+                                        @can('view', $i)
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="{{ action('Stock\IncomeFromCompanyController@getView', $i) }}">
+                                                Просмотр
+                                            </a>
+                                        @endcan
+
                                         @can('delete', $i)
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="{{ action('Stock\IncomeFromCompanyController@getDelete', $i) }}">

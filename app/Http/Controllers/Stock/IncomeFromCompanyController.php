@@ -15,6 +15,11 @@ use App\Model\SysPositionStatus;
 use App\Model\Position;
 use App\Model\IncomePosition;
 
+
+use App\Model\Finance;
+use App\Model\FinancePosition;
+use App\Model\FinanceService;
+
 use App\Services\Finance\CreateFinanceModel;
 
 use DB;
@@ -30,6 +35,27 @@ class IncomeFromCompanyController extends Controller{
         $ar['items'] = IncomeFromCompanyList::get($request)->latest()->paginate(24);
 
         return view('page.stock.income_from_company.index', $ar);
+    }
+
+    function getView(Request $request, IncomeFromCompany $item){
+        $positions = false;
+        $services = false;
+        $finance = Finance::where('income_id', $item->id)->first();
+        if ($finance){
+            $positions = FinancePosition::where('finance_id', $finance->id)->with('relProduct')->get();
+            $services = FinanceService::where('finance_id', $finance->id)->with('relService')->get();
+        }
+            
+        
+
+        $ar = array();
+        $ar['title'] = 'Детализация елемента списока "'.$this->title.'"';
+        $ar['ar_type'] = SysIncomeType::pluck('name', 'id')->toArray();
+        $ar['positions'] = $positions;
+        $ar['services'] = $services;
+        $ar['item'] = $item;
+
+        return view('page.stock.income_from_company.view', $ar);
     }
 
     function getCreate(Request $request){
