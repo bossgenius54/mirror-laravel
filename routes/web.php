@@ -131,9 +131,6 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
         });
     });
 
-    Route::group(['prefix' => 'stock', 'namespace' => 'Stock'], function () {
-
-    });
 
 
     Route::group(['prefix' => 'lib', 'namespace' => 'Lib'], function () {
@@ -297,6 +294,14 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
          /// position
          Route::group(['prefix' => 'position'], function () {
             Route::get('/', 'FinancePositionController@getIndex')->middleware('can:list,App\Model\FinancePosition');
+        });
+
+    });
+
+    Route::group(['prefix' => 'system', 'namespace' => 'System'], function () {
+        /// service
+        Route::group(['prefix' => 'auth-log'], function () {
+            Route::get('/', 'AuthLogController@getIndex')->middleware('can:list,App\Model\FinanceService');
         });
 
     });
