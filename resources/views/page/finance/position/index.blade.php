@@ -5,6 +5,8 @@
 
 @section('content')
 
+@include($filter_block)
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -19,6 +21,7 @@
                     <tr>
                         <th>Филиал</th>
                         <th>Продукция</th>
+                        <th>Системный номер</th>
                         <th>До</th>
                         <th>После</th>
                         <th>Сумма</th>
@@ -30,6 +33,7 @@
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                             <td>{{ $i->relBranch ? $i->relBranch->name : '' }}</td>
                             <td>{{ $i->relProduct ? $i->relProduct->name : '' }}</td>
+                            <td>{{ $i->position_sys_num }}</td>
                             <td>{{ $i->price_before }}</td>
                             <td>{{ $i->price_after }}</td>
                             <td>{{ $i->price_total }}</td>

@@ -36,6 +36,8 @@ class CalcMoveTo {
         $ar_el = [];
         $ar_el['finance_id'] = $this->item->id;
         $ar_el['branch_id'] = $this->item->branch_id;
+        $ar_el['created_at'] = date('Y-m-d h:i:s');
+        $ar_el['updated_at'] = date('Y-m-d h:i:s');
         foreach ($items as $i ) {
             $ar_el['product_id'] = $i->product_id;
             $ar_el['position_id'] = $i->id;
