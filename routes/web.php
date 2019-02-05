@@ -117,6 +117,18 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('finish/{item}', 'MotionController@getFinish')->middleware('can:finish,item');
             Route::get('canceleld/{item}', 'MotionController@getCanceled')->middleware('can:cancel,item');
         });
+
+        /// income-returned
+        Route::group(['prefix' => 'income-returned'], function () {
+            Route::get('/', 'IncomeReturnedController@getIndex')->middleware('can:list,App\Model\View\IncomeReturned');
+            Route::get('view/{item}', 'IncomeReturnedController@getView')->middleware('can:view,item');
+        });
+        
+        /// outcome
+        Route::group(['prefix' => 'outcome'], function () {
+            Route::get('/', 'OutcomeController@getIndex')->middleware('can:list,App\Model\Outcome');
+            Route::get('view/{item}', 'OutcomeController@getView')->middleware('can:view,item');
+        });
     });
 
 

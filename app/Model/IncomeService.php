@@ -9,4 +9,7 @@ class IncomeService extends Model{
     protected $fillable = ['service_id', 'income_id', 'service_count', 'service_cost', 'total_sum'];
     use DateHelper;
 
+    function relService(){
+        return $this->belongsTo('App\Model\CompanyService', 'service_id');
+    }
 }

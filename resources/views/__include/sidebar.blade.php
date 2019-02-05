@@ -35,6 +35,26 @@
                         </a>
                     </li>
                 @endcan
+                @can('list', App\Model\Outcome::class)
+                    <li>
+                        <a class="waves-effect waves-dark" href="{{ action('Stock\OutcomeController@getIndex') }}">
+                            <i class="mdi mdi-format-horizontal-align-left"></i>
+                            <span class="hide-menu">
+                                Отгрузки
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+                @can('list', App\Model\View\IncomeReturned::class)
+                    <li>
+                        <a class="waves-effect waves-dark" href="{{ action('Stock\IncomeReturnedController@getIndex') }}">
+                            <i class="mdi mdi-keyboard-return"></i>
+                            <span class="hide-menu">
+                                Возвраты
+                            </span>
+                        </a>
+                    </li>
+                @endcan
                 @can('list', App\Model\Motion::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Stock\MotionController@getIndex') }}">

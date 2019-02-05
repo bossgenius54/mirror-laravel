@@ -12,6 +12,8 @@ use App\Model\Product;
 use App\Services\Order\CanChangeOrderStatusRules;
 use App\Model\SysOrderStatus;
 
+use App\Services\Order\GetOrderFormula;
+
 use DB;
 use Exception;
 
@@ -38,6 +40,7 @@ class ViewController extends Controller{
         $ar['can_status_class'] = SysOrderStatus::whereIn('id', $can_ar_status)->pluck('bootstrap_class', 'id')->toArray();
         $ar['user'] = $request->user();
         $ar['request'] = $request;
+        $ar['formula'] = GetOrderFormula::start($item);
         
         if ($request->for_print == 1)
             return view('page.order.view.for_print', $ar);
