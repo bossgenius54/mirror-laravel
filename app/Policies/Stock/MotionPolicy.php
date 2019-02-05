@@ -17,17 +17,24 @@ class MotionPolicy {
 
 
     public function list($user){
-        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER]))
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER]))
             return false;
         
         return true; 
     }
 
     public function create($user){
-        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER]))
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER]))
             return false;
         
         return true; 
+    }
+
+    public function view($user, $item){
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER]))
+            return false;
+
+        return true;
     }
 
     

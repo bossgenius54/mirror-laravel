@@ -19,6 +19,12 @@ use App\Services\Finance\CreateFinanceModel;
 
 use App\ModelFilter\MotionFilter;
 
+
+use App\Model\Finance;
+use App\Model\FinancePosition;
+use App\Model\FinanceService;
+use App\Model\SysFinanceType;
+
 use DB;
 use Exception;
 
@@ -38,6 +44,25 @@ class MotionController extends Controller{
         $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
 
         return view('page.stock.motion.index', $ar);
+    }
+
+    function getView(Request $request, Motion $item){
+        $positions = false;
+        $services = false;
+        $finance = Finance::where('motion_id', $item->id)->where('type_id', SysFinanceType::MOVE_FROM)->first();
+        if ($finance){
+            $positions = FinancePosition::where('finance_id', $finance->id)->with('relProduct')->get();
+            $services = FinanceService::where('finance_id', $finance->id)->with('relService')->get();
+        }
+
+        $ar = array();
+        $ar['title'] = 'Детализация елемента списока "'.$this->title.'"';
+        $ar['ar_status'] = SysMotionStatus::pluck('name', 'id')->toArray();
+        $ar['positions'] = $positions;
+        $ar['services'] = $services;
+        $ar['item'] = $item;
+
+        return view('page.stock.motion.view', $ar);
     }
 
     function getCreate(Request $request){

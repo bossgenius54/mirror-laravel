@@ -117,6 +117,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('unset-product/{item}/{motion_product}', 'MotionController@getUnsetProduct')->middleware('can:update,item');
             Route::get('finish/{item}', 'MotionController@getFinish')->middleware('can:finish,item');
             Route::get('canceleld/{item}', 'MotionController@getCanceled')->middleware('can:cancel,item');
+            Route::get('view/{item}', 'MotionController@getView')->middleware('can:view,item');
         });
 
         /// income-returned

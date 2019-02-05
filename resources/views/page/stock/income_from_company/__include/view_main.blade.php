@@ -1,6 +1,6 @@
 <div class="card card-outline-info">
     <div class="card-header">
-        <h4 class="m-b-0 text-white">Основные данные отгрузки № {{ $item->id }}</h4>
+        <h4 class="m-b-0 text-white">Основные данные приемки № {{ $item->id }}</h4>
     </div>
     <div class="card-body">
         <small class="text-muted">Тип</small>

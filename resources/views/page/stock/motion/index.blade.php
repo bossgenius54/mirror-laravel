@@ -50,6 +50,12 @@
                                         <i class="ti-settings"></i>
                                     </button>
                                     <div class="dropdown-menu">
+                                        @can('view', $i)
+                                            <a class="dropdown-item" href="{{ action('Stock\MotionController@getView', $i) }}">
+                                                Просмотр
+                                            </a>
+                                        @endcan
+
                                         @can('update', $i)
                                             <a class="dropdown-item" href="{{ action('Stock\MotionController@getUpdate', $i) }}">
                                                 Изменить
