@@ -49,6 +49,11 @@ class AuthServiceProvider extends ServiceProvider
 
         'App\Model\FinanceService'              => 'App\Policies\Finance\CommonFinancePolice',
         'App\Model\FinancePosition'             => 'App\Policies\Finance\CommonFinancePolice',
+
+        
+
+        'App\Model\View\BranchProduct'          => 'App\Policies\Stock\BranchProductPolicy',
+
     ];
 
     /**

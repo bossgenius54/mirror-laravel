@@ -12,17 +12,21 @@ use App\Model\SysUserType;
 
 use App\ModelList\OrderList;
 use App\ModelList\ExternalDoctorList;
+use App\ModelFilter\ExternalDoctorSalaryFilter;
 
 class ExternalDoctorSalaryController  extends Controller{
     private $title = 'Комисионные внешнего врача';
 
     function getIndex (Request $request){
         $user = $request->user();
+        $items = ExternalDoctorSalaryList::get($request);
+        $items = ExternalDoctorSalaryFilter::filter($request, $items);
 
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = ExternalDoctorSalaryList::get($request)->paginate(24);
+        $ar['filter_block'] = ExternalDoctorSalaryFilter::getFilterBlock($request);
+        $ar['items'] = $items->latest()->paginate(24);
 
         return view('page.common.external_doctor_salary.index', $ar);
     }

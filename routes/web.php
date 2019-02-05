@@ -131,6 +131,11 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('/', 'OutcomeController@getIndex')->middleware('can:list,App\Model\Outcome');
             Route::get('view/{item}', 'OutcomeController@getView')->middleware('can:view,item');
         });
+
+        /// outcome
+        Route::group(['prefix' => 'product-count'], function () {
+            Route::get('/', 'BranchProductController@getIndex')->middleware('can:list,App\Model\View\BranchProduct');
+        });
     });
 
 

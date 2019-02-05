@@ -4,6 +4,9 @@
 @section('title', $title)
 
 @section('content')
+
+@include($filter_block)
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -28,7 +31,6 @@
                         <th>Сумма</th>
                         <th>Наименование</th>
                         <th>Заметка</th>
-                        <th>Наименование</th>
                         <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>

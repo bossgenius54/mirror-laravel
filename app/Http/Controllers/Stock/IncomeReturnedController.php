@@ -14,6 +14,8 @@ use App\Model\FinancePosition;
 
 use App\Services\Finance\CreateFinanceModel;
 
+use App\ModelFilter\IncomeReturnedFilter;
+
 use DB;
 use Exception;
 
@@ -21,10 +23,14 @@ class IncomeReturnedController extends Controller{
     private $title = 'Возвраты';
 
     function getIndex (Request $request){
+        $items = IncomeReturnedList::get($request);
+        $items = IncomeReturnedFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = IncomeReturnedList::get($request)->latest()->paginate(24);
+        $ar['filter_block'] = IncomeReturnedFilter::getFilterBlock($request);
+        $ar['items'] = $items->latest()->paginate(24);
         $ar['ar_type'] = SysIncomeType::pluck('name', 'id')->toArray();
 
         return view('page.stock.income_returned.index', $ar);

@@ -34,10 +34,10 @@ class User extends Authenticatable
     public function getTypeName(){
         $type = SysUserType::find( $this->type_id);
         $name = ($type ? $type->name : '');
-
+        
         $branch = $this->relBranch;
         if ($branch)
-            $name .= '<br/>'.$branch->name;
+            $name .= '<br/><small><i>'.$branch->name.'</i></small>';
 
         return $name;
     }

@@ -13,6 +13,8 @@ use App\Model\FinancePosition;
 use App\Model\FinanceService;
 use App\Model\SysFinanceType;
 
+use App\ModelFilter\OutcomeFilter;
+
 use DB;
 use Exception;
 
@@ -20,10 +22,14 @@ class OutcomeController extends Controller{
     private $title = 'Отгрузки';
 
     function getIndex (Request $request){
+        $items = OutcomeList::get($request);
+        $items = OutcomeFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = OutcomeList::get($request)->latest()->paginate(24);
+        $ar['filter_block'] = OutcomeFilter::getFilterBlock($request);
+        $ar['items'] = $items->latest()->paginate(24);
         $ar['ar_type'] = SysOutcomeType::pluck('name', 'id')->toArray();
 
         return view('page.stock.outcome.index', $ar);

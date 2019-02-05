@@ -22,6 +22,8 @@ use App\Model\FinanceService;
 
 use App\Services\Finance\CreateFinanceModel;
 
+use App\ModelFilter\IncomeFromCompanyFilter;
+
 use DB;
 use Exception;
 
@@ -29,10 +31,14 @@ class IncomeFromCompanyController extends Controller{
     private $title = 'Оприходование';
 
     function getIndex (Request $request){
+        $items = IncomeFromCompanyList::get($request);
+        $items = IncomeFromCompanyFilter::filter($request, $items);
+
         $ar = array();
         $ar['title'] = 'Список елементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = IncomeFromCompanyList::get($request)->latest()->paginate(24);
+        $ar['filter_block'] = IncomeFromCompanyFilter::getFilterBlock($request);
+        $ar['items'] = $items->latest()->paginate(24);
 
         return view('page.stock.income_from_company.index', $ar);
     }

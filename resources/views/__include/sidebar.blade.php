@@ -26,6 +26,19 @@
                 @endcan
                 
                 <li class="nav-small-cap">Склад</li>
+                
+                @can('list', App\Model\View\BranchProduct::class)
+                    <li>
+                        <a class="waves-effect waves-dark" href="{{ action('Stock\BranchProductController@getIndex') }}">
+                            <i class="fa fa-th"></i>
+                            <span class="hide-menu">
+                                Кол-во на складах
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+
+
                 @can('list', App\Model\View\IncomeFromCompany::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Stock\IncomeFromCompanyController@getIndex') }}">
