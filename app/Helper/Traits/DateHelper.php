@@ -41,6 +41,8 @@ trait DateHelper {
     }
 
     public function getCreatedAtAttribute($date){
+        if (!$date || $date == null || $date == '')
+            return '';
         $d = Date::createFromFormat('Y-m-d H:i:s', $date);
 
         return $d->format('d.m.Y H:i:s');

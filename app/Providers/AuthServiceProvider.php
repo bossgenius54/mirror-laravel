@@ -45,7 +45,10 @@ class AuthServiceProvider extends ServiceProvider
 
         'App\Model\SysAuthLog'                  => 'App\Policies\System\SystemCommonPolicy',
 
-        'App\Model\Order'           => 'App\Policies\Order\OrderPolicy',
+        'App\Model\Order'                       => 'App\Policies\Order\OrderPolicy',
+
+        'App\Model\FinanceService'              => 'App\Policies\Finance\CommonFinancePolice',
+        'App\Model\FinancePosition'             => 'App\Policies\Finance\CommonFinancePolice',
     ];
 
     /**

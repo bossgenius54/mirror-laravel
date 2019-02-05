@@ -13,4 +13,12 @@ class FinancePosition extends Model{
         return $this->belongsTo('App\Model\Product', 'product_id');
     }
 
+    function relBranch(){
+        return $this->belongsTo('App\Model\Branch', 'branch_id');
+    }
+
+    function relFinance(){
+        return $this->belongsTo('App\Model\Finance', 'finance_id');
+    }
+
 }

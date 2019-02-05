@@ -13,4 +13,11 @@ class FinanceService extends Model{
         return $this->belongsTo('App\Model\CompanyService', 'service_id');
     }
 
+    function relBranch(){
+        return $this->belongsTo('App\Model\Branch', 'branch_id');
+    }
+
+    function relFinance(){
+        return $this->belongsTo('App\Model\Finance', 'finance_id');
+    }
 }

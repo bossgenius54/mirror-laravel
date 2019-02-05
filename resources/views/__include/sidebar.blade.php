@@ -48,7 +48,7 @@
                 @can('list', App\Model\View\IncomeReturned::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Stock\IncomeReturnedController@getIndex') }}">
-                            <i class="mdi mdi-keyboard-return"></i>
+                            <i class="mdi mdi-backup-restore"></i>
                             <span class="hide-menu">
                                 Возвраты
                             </span>
@@ -81,6 +81,28 @@
                             <i class="mdi mdi-barcode"></i>
                             <span class="hide-menu">
                                 Ассортимент товаров
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+                
+                <li class="nav-small-cap">Финансы</li>
+                @can('list', App\Model\FinanceService::class)
+                    <li>
+                        <a class="waves-effect waves-dark" href="{{ action('Finance\FinanseServiceController@getIndex') }}">
+                            <i class="fa fa-dollar"></i>
+                            <span class="hide-menu">
+                                По услугам
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+                @can('list', App\Model\FinancePosition::class)
+                    <li>
+                        <a class="waves-effect waves-dark" href="{{ action('Finance\FinancePositionController@getIndex') }}">
+                            <i class="fa fa-dollar"></i>
+                            <span class="hide-menu">
+                                По позициям
                             </span>
                         </a>
                     </li>

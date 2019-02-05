@@ -4,11 +4,11 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="/">
                 <b>
-                    <img src="/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                    <img src="/assets/images/logo-icon.png" alt="homepage" class="dark-logo" style="height: 40px;     width: 40px;" />
                 </b>
                 <span>
-                    <img src="/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                </span> 
+                    <img src="/assets/images/logo-text.png" alt="homepage" class="dark-logo" style="height: 40px;     width: 128px;" />
+                </span>  
             </a>
         </div>
         <div class="navbar-collapse">
