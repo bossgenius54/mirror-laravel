@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Helper\Traits\DateHelper;
+use App\Model\SysUserType;
 
 class User extends Authenticatable
 {
@@ -29,4 +30,23 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function getTypeName(){
+        $type = SysUserType::find( $this->type_id);
+        $name = ($type ? $type->name : '');
+
+        $branch = $this->relBranch;
+        if ($branch)
+            $name .= '<br/>'.$branch->name;
+
+        return $name;
+    }
+
+    function relCompany(){
+        return $this->belongsTo('App\Model\Company', 'company_id');
+    }
+
+    function relBranch(){
+        return $this->belongsTo('App\Model\Branch', 'branch_id');
+    }
 }

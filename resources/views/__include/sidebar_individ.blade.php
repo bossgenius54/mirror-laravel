@@ -1,5 +1,6 @@
 <aside class="left-sidebar">
     <div class="scroll-sidebar">
+        @include('__include.sidebar_profile')
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="nav-devider"></li>

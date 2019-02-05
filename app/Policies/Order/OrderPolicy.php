@@ -32,6 +32,8 @@ class OrderPolicy {
 
     
     public function createForFiz($user){
+        return false; 
+
         if (!in_array($user->type_id, [SysUserType::FIZ]))
             return false;
         
