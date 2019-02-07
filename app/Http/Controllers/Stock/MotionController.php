@@ -49,16 +49,19 @@ class MotionController extends Controller{
     function getView(Request $request, Motion $item){
         $positions = false;
         $services = false;
+        $products = false;
         $finance = Finance::where('motion_id', $item->id)->where('type_id', SysFinanceType::MOVE_FROM)->first();
         if ($finance){
             $positions = FinancePosition::where('finance_id', $finance->id)->with('relProduct')->get();
             $services = FinanceService::where('finance_id', $finance->id)->with('relService')->get();
+            $products = FinancePosition::getStatByPriceAfter($finance->id);
         }
 
         $ar = array();
         $ar['title'] = 'Детализация элемента списока "'.$this->title.'"';
         $ar['ar_status'] = SysMotionStatus::pluck('name', 'id')->toArray();
         $ar['positions'] = $positions;
+        $ar['products'] = $products;
         $ar['services'] = $services;
         $ar['item'] = $item;
 

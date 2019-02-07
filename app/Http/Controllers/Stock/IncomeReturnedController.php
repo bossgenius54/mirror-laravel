@@ -39,14 +39,19 @@ class IncomeReturnedController extends Controller{
     function getView(Request $request, IncomeReturned $item){
         $income_position = false;
         $finance = Finance::where('income_id', $item->id)->first();
-        if ($finance)
+        $products = false;
+        if ($finance){
             $income_position = FinancePosition::where('finance_id', $finance->id)->with('relProduct')->get();
+            $products = FinancePosition::getStatByPriceBefore($finance->id);
+        }
+           
         
 
         $ar = array();
         $ar['title'] = 'Детализация элемента списока "'.$this->title.'"';
         $ar['ar_type'] = SysIncomeType::pluck('name', 'id')->toArray();
         $ar['income_position'] = $income_position;
+        $ar['products'] = $products;
         $ar['income_services'] = IncomeService::where('income_id', $item->id)->get();
         $ar['item'] = $item;
 
