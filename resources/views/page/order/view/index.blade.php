@@ -5,6 +5,9 @@
 
 @section('content')
 <div class="row">
+    <div class="col-md-12">
+        @include('page.order.view.__include.view_main_edit')
+    </div>
     <div class="col-sm-8">
 
         @include('page.order.view.__include.view_service_block')
@@ -17,10 +20,9 @@
             Версия для печати
         </a>
         @include('page.order.view.__include.view_change_status')
+        @include('page.order.view.__include.view_total_sum_status')
         @include('page.order.view.__include.view_formula_block')
         @include('page.order.view.__include.view_main')
-
-        @include('page.order.view.__include.view_main_edit')
     </div>
 </div>
 @endsection

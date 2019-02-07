@@ -10,63 +10,63 @@
             <div class="row">
                 <div class="form-group col-md-2">
                     <small>Сфера</small> <br/>
-                    <input type="text" class="form-control " value="{{ $formula->l_scope }}" disabled > 
+                    {{ $formula->l_scope }}
                 </div>
                 <div class="form-group col-md-2">
                     <small>Цил.</small> <br/>
-                    <input type="text" class="form-control " value="{{ $formula->l_cil }}" disabled > 
+                    {{ $formula->l_cil }}
                 </div>
                 <div class="form-group col-md-2">
                     <small>Ось</small> <br/>
-                    <input type="text" class="form-control " value="{{ $formula->l_os }}" disabled > 
+                    {{ $formula->l_os }}
                 </div>
                 <div class="form-group col-md-2">
                 </div>
                 <div class="form-group col-md-2">
                     <small>Призма оси</small> <br/>
-                    <input type="text" class="form-control " value="{{ $formula->l_prism_01 }}" disabled > 
+                    {{ $formula->l_prism_01 }}
                 </div>
                 <div class="form-group col-md-2">
                     <small>Призма оси</small> <br/>
-                    <input type="text" class="form-control " value="{{ $formula->l_prism_02 }}" disabled > 
+                    {{ $formula->l_prism_02 }}
                 </div>
             </div>
             <h5 class="card-title">Левый глаз</h5>
             <div class="row">
                 <div class="form-group col-md-2">
                     <small>Сфера</small> <br/>
-                    <input type="text" class="form-control " value="{{ $formula->r_scope }}" disabled > 
+                    {{ $formula->r_scope }}
                 </div>
                 <div class="form-group col-md-2">
                     <small>Цил.</small> <br/>
-                    <input type="text" class="form-control " value="{{ $formula->r_cil }}" disabled > 
+                    {{ $formula->r_cil }}
                 </div>
                 <div class="form-group col-md-2">
                     <small>Ось</small> <br/>
-                    <input type="text" class="form-control " value="{{ $formula->r_os }}" disabled > 
+                    {{ $formula->r_os }}
                 </div>
                 <div class="form-group col-md-2">
                 </div>
                 <div class="form-group col-md-2">
                     <small>Призма оси</small> <br/>
-                    <input type="text" class="form-control " value="{{ $formula->r_prism_01 }}" disabled > 
+                    {{ $formula->r_prism_01 }}
                 </div>
                 <div class="form-group col-md-2">
                     <small>Призма оси</small> <br/>
-                    <input type="text" class="form-control " value="{{ $formula->r_prism_02 }}" disabled > 
+                    {{ $formula->r_prism_02 }}
                 </div>
             </div>
             <div class="form-group">
                 <small>Расстояние между центрами зрачков</small> <br/>
-                <input type="text" class="form-control "  value="{{ $formula->len }}" disabled > 
+                {{ $formula->len }}
             </div>
             <div class="form-group">
                 <small>Назначение</small> <br/>
-                <input type="text" class="form-control " value="{{ $formula->purpose }}" disabled > 
+                {{ $formula->len }}
             </div>
             <div class="form-group">
                 <small>Примечание</small> <br/>
-                <input type="text" class="form-control" value="{{ $formula->note }}" disabled > 
+                {{ $formula->note }}
             </div>
             <p class="card-text"><small class="text-muted pull-right">Создан {{ $formula->created_at }}, от врача "{{ $formula->relCreatedUser->name }}"</small></p>
         </div>
