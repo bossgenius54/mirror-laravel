@@ -11,7 +11,7 @@
                 <h4 class="m-b-0 text-white">{{ $title }}</h4>
             </div>
             <div class="card-body">
-                <form class="form-material" action="{{ $action }}" method="post"  enctype="multipart/form-data">
+                <form class="form-material" action="{{ $action }}" method="post" data-mask="(999) 999-9999"   enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Телефон</label>
                         <input type="text" class="form-control " name="phone" value="{{ $item->phone }}" required> 

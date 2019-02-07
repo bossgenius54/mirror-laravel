@@ -46,10 +46,12 @@ class IncomeFromCompanyController extends Controller{
     function getView(Request $request, IncomeFromCompany $item){
         $positions = false;
         $services = false;
+        $products = false;
         $finance = Finance::where('income_id', $item->id)->first();
         if ($finance){
-            $positions = FinancePosition::where('finance_id', $finance->id)->with('relProduct')->get();
+            $positions = FinancePosition::where('finance_id', $finance->id)->with('relProduct')->paginate(24);
             $services = FinanceService::where('finance_id', $finance->id)->with('relService')->get();
+            $products = FinancePosition::getStatByPriceBefore($finance->id);
         }
             
         
@@ -59,6 +61,7 @@ class IncomeFromCompanyController extends Controller{
         $ar['ar_type'] = SysIncomeType::pluck('name', 'id')->toArray();
         $ar['positions'] = $positions;
         $ar['services'] = $services;
+        $ar['products'] = $products;
         $ar['item'] = $item;
 
         return view('page.stock.income_from_company.view', $ar);

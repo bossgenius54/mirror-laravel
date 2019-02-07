@@ -2,7 +2,7 @@
 @if ($positions && $positions->count() > 0)
     <div class="card card-outline-info">
         <div class="card-header">
-            <h4 class="m-b-0 text-white">Услуги приемки</h4>
+            <h4 class="m-b-0 text-white">Позиции приемки</h4>
         </div>
         @php
             $total_summ = 0;
@@ -27,14 +27,8 @@
                     </tr>
                 @endforeach
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="2">
-                        Итого
-                    </td>
-                    <td colspan="1">{{ $total_summ }}</td>
-                </tr>
-            </tfoot>
         </table>
+        
+        {!! $positions->links() !!}
     </div>
 @endif

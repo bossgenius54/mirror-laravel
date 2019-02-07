@@ -14,7 +14,7 @@
                 <form class="form-material" action="{{ $action }}" method="post"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Телефон</label>
-                        <input type="text" class="form-control " name="phone" required> 
+                        <input type="text" class="form-control " data-mask="(999) 999-9999"  name="phone" required> 
                     </div>
                     <div class="form-group">
                         <label>ФИО</label>

@@ -38,11 +38,13 @@ class OutcomeController extends Controller{
     function getView(Request $request, Outcome $item){
         $positions = false;
         $services = false;
+        $products = false;
         $finance = Finance::where('outcome_id', $item->id)
                             ->whereIn('type_id', [SysFinanceType::TO_COMPANY, SysFinanceType::TO_PERSON])->first();
         if ($finance){
             $positions = FinancePosition::where('finance_id', $finance->id)->with('relProduct')->get();
             $services = FinanceService::where('finance_id', $finance->id)->with('relService')->get();
+            $products = FinancePosition::getStatByPriceAfter($finance->id);
         }
             
         
@@ -51,6 +53,7 @@ class OutcomeController extends Controller{
         $ar['title'] = 'Детализация элемента списока "'.$this->title.'"';
         $ar['ar_type'] = SysOutcomeType::pluck('name', 'id')->toArray();
         $ar['positions'] = $positions;
+        $ar['products'] = $products;
         $ar['services'] = $services;
         $ar['item'] = $item;
 

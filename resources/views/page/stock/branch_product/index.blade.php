@@ -35,7 +35,7 @@
                         </tr>
                         @foreach ($ar_branch as $id=>$name) 
                             @php 
-                                $count_pos = $i->relPositions()->where('branch_id', $id)->count();
+                                $count_pos = $i->relPositions()->where('branch_id', $id)->where('status_id', App\Model\SysPositionStatus::ACTIVE)->count();
                             @endphp
                             <tr  class=" {{ $class_css }}">
                                 <td >{{ $name }})</td>

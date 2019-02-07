@@ -2,7 +2,7 @@
 @if ($services->count() > 0)
     <div class="card card-outline-info">
         <div class="card-header">
-            <h4 class="m-b-0 text-white">Позиции отгрузки</h4>
+            <h4 class="m-b-0 text-white">Услуги отгрузки</h4>
         </div>
         @php
             $total_count = 0;

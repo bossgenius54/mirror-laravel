@@ -63,6 +63,9 @@
     <script src="/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
     <script src="/js/custom.min.js"></script>
     <script src="/js/jasny-bootstrap.js"></script>
+    
+    <script src="/js/mask.js"></script>
+
     <script src="/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
     <script src="/assets/plugins/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
 
