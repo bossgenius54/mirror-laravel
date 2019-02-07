@@ -15,6 +15,21 @@
             <ul class="navbar-nav mr-auto mt-md-0">
                 <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
                 <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                <li class="nav-item">
+
+                    
+                    @can('create', App\Model\Order::class)
+                        <a href="{{ action('Order\CreateOrderController@getCreate', 1) }}" class="nav-link text-muted waves-effect waves-dark ">
+                            <i class="mdi mdi-cart-plus"></i> Новый заказ 
+                        </a>
+                    @endcan
+
+                    @can('create', App\Model\View\Individ::class)
+                        <a href="{{ action('Lib\IndividController@getCreate') }}" class="nav-link text-muted waves-effect waves-dark">
+                            <i class="mdi mdi-account-box-outline"></i> Новый клиент
+                        </a>
+                    @endcan
+                </li>
             </ul>
             <ul class="navbar-nav my-lg-0">
                 

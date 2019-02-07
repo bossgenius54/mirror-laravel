@@ -37,6 +37,18 @@
                     </li>
                 @endcan
                 
+                @can('list', App\Model\Formula::class)
+                    <li>
+                        <a class="waves-effect waves-dark" href="{{ action('Common\FormulaController@getIndex') }}">
+                            <i class="fa fa-list-alt"></i>
+                            <span class="hide-menu">
+                                Рецепты
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+
+                
                 <li class="nav-small-cap">Склад</li>
                 
                 @can('list', App\Model\View\BranchProduct::class)
