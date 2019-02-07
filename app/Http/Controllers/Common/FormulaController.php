@@ -34,7 +34,7 @@ class FormulaController extends Controller{
 
     function getIndex (Request $request){
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['items'] = FormulaList::get($request)->latest()->paginate(24);
         $ar['ar_propose'] = Formula::getProposeAr();
@@ -44,7 +44,7 @@ class FormulaController extends Controller{
 
     function getCreate(Request $request, Individ $user){
         $ar = array();
-        $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
+        $ar['title'] = 'Добавить элемент в список "'.$this->title.'"';
         $ar['action'] = action('Common\FormulaController@postCreate', $user);
         $ar['ar_propose'] = Formula::getProposeAr();
 
@@ -57,13 +57,13 @@ class FormulaController extends Controller{
         $ar['created_user_id'] = $request->user()->id;
         $item = Formula::create($ar);
         
-        return redirect()->action("Common\FormulaController@getIndex", ['user_id'=> $user->id])->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Common\FormulaController@getIndex", ['user_id'=> $user->id])->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
     function getDelete(Request $request, Formula $item){
         $id = $item->id;
         $item->delete();
 
-        return redirect()->back()->with('success', 'Удален елемент списка "'.$this->title.'" № '.$id);
+        return redirect()->back()->with('success', 'Удален элемент списка "'.$this->title.'" № '.$id);
     }
 }

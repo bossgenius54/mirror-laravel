@@ -32,11 +32,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
-                            <label>Наименование</label>
-                            <input type="text" class="form-control" name="name" required> 
-                        </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-6">
                             <label>Заметка</label>
                             <input type="text" class="form-control" name="note" > 
                         </div>

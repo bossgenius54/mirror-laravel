@@ -28,12 +28,8 @@
             <h6>{{ $item->may_finish_at }}</h6>
         @endif
         @if ($item->name )
-            <small class="text-muted">Наименование</small>
-            <h6>{{ $item->name }}</h6>
-        @endif
-        @if ($item->note )
             <small class="text-muted">Заметка</small>
-            <h6>{{ $item->note }}</h6>
+            <h6>{{ $item->name }}</h6>
         @endif
         <small class="text-muted">Менеджер</small>
         <h6>{{ $item->relCreatedUser ? $item->relCreatedUser->name : '' }}</h6>

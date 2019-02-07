@@ -24,7 +24,7 @@ class ViewController extends Controller{
         $can_ar_status = CanChangeOrderStatusRules::getArStatus($request->user(), $item);
 
         $ar = array();
-        $ar['title'] = 'Просмотр елемента списка "'.$this->title.'"';
+        $ar['title'] = 'Просмотр элемента списка "'.$this->title.'"';
         $ar['item'] = $item;
         $ar['action'] = action('Order\ViewController@postUpdate', $item);
 
@@ -61,7 +61,7 @@ class ViewController extends Controller{
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Изменен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->back()->with('success', 'Изменен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
 }

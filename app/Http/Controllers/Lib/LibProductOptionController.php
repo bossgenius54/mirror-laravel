@@ -13,7 +13,7 @@ class LibProductOptionController extends Controller{
 
     function getIndex (Request $request){
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['items'] = LibProductOption::latest()->paginate(24);
         $ar['ar_cat'] = LibProductCat::getAr();
@@ -23,7 +23,7 @@ class LibProductOptionController extends Controller{
 
     function getCreate(Request $request){
         $ar = array();
-        $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
+        $ar['title'] = 'Добавить элемент в список "'.$this->title.'"';
         $ar['action'] = action('Lib\LibProductOptionController@postCreate');
         $ar['ar_type'] = LibProductType::getArWithCat();
 
@@ -39,12 +39,12 @@ class LibProductOptionController extends Controller{
 
         $item = LibProductOption::create($ar);
         
-        return redirect()->action("Lib\LibProductOptionController@getIndex")->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Lib\LibProductOptionController@getIndex")->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
     function getUpdate(Request $request, LibProductOption $item){
         $ar = array();
-        $ar['title'] = 'Изменить елемент № '. $item->id.' списка "'.$this->title.'"';
+        $ar['title'] = 'Изменить элемент № '. $item->id.' списка "'.$this->title.'"';
         $ar['item'] = $item;
         $ar['ar_type'] = LibProductType::getArWithCat();
         $ar['action'] = action('Lib\LibProductOptionController@postUpdate', $item);
@@ -65,13 +65,13 @@ class LibProductOptionController extends Controller{
 
         $item->update($ar);
 
-        return redirect()->action("Lib\LibProductOptionController@getIndex")->with('success', 'Изменен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Lib\LibProductOptionController@getIndex")->with('success', 'Изменен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
     function getDelete(Request $request, LibProductOption $item){
         $id = $item->id;
         $item->delete();
 
-        return redirect()->back()->with('success', 'Удален елемент списка "'.$this->title.'" № '.$id);
+        return redirect()->back()->with('success', 'Удален элемент списка "'.$this->title.'" № '.$id);
     }
 }

@@ -18,7 +18,7 @@ class BranchProductController extends Controller{
         $items = ProductList::get($request);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['items'] = $items->latest()->paginate(12);
         $ar['ar_branch'] = BranchList::get($request)->pluck('name', 'id')->toArray();

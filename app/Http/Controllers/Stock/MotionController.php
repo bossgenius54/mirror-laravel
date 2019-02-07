@@ -36,7 +36,7 @@ class MotionController extends Controller{
         $items = MotionFilter::filter($request, $items);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = MotionFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
@@ -56,7 +56,7 @@ class MotionController extends Controller{
         }
 
         $ar = array();
-        $ar['title'] = 'Детализация елемента списока "'.$this->title.'"';
+        $ar['title'] = 'Детализация элемента списока "'.$this->title.'"';
         $ar['ar_status'] = SysMotionStatus::pluck('name', 'id')->toArray();
         $ar['positions'] = $positions;
         $ar['services'] = $services;
@@ -67,7 +67,7 @@ class MotionController extends Controller{
 
     function getCreate(Request $request){
         $ar = array();
-        $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
+        $ar['title'] = 'Добавить элемент в список "'.$this->title.'"';
         $ar['action'] = action('Stock\MotionController@postCreate');
         $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
 
@@ -91,12 +91,12 @@ class MotionController extends Controller{
             return redirect()->back()->with('error', $e->getMessage());
         }
         
-        return redirect()->action('Stock\MotionController@getUpdate', $item)->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action('Stock\MotionController@getUpdate', $item)->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
     function getUpdate(Request $request, Motion $item){
         $ar = array();
-        $ar['title'] = 'Изменить елемент № '. $item->id.' списка "'.$this->title.'"';
+        $ar['title'] = 'Изменить элемент № '. $item->id.' списка "'.$this->title.'"';
         $ar['item'] = $item;
         $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
         $ar['products'] = Product::where('company_id', $request->user()->company_id)
@@ -194,7 +194,7 @@ class MotionController extends Controller{
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->action('Stock\MotionController@getIndex')->with('success', 'Изменен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action('Stock\MotionController@getIndex')->with('success', 'Изменен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
     function getCanceled(Request $request, Motion $item){
@@ -216,7 +216,7 @@ class MotionController extends Controller{
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->action('Stock\MotionController@getIndex')->with('success', 'Отменен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action('Stock\MotionController@getIndex')->with('success', 'Отменен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
 }

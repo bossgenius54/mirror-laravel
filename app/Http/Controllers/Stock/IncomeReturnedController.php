@@ -27,7 +27,7 @@ class IncomeReturnedController extends Controller{
         $items = IncomeReturnedFilter::filter($request, $items);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = IncomeReturnedFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
@@ -44,7 +44,7 @@ class IncomeReturnedController extends Controller{
         
 
         $ar = array();
-        $ar['title'] = 'Детализация елемента списока "'.$this->title.'"';
+        $ar['title'] = 'Детализация элемента списока "'.$this->title.'"';
         $ar['ar_type'] = SysIncomeType::pluck('name', 'id')->toArray();
         $ar['income_position'] = $income_position;
         $ar['income_services'] = IncomeService::where('income_id', $item->id)->get();

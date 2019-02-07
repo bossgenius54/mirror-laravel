@@ -35,7 +35,7 @@ class IncomeFromCompanyController extends Controller{
         $items = IncomeFromCompanyFilter::filter($request, $items);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = IncomeFromCompanyFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
@@ -55,7 +55,7 @@ class IncomeFromCompanyController extends Controller{
         
 
         $ar = array();
-        $ar['title'] = 'Детализация елемента списока "'.$this->title.'"';
+        $ar['title'] = 'Детализация элемента списока "'.$this->title.'"';
         $ar['ar_type'] = SysIncomeType::pluck('name', 'id')->toArray();
         $ar['positions'] = $positions;
         $ar['services'] = $services;
@@ -77,7 +77,7 @@ class IncomeFromCompanyController extends Controller{
             $branches->where('id', $request->user()->branch_id);
 
         $ar = array();
-        $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
+        $ar['title'] = 'Добавить элемент в список "'.$this->title.'"';
         $ar['action'] = action('Stock\IncomeFromCompanyController@postCreate');
         $ar['ar_branch'] = $branches->pluck('name', 'id')->toArray();
         $ar['products'] = $products;
@@ -148,7 +148,7 @@ class IncomeFromCompanyController extends Controller{
             return redirect()->back()->with('error', $e->getMessage());
         }
         
-        return redirect()->action("Stock\IncomeFromCompanyController@getIndex")->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$income->id);
+        return redirect()->action("Stock\IncomeFromCompanyController@getIndex")->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$income->id);
     }
 
     function getDelete(Request $request, IncomeFromCompany $item){
@@ -158,7 +158,7 @@ class IncomeFromCompanyController extends Controller{
         $id = $item->id;
         $item->delete();
 
-        return redirect()->back()->with('success', 'Удален елемент списка "'.$this->title.'" № '.$id);
+        return redirect()->back()->with('success', 'Удален элемент списка "'.$this->title.'" № '.$id);
     }
 
 }

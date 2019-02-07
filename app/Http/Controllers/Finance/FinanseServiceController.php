@@ -17,7 +17,7 @@ class FinanseServiceController extends Controller{
         $items = FinanceServiceFilter::filter($request, $items);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = FinanceServiceFilter::getFilterBlock($request);
         $ar['items'] = $items->with('relBranch', 'relService')->latest()->paginate(24);

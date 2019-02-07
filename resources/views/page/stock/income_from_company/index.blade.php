@@ -29,7 +29,6 @@
                         <th>В филиал</th>
                         <th>От компании</th>
                         <th>Сумма</th>
-                        <th>Наименование</th>
                         <th>Заметка</th>
                         <th>Изменен</th>
                         <th>Создан</th>
@@ -43,7 +42,6 @@
                             <td>{{ $i->relBranch ? $i->relBranch->name : '' }}</td>
                             <td>{{ $i->relFromCompany ? $i->relFromCompany->name : '' }}</td>
                             <td>{{ $i->related_cost }}</td>
-                            <td>{{ $i->name }}</td>
                             <td>{{ $i->note }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>

@@ -24,7 +24,7 @@ class ListOrderController extends Controller{
         $items = OrderFilter::filter($request, $items);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = OrderFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);

@@ -20,7 +20,7 @@ class ExternalDoctorController extends Controller{
         $items = UserFilter::filter($request, $items);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['filter_block'] = UserFilter::getFilterBlock($request);
         $ar['request'] = $request;
         $ar['items'] = $items->latest()->paginate(24);
@@ -30,7 +30,7 @@ class ExternalDoctorController extends Controller{
 
     function getCreate(Request $request){
         $ar = array();
-        $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
+        $ar['title'] = 'Добавить элемент в список "'.$this->title.'"';
         $ar['action'] = action('Lib\ExternalDoctorController@postCreate');
 
         return view('page.lib.external_doctor.create', $ar);
@@ -52,12 +52,12 @@ class ExternalDoctorController extends Controller{
 
         $item = ExternalDoctor::create($ar);
         
-        return redirect()->action("Lib\ExternalDoctorController@getIndex")->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Lib\ExternalDoctorController@getIndex")->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
     function getUpdate(Request $request, ExternalDoctor $item){
         $ar = array();
-        $ar['title'] = 'Изменить елемент № '. $item->id.' списка "'.$this->title.'"';
+        $ar['title'] = 'Изменить элемент № '. $item->id.' списка "'.$this->title.'"';
         $ar['item'] = $item;
         $ar['action'] = action('Lib\ExternalDoctorController@postUpdate', $item);
 
@@ -80,14 +80,14 @@ class ExternalDoctorController extends Controller{
         
         $item->update($ar);
 
-        return redirect()->action("Lib\ExternalDoctorController@getIndex")->with('success', 'Изменен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Lib\ExternalDoctorController@getIndex")->with('success', 'Изменен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
     function getDelete(Request $request, ExternalDoctor $item){
         $id = $item->id;
         $item->update(['is_active' => 0]);
 
-        return redirect()->back()->with('success', 'Удален елемент списка "'.$this->title.'" № '.$id);
+        return redirect()->back()->with('success', 'Удален элемент списка "'.$this->title.'" № '.$id);
     }
 
 }

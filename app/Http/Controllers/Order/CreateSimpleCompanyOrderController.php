@@ -22,7 +22,7 @@ class CreateSimpleCompanyOrderController extends Controller{
 
     function getCreate(Request $request){
         $ar = array();
-        $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
+        $ar['title'] = 'Добавить элемент в список "'.$this->title.'"';
         $ar['action'] = action('Order\CreateSimpleCompanyOrderController@postCreate');
         $ar['ar_branch'] = BranchList::get($request)->where('has_onlain', 1)->pluck('name', 'id')->toArray();
         $ar['companies'] = CompanyList::get($request)->pluck('name', 'id')->toArray();
@@ -54,7 +54,7 @@ class CreateSimpleCompanyOrderController extends Controller{
             return redirect()->back()->with('error', $e->getMessage());
         }
         
-        return redirect()->action("Order\ViewController@getView", $item)->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Order\ViewController@getView", $item)->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
 }

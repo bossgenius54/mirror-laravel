@@ -25,7 +25,7 @@ class ProductController extends Controller{
         $items = ProductFilter::filter($request, $items);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = ProductFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
@@ -36,7 +36,7 @@ class ProductController extends Controller{
 
     function getCreate(Request $request, LibProductCat $cat){
         $ar = array();
-        $ar['title'] = 'Добавить елемент в список "'.$this->title.'", категория "'.$cat->name.'"';
+        $ar['title'] = 'Добавить элемент в список "'.$this->title.'", категория "'.$cat->name.'"';
         $ar['action'] = action('Stock\ProductController@postCreate', $cat);
         $ar['types'] = LibProductType::where('cat_id', $cat->id)->with('relOptions')->orderBy('id', 'asc')->get();
 
@@ -77,14 +77,14 @@ class ProductController extends Controller{
             return redirect()->back()->with('error', $e->getMessage());
         }
         
-        return redirect()->action("Stock\ProductController@getIndex")->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Stock\ProductController@getIndex")->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
     function getUpdate(Request $request, Product $item){
         $cat = LibProductCat::findOrFail($item->cat_id);
 
         $ar = array();
-        $ar['title'] = 'Изменить елемент № '. $item->id.' списка "'.$this->title.'"';
+        $ar['title'] = 'Изменить элемент № '. $item->id.' списка "'.$this->title.'"';
         $ar['item'] = $item;
         $ar['ar_sel_option'] = $item->relOptions()->pluck('option_id')->toArray();
         $ar['types'] = LibProductType::where('cat_id', $cat->id)->with('relOptions')->orderBy('id', 'asc')->get();
@@ -130,14 +130,14 @@ class ProductController extends Controller{
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->action("Stock\ProductController@getIndex")->with('success', 'Изменен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Stock\ProductController@getIndex")->with('success', 'Изменен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
     function getDelete(Request $request, Product $item){
         $id = $item->id;
         $item->delete();
 
-        return redirect()->back()->with('success', 'Удален елемент списка "'.$this->title.'" № '.$id);
+        return redirect()->back()->with('success', 'Удален элемент списка "'.$this->title.'" № '.$id);
     }
 
     private function generateSysName(Request $request, LibProductCat $cat){

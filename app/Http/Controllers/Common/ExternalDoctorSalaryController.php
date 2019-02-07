@@ -23,7 +23,7 @@ class ExternalDoctorSalaryController  extends Controller{
         $items = ExternalDoctorSalaryFilter::filter($request, $items);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = ExternalDoctorSalaryFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
@@ -33,7 +33,7 @@ class ExternalDoctorSalaryController  extends Controller{
 
     function getCreate(Request $request){
         $ar = array();
-        $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
+        $ar['title'] = 'Добавить элемент в список "'.$this->title.'"';
         $ar['action'] = action('Common\ExternalDoctorSalaryController@postCreate');
 
         $ar['orders'] = OrderList::get($request)->pluck('name', 'id')->toArray();
@@ -48,14 +48,14 @@ class ExternalDoctorSalaryController  extends Controller{
 
         $item = ExternalDoctorSalary::create($ar);
         
-        return redirect()->action("Common\ExternalDoctorSalaryController@getIndex")->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Common\ExternalDoctorSalaryController@getIndex")->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
     function getDelete(Request $request, ExternalDoctorSalary $item){
         $id = $item->id;
         $item->delete();
 
-        return redirect()->back()->with('success', 'Удален елемент списка "'.$this->title.'" № '.$id);
+        return redirect()->back()->with('success', 'Удален элемент списка "'.$this->title.'" № '.$id);
     }
 
 }

@@ -4,6 +4,18 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="nav-devider"></li>
+                
+                @can('list', App\Model\View\Individ::class)
+                    <li>
+                        <a class="" href="{{ action('Lib\IndividController@getIndex') }}">
+                            <i class="mdi mdi-account-box-outline"></i>
+                            <span class="hide-menu">
+                                База клиентов
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+                
                 @can('list', App\Model\Order::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Order\ListOrderController@getIndex') }}">
@@ -128,16 +140,6 @@
                             <i class="mdi mdi-alphabetical"></i>
                             <span class="hide-menu">
                                 Компании
-                            </span>
-                        </a>
-                    </li>
-                @endcan
-                @can('list', App\Model\View\Individ::class)
-                    <li>
-                        <a class="" href="{{ action('Lib\IndividController@getIndex') }}">
-                            <i class="mdi mdi-account-box-outline"></i>
-                            <span class="hide-menu">
-                                Физ. лица
                             </span>
                         </a>
                     </li>

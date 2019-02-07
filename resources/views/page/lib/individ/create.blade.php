@@ -13,20 +13,24 @@
             <div class="card-body">
                 <form class="form-material" action="{{ $action }}" method="post"  enctype="multipart/form-data">
                     <div class="form-group">
-                        <label>Почтовый адрес</label>
-                        <input type="email" class="form-control " name="email"  required> 
+                        <label>Телефон</label>
+                        <input type="text" class="form-control " name="phone" required> 
                     </div>
                     <div class="form-group">
                         <label>ФИО</label>
                         <input type="text" class="form-control " name="name" required> 
                     </div>
                     <div class="form-group">
-                        <label>ИИН</label>
-                        <input type="text" class="form-control " name="iin" required> 
+                        <label>Почтовый адрес</label>
+                        <input type="email" class="form-control " name="email"  required> 
                     </div>
                     <div class="form-group">
-                        <label>Телефон</label>
-                        <input type="text" class="form-control " name="phone" required> 
+                        <label>Адрес доставки</label>
+                        <input type="text" class="form-control " name="address"  required> 
+                    </div>
+                    <div class="form-group">
+                        <label>ИИН</label>
+                        <input type="text" class="form-control " name="iin" required> 
                     </div>
                     <div class="form-group">
                         <label>Фото</label>

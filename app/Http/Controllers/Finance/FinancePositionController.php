@@ -18,7 +18,7 @@ class FinancePositionController extends Controller{
         $items = FinancePositionFilter::filter($request, $items);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = FinancePositionFilter::getFilterBlock($request);
         $ar['items'] = $items->with('relBranch', 'relProduct')->latest()->paginate(24);

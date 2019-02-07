@@ -26,7 +26,7 @@ class OutcomeController extends Controller{
         $items = OutcomeFilter::filter($request, $items);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = OutcomeFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
@@ -48,7 +48,7 @@ class OutcomeController extends Controller{
         
 
         $ar = array();
-        $ar['title'] = 'Детализация елемента списока "'.$this->title.'"';
+        $ar['title'] = 'Детализация элемента списока "'.$this->title.'"';
         $ar['ar_type'] = SysOutcomeType::pluck('name', 'id')->toArray();
         $ar['positions'] = $positions;
         $ar['services'] = $services;

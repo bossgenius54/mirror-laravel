@@ -28,7 +28,7 @@ class PositionController extends Controller{
         $items = PositionFilter::filter($request, $items);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = PositionFilter::getFilterBlock($request);
         $ar['items'] = $items->with('relProduct')->latest()->paginate(48);
@@ -41,7 +41,7 @@ class PositionController extends Controller{
 
     function getUpdate(Request $request, Position $item){
         $ar = array();
-        $ar['title'] = 'Изменить елемент № '. $item->id.' списка "'.$this->title.'"';
+        $ar['title'] = 'Изменить элемент № '. $item->id.' списка "'.$this->title.'"';
         $ar['item'] = $item;
         $ar['action'] = action('Stock\PositionController@postUpdate', $item);
 
@@ -60,7 +60,7 @@ class PositionController extends Controller{
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->action("Stock\PositionController@getIndex")->with('success', 'Изменен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->action("Stock\PositionController@getIndex")->with('success', 'Изменен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
 
@@ -78,7 +78,7 @@ class PositionController extends Controller{
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Списан елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->back()->with('success', 'Списан элемент списка "'.$this->title.'" № '.$item->id);
     }
 
 }

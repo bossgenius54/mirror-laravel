@@ -16,7 +16,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Артикул</label>
-                                <input type="text" class="form-control " name="artikul" required> 
+                                <input type="text" class="form-control " name="artikul" > 
                             </div>
                             <div class="form-group">
                                 <label>Наименование</label>

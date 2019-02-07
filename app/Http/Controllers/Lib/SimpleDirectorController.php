@@ -20,7 +20,7 @@ class SimpleDirectorController extends Controller{
         $items = UserFilter::filter($request, $items);
 
         $ar = array();
-        $ar['title'] = 'Список елементов "'.$this->title.'"';
+        $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = UserFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
@@ -31,7 +31,7 @@ class SimpleDirectorController extends Controller{
 
     function getCreate(Request $request, Company $company){
         $ar = array();
-        $ar['title'] = 'Добавить елемент в список "'.$this->title.'"';
+        $ar['title'] = 'Добавить элемент в список "'.$this->title.'"';
         $ar['action'] = action('Lib\SimpleDirectorController@postCreate', $company);
 
         return view('page.lib.simple_director.create', $ar);
@@ -53,7 +53,7 @@ class SimpleDirectorController extends Controller{
 
         $item = SimpleDirector::create($ar);
         
-        return redirect()->back()->with('success', 'Добавлен елемент списка "'.$this->title.'" № '.$item->id);
+        return redirect()->back()->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
 
