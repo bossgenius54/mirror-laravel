@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group">
                         <label>ИИН</label>
-                        <input type="text" class="form-control " name="iin" value="{{ $item->iin }}" required> 
+                        <input type="text" class="form-control " name="iin" data-mask="999999999999"  value="{{ $item->iin }}" required> 
                     </div>
                     <div class="form-group">
                         <label>Фото</label>

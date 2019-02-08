@@ -16,9 +16,7 @@ Route::post('login', 'LoginController@postLogin');
 
 
 Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
-    Route::get('/', function () {
-        return  redirect()->to("profile");
-    });
+    Route::get('/', 'IndexController@getIndex');
 
     Route::group(['prefix' => 'order', 'namespace' => 'Order'], function () {
         

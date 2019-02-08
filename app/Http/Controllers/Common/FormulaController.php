@@ -11,26 +11,6 @@ use App\ModelList\FormulaList;
 
 class FormulaController extends Controller{
     private $title = 'Рецепты';
-    
-    private function getItems(Request $request){
-        $user = $request->user();
-        
-        $items = Formula::where('id', '>', 0);
-        if ($user->type_id == SysUserType::FIZ)
-            $items->where('user_id', $user->id);
-        else if (in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::MANAGER, SysUserType::DOCTOR, SysUserType::EXTERNAL_DOCTOR]))
-            $items->whereHas('relIndivid', function($q) use ($user){
-                $q->whereHas('relSeller', function($b) use ($user){
-                    $b->where('company_id', $user->company_id);
-                });
-            });
-        
-        if ($request->has('user_id') && $request->user_id){
-            $items->where('user_id', $request->user_id);
-        }
-            
-        return $items;
-    }
 
     function getIndex (Request $request){
         $ar = array();
@@ -38,15 +18,22 @@ class FormulaController extends Controller{
         $ar['request'] = $request;
         $ar['items'] = FormulaList::get($request)->latest()->paginate(24);
         $ar['ar_propose'] = Formula::getProposeAr();
+        $ar['contact_type_id'] = Formula::CONTACT_TYPE_ID;
 
         return view('page.common.formula.index', $ar);
     }
 
     function getCreate(Request $request, Individ $user){
+        $type_id = Formula::SIMPLE_TYPE_ID;
+        if ($request->type_id == Formula::CONTACT_TYPE_ID)
+            $type_id = Formula::CONTACT_TYPE_ID;
+
         $ar = array();
         $ar['title'] = 'Добавить элемент в список "'.$this->title.'"';
         $ar['action'] = action('Common\FormulaController@postCreate', $user);
         $ar['ar_propose'] = Formula::getProposeAr();
+        $ar['type_id'] = $type_id;
+        $ar['contact_type_id'] = Formula::CONTACT_TYPE_ID;
 
         return view('page.common.formula.create', $ar);
     }

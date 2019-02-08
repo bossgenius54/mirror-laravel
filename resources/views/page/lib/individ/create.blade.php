@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group">
                         <label>ИИН</label>
-                        <input type="text" class="form-control " name="iin" required> 
+                        <input type="text" class="form-control " data-mask="999999999999" name="iin" required> 
                     </div>
                     <div class="form-group">
                         <label>Фото</label>

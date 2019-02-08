@@ -14,7 +14,11 @@
                         @if ($request->user_id)
                             <a href="{{ action('Common\FormulaController@getCreate', $request->user_id) }}" type="button" 
                                 class="btn btn-sm btn-info btn-rounded pull-right" >
-                                Добавить
+                                Создать рецепт на очковые линзы
+                            </a>
+                            <a href="{{ action('Common\FormulaController@getCreate', $request->user_id) }}?type_id={{ $contact_type_id }}" type="button" 
+                                class="btn btn-sm btn-info btn-rounded pull-right" >
+                                Создать рецепт на контактные линзы
                             </a>
                         @endif
                     @endcan
@@ -28,7 +32,7 @@
         <div class="col-md-6">
             <div class="card card-outline-info"">
                 <div class="card-header">
-                    <h4 class="m-b-0 text-white">Рецепт № {{ $i->id }}. Выданный пользователю "{{ $i->relIndivid->name }}"</h4>
+                    <h4 class="m-b-0 text-white">Рецепт на {{ $i->type_id == $contact_type_id ? 'контактные линзы' : 'очковые линзы' }} № {{ $i->id }}. Выданный пользователю "{{ $i->relIndivid->name }}"</h4>
                 </div>
                 <div class="card-body">
                     <h4 class="card-title"></h4>
@@ -84,7 +88,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <small>Расстояние между центрами зрачков</small> <br/>
+                        @if ($i->type_id == $contact_type_id)
+                            <small>Кривизна</small> <br/>
+                        @else 
+                            <small>Расстояние между центрами зрачков</small> <br/>
+                        @endif
                         <input type="text" class="form-control "  value="{{ $i->len }}" disabled > 
                     </div>
                     <div class="form-group">

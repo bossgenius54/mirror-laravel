@@ -1,7 +1,7 @@
 @if ($formula)
     <div class="card card-outline-info"">
         <div class="card-header">
-            <h4 class="m-b-0 text-white">Рецепт № {{ $formula->id }}. Выданный пользователю "{{ $formula->relIndivid->name }}"</h4>
+            <h4 class="m-b-0 text-white">Рецепт на {{ $formula->type_id == App\Model\Formula::CONTACT_TYPE_ID ? 'контактные линзы' : 'очковые линзы' }} № {{ $formula->id }}. Выданный пользователю "{{ $formula->relIndivid->name }}"</h4>
         </div>
         <div class="card-body">
             <h4 class="card-title"></h4>
@@ -57,7 +57,11 @@
                 </div>
             </div>
             <div class="form-group">
-                <small>Расстояние между центрами зрачков</small> <br/>
+                @if (App\Model\Formula::CONTACT_TYPE_ID == $formula->type_id)
+                    <small>Кривизна</small> <br/>
+                @else
+                    <small>Расстояние между центрами зрачков</small> <br/>
+                @endif
                 {{ $formula->len }}
             </div>
             <div class="form-group">
