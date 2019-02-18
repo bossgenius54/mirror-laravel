@@ -27,6 +27,7 @@ class UserFilter {
         $this->filterName();
         $this->filterEmail();
         $this->filterIin();
+        $this->filterPhone();
         $this->filterBranch();
 
     }
@@ -55,6 +56,13 @@ class UserFilter {
             return;
 
         $this->items->where('iin', 'like', '%'.$this->request->iin.'%');
+    }
+
+    private  function filterPhone(){
+        if (!$this->request->has('phone') || !$this->request->phone)
+            return;
+
+        $this->items->where('phone', 'like', '%'.$this->request->phone.'%');
     }
 
     

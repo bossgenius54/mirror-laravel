@@ -103,7 +103,23 @@
                         <small>Примечание</small> <br/>
                         <input type="text" class="form-control" value="{{ $i->note }}" disabled > 
                     </div>
-                    <p class="card-text"><small class="text-muted pull-right">Создан {{ $i->created_at }}, от врача "{{ $i->relCreatedUser->name }}"</small></p>
+                    <p class="card-text"><small class="text-muted pull-right">Создан {{ $i->created_at }}, от  "{{ $i->relCreatedUser->name }}" ({{ $i->relCreatedUser->getClearTypeName() }})</small></p>
+                    
+                </div>
+                
+                <div class="card-footer">
+                    @if ($request->user_id)
+                        @can('update', $i)
+                            <a class="btn btn-warning" href="{{ action('Common\FormulaController@getUpdate', [$request->user_id, $i]) }}">
+                                Изменить
+                            </a>
+                        @endcan
+                    @endif
+                    @can('delete', $i)
+                        <a class="btn btn-danger pull-right"  href="{{ action('Common\FormulaController@getDelete', $i) }}">
+                            Удалить
+                        </a>
+                    @endcan
                 </div>
             </div>
         </div>

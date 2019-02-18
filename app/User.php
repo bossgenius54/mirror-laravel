@@ -49,4 +49,12 @@ class User extends Authenticatable
     function relBranch(){
         return $this->belongsTo('App\Model\Branch', 'branch_id');
     }
+
+
+    function getClearTypeName(){
+        $type = SysUserType::find( $this->type_id);
+        $name = ($type ? $type->name : '');
+
+        return $name;
+    }
 }

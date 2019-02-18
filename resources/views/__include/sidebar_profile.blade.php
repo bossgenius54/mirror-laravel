@@ -2,8 +2,16 @@
     <div class="profile-text"> 
         <h5>{!! Auth::user()->getTypeName() !!}</h5>
     </div>
-    <div class="profile-img"> 
-        <img src="{{ Auth::user()->photo ? Auth::user()->photo : '/assets/images/users/1.jpg' }}" alt="user" style="width: 58px; height: 50px;"> 
+    <div class="profile-img" style="
+        background: url({{ Auth::user()->photo ? Auth::user()->photo : '/assets/images/users/1.jpg' }});
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+        background-position: 50% !important;
+        
+        width: 55px;
+        height: 55px;
+    "> 
+        <img sda="{{ Auth::user()->photo ? Auth::user()->photo : '/assets/images/users/1.jpg' }}" alt="user" style="display: none;"> 
     </div>
     <div class="profile-text"> 
         <h6>{{ Auth::user()->name }}</h6>

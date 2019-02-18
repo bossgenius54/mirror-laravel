@@ -64,6 +64,8 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('/', 'FormulaController@getIndex')->middleware('can:list,App\Model\Formula');
             Route::get('create/{user}', 'FormulaController@getCreate')->middleware('can:create,App\Model\Formula');
             Route::post('create/{user}', 'FormulaController@postCreate')->middleware('can:create,App\Model\Formula');
+            Route::get('update/{user}/{item}', 'FormulaController@getUpdate')->middleware('can:update,item');
+            Route::post('update/{user}/{item}', 'FormulaController@postUpdate')->middleware('can:update,item');
             Route::get('delete/{item}', 'FormulaController@getDelete')->middleware('can:delete,item');
         });
 

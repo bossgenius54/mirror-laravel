@@ -7,16 +7,18 @@
             </div>
             <div class="card-body">
                 <form class="form-material row" >
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <input type="text" class="form-control " placeholder="Почтовый адрес" name="email" value="{{ $request->email }}"> 
                     </div>
                     <div class="form-group col-md-3">
                         <input type="text" class="form-control " placeholder="ФИО" name="name" value="{{ $request->name }}" > 
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <input type="text" class="form-control " placeholder="ИИН" name="iin" value="{{ $request->iin }}"> 
                     </div>
-                    
+                    <div class="form-group col-md-2">
+                        <input type="text" class="form-control " placeholder="Телефон" name="phone" value="{{ $request->phone }}"> 
+                    </div>
                     <div class="form-group col-md-2">
                         <button class="btn btn-warning btn-block" type="submit">Отфильтровать</button>
                     </div>
