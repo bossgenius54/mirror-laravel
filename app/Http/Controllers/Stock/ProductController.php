@@ -38,7 +38,7 @@ class ProductController extends Controller{
         $ar = array();
         $ar['title'] = 'Добавить элемент в список "'.$this->title.'", категория "'.$cat->name.'"';
         $ar['action'] = action('Stock\ProductController@postCreate', $cat);
-        $ar['types'] = LibProductType::where('cat_id', $cat->id)->with('relOptions')->orderBy('id', 'asc')->get();
+        $ar['types'] = LibProductType::where('cat_id', $cat->id)->orderBy('name', 'asc')->with('relOptions')->orderBy('id', 'asc')->get();
 
         return view('page.stock.product.create', $ar);
     }
@@ -50,7 +50,7 @@ class ProductController extends Controller{
         $ar['company_id'] = $request->user()->company_id;
         $ar['cat_id'] = $cat->id;
         $ar['sys_num'] = $this->sys_name;
-
+        
         if (Product::where([    'company_id' => $request->user()->company_id,
                                 'cat_id' => $cat->id,
                                 'sys_num' => $this->sys_name])->count() > 0)
@@ -87,7 +87,7 @@ class ProductController extends Controller{
         $ar['title'] = 'Изменить элемент № '. $item->id.' списка "'.$this->title.'"';
         $ar['item'] = $item;
         $ar['ar_sel_option'] = $item->relOptions()->pluck('option_id')->toArray();
-        $ar['types'] = LibProductType::where('cat_id', $cat->id)->with('relOptions')->orderBy('id', 'asc')->get();
+        $ar['types'] = LibProductType::where('cat_id', $cat->id)->orderBy('name', 'asc')->with('relOptions')->orderBy('id', 'asc')->get();
         $ar['action'] = action('Stock\ProductController@postUpdate', $item);
 
         return view('page.stock.product.update', $ar);
@@ -141,19 +141,22 @@ class ProductController extends Controller{
     }
 
     private function generateSysName(Request $request, LibProductCat $cat){
+        $ar_option_type = LibProductType::where('cat_id', $cat->id)->where('need_in_generate', 1)->orderBy('sys_num', 'asc')->pluck('id');
+
         $ar = $request->all();
         $this->ar_option = [];
 
-        $this->sys_name = $cat->id;
-        if (isset($ar['option']) && count($ar['option'])) {
-            $this->sys_name .= '/';
+        $this->sys_name = $cat->name;
 
-            foreach ($ar['option'] as $type_id => $option_id){
-                $this->sys_name .= $option_id.'-';
-                if ($option_id > 0)
-                    $this->ar_option[] = $option_id;
-            }
-            $this->sys_name = mb_substr($this->sys_name, 0, -1);
+        foreach ($ar_option_type as $type_id) {
+            if (!isset($ar['option'][$type_id]))
+                continue;
+            
+            $option = LibProductOption::find($ar['option'][$type_id]);
+            if (!$option)
+                continue;
+        
+            $this->sys_name .= ' '.$option->option_val;
         }
         
 

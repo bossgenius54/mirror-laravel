@@ -22,6 +22,8 @@
                 <thead>
                     <tr>
                         <th>id</th>
+                        <th>Cист. номер</th>
+                        <th>Участвует в форм. номера</th>
                         <th>Категория</th>
                         <th>Наименование</th>
                         <th>Изменен</th>
@@ -33,6 +35,8 @@
                     @foreach ($items as $i)
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                             <td>{{ $i->id }}</td>
+                            <td>{{ $i->sys_num }}</td>
+                            <td>{{ $i->need_in_generate ? 'да' : 'нет' }}</td>
                             <td>{{ isset($ar_cat[$i->cat_id]) ? $ar_cat[$i->cat_id] : 'не указано' }}</td>
                             <td>{{ $i->name }}</td>
                             <td>{{ $i->updated_at }}</td>

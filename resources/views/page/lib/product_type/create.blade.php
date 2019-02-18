@@ -24,6 +24,17 @@
                         <label>Наименование</label>
                         <input type="text" class="form-control " name="name" required> 
                     </div>
+                    <div class="form-group">
+                        <label>Участвует в форм. номера</label>
+                        <select name="need_in_generate" class="form-control" >
+                            <option value="0">Нет</option>
+                            <option value="1">Да</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cист. номер</label>
+                        <input type="number" class="form-control " name="sys_num" required> 
+                    </div>
                     <button class="btn btn-info pull-right" type="submit">Сохранить</button>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </form>

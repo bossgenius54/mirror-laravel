@@ -9,7 +9,7 @@ use App\Helper\Traits\DateHelper;
 
 class LibProductType extends Model{
     protected $table = 'lib_product_type';
-    protected $fillable = ['name', 'cat_id'];
+    protected $fillable = ['name', 'cat_id', 'sys_num', 'need_in_generate'];
     use DateHelper;
     
     static function getAr(){

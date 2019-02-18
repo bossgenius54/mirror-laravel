@@ -8,6 +8,7 @@ use App\Model\SysUserType;
 class IndexController extends Controller{
 
     function getIndex(Request $request){
+       
         $user = $request->user();
         if ($user->type_id == SysUserType::DIRECTOR)
             return redirect()->action('Lib\IndividController@getIndex');
@@ -24,7 +25,7 @@ class IndexController extends Controller{
         if ($user->type_id == SysUserType::STOCK_MANAGER)
             return redirect()->action('Stock\BranchProductController@getIndex');
             
-        return redirect()->action('/');
+        return redirect()->to('profile');
     }  
 
 }
