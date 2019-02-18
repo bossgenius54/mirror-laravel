@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group">
                         <label>Почтовый адрес</label>
-                        <input type="email" class="form-control " name="email"  required> 
+                        <input type="email" class="form-control " name="email"  > 
                     </div>
                     <div class="form-group">
                         <label>Адрес доставки</label>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group">
                         <label>ИИН</label>
-                        <input type="text" class="form-control " data-mask="999999999999" name="iin" required> 
+                        <input type="text" class="form-control " data-mask="999999999999" name="iin" > 
                     </div>
                     <div class="form-group">
                         <label>Фото</label>

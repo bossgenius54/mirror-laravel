@@ -37,12 +37,17 @@ class IndividController extends Controller{
     }
 
     function postCreate(Request $request){
-        if (Individ::where(['email' => $request->email])->count() > 0)
+        $email = $request->email;
+        if (!$email)
+            $email = time().'@crm.qlt.kz';
+
+        if (Individ::where(['email' => $email])->count() > 0)
             return redirect()->back()->with('error', 'Указанный почтовый адрес уже используется');
 
         $ar = $request->all();
         $ar['type_id'] = SysUserType::FIZ;
         $ar['is_active'] = 1;
+        $ar['email'] = $email;
         //$ar['password'] = Hash::make(rand(1000, 9999));
         $ar['password'] = Hash::make(346488);
         $ar['photo'] = UploadPhoto::upload($request->photo);
