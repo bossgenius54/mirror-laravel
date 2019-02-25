@@ -23,9 +23,9 @@
                     <div class="form-group">
                         <label>Тип</label>
                         <div class="demo-radio-button">
-                            <input name="is_retail" type="radio" id="is_retail_0" class="with-gap radio-col-teal" value="0">
+                            <input name="is_retail" type="radio" id="is_retail_0" class="with-gap radio-col-teal" checked=""  value="0">
                             <label for="is_retail_0">Оптовая продажа</label>
-                            <input name="is_retail" type="radio" id="is_retail_1" class="with-gap radio-col-teal" checked="" value="1">
+                            <input name="is_retail" type="radio" id="is_retail_1" class="with-gap radio-col-teal" value="1">
                             <label for="is_retail_1">Розница</label>
                         </div>
                     </div>

@@ -11,7 +11,7 @@ class Formula extends Model{
                             'len', 'purpose', 'note', 'type_id'];
     use DateHelper;
     
-    CONST SIMPLE_TYPE_ID = 2;
+    CONST SIMPLE_TYPE_ID = 1;
     CONST CONTACT_TYPE_ID = 2;
 
     function relIndivid(){

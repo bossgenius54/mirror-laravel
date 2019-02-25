@@ -86,9 +86,11 @@ class ProductController extends Controller{
         $ar = array();
         $ar['title'] = 'Изменить элемент № '. $item->id.' списка "'.$this->title.'"';
         $ar['item'] = $item;
-        $ar['ar_sel_option'] = $item->relOptions()->pluck('option_id')->toArray();
+        $ar['ar_sel_option'] = ProductOption::where('product_id', $item->id)->pluck('option_id')->toArray();
         $ar['types'] = LibProductType::where('cat_id', $cat->id)->orderBy('name', 'asc')->with('relOptions')->orderBy('id', 'asc')->get();
         $ar['action'] = action('Stock\ProductController@postUpdate', $item);
+
+        //dd($ar['ar_sel_option'], $item->relOptions, $item->id, $item);
 
         return view('page.stock.product.update', $ar);
     }
@@ -113,6 +115,7 @@ class ProductController extends Controller{
             ProductOption::where('product_id', $item->id)->delete();
 
             $lib_options = LibProductOption::whereIn('id', $this->ar_option)->where('cat_id', $cat->id)->get();
+
             foreach ($lib_options as $o) {
                 $option = ProductOption::create([
                     'product_id' => $item->id, 
@@ -157,6 +160,7 @@ class ProductController extends Controller{
                 continue;
         
             $this->sys_name .= ' '.$option->option_val;
+            $this->ar_option [] = $option->id;
         }
         
 

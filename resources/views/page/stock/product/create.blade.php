@@ -42,7 +42,7 @@
                                     <div class="demo-radio-button">
                                         <input name="option[{{ $type->id }}]" type="radio" id="radio_{{ $type->id }}_0" checked value="0" />
                                         <label for="radio_{{ $type->id }}_0">Не указан</label>
-                                        @foreach ($type->relOptions as $option)
+                                        @foreach ($type->relOptions()->orderBy('option_name', 'asc')->get() as $option)
                                             <input name="option[{{ $type->id }}]" type="radio" id="radio_{{ $type->id }}_{{ $option->id }}" value="{{ $option->id }}" />
                                             <label for="radio_{{ $type->id }}_{{ $option->id }}">{{ $option->option_name }} </label>
                                         @endforeach

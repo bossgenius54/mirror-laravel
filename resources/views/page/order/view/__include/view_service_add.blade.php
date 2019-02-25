@@ -31,7 +31,7 @@
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
         </form>
-    @else 
+    @else
         <form class="form-material row" action="{{ action('Order\ServiceOrderController@postAddService', $item) }}" method="post" style="margin-top: 15px;" enctype="multipart/form-data">
             <div class="form-group col-md-4">
                 <label>Услуга</label>

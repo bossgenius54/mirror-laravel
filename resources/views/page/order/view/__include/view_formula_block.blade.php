@@ -72,7 +72,7 @@
                 <small>Примечание</small> <br/>
                 {{ $formula->note }}
             </div>
-            <p class="card-text"><small class="text-muted pull-right">Создан {{ $i->created_at }}, от  "{{ $i->relCreatedUser->name }}" ({{ $i->relCreatedUser->getClearTypeName() }})</small></p>
+            <p class="card-text"><small class="text-muted pull-right">Создан {{ $formula->created_at }}, от  "{{ $formula->relCreatedUser->name }}" ({{ $formula->relCreatedUser->getClearTypeName() }})</small></p>
         </div>
     </div>
 @endif
