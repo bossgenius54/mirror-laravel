@@ -17,7 +17,6 @@ class DoctorList {
         return  $el->getResult();
     }
 
-
     private function getItems(){
         $items = Doctor::where('type_id', SysUserType::DOCTOR)->where('is_active', 1);
         if ($this->user->company_id)
