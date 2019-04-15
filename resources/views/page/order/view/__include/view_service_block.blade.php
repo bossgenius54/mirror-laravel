@@ -1,5 +1,5 @@
 @if ($user->can('service', $item) ||  $order_services->count() > 0)
-    @if ($user->type_id != App\Model\SysUserType::COMPANY_CLIENT))4
+    @if ($user->type_id != App\Model\SysUserType::COMPANY_CLIENT)
         <div class="card card-outline-info">
             <div class="card-header">
                 <h4 class="m-b-0 text-white">Услуги</h4>

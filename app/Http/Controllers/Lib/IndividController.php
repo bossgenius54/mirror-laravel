@@ -11,11 +11,15 @@ use App\Model\SysUserType;
 use App\ModelList\IndividList;
 
 use App\ModelFilter\UserFilter;
+use App\Services\SenderMail;
 
 class IndividController extends Controller{
     private $title = 'База клиентов';
 
     function getIndex (Request $request){
+        
+
+
         $items = IndividList::get($request);
         $items = UserFilter::filter($request, $items);
 

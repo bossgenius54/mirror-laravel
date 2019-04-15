@@ -16,7 +16,7 @@
                         <option     value="{{ $product->id }}"  
                                     data-count="{{ $position_count }}" 
                                     data-price="{{ $item->is_retail ? $product->price_retail : $product->price_opt }}">
-                            {{ $product->name }} ({{ $product->sys_num }}).  
+                            {{ $product->artikul }}|{{ $product->name }} ({{ $product->sys_num }}).  
                             Цена {{ $item->is_retail ? $product->price_retail : $product->price_opt }}
                         </option>
                     @endforeach
@@ -57,7 +57,7 @@
                         <option     value="{{ $product->id }}"  
                                     data-count="{{ $position_count }}" 
                                     data-price="{{ $item->is_retail ? $product->price_retail : $product->price_opt }}">
-                            {{ $product->name }} ({{ $product->sys_num }}). 
+                            {{ $product->artikul }}|{{ $product->name }} ({{ $product->sys_num }}). 
                             Цена {{ $item->is_retail ? $product->price_retail : $product->price_opt }}
                         </option>
                     @endforeach
@@ -99,7 +99,7 @@
                         <option     value="{{ $product->id }}"  
                                     data-count="{{ $position_count }}" 
                                     data-price="{{ $item->is_retail ? $product->price_retail : $product->price_opt }}">
-                            {{ $product->name }} ({{ $product->sys_num }}). Есть {{ $position_count }} позиций. 
+                            {{ $product->artikul }}|{{ $product->name }} ({{ $product->sys_num }}). Есть {{ $position_count }} позиций. 
                             Цена {{ $item->is_retail ? $product->price_retail : $product->price_opt }}
                         </option>
                     @endforeach

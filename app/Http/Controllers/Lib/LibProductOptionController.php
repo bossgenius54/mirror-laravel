@@ -12,10 +12,26 @@ class LibProductOptionController extends Controller{
     private $title = 'Опции товаров';
 
     function getIndex (Request $request){
+        $items = LibProductOption::where('id', '>', 0);
+
+        if ($request->cat_name)
+            $items->whereHas('relCat', function($q) use ($request){
+                $q->where('name', 'like', '%'.$request->cat_name.'%');
+            });
+        if ($request->type_name)
+            $items->whereHas('relType', function($q) use ($request){
+                $q->where('name', 'like', '%'.$request->type_name.'%');
+            });
+        if ($request->option_name)
+            $items->where('option_name', 'like', '%'.$request->option_name.'%');
+        if ($request->option_val)
+            $items->where('option_val', 'like', '%'.$request->option_val.'%');
+         
+
         $ar = array();
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = LibProductOption::latest()->paginate(24);
+        $ar['items'] = $items->latest()->paginate(24);
         $ar['ar_cat'] = LibProductCat::getAr();
 
         return view('page.lib.product_option.index', $ar);

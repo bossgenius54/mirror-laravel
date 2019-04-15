@@ -18,7 +18,7 @@
                     </div>
                     <div class="form-group">
                         <label>ФИО</label>
-                        <input type="text" class="form-control " name="name" required> 
+                        <input type="text" class="form-control " name="name" > 
                     </div>
                     <div class="form-group">
                         <label>Почтовый адрес</label>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <label>Адрес доставки</label>
-                        <input type="text" class="form-control " name="address"  required> 
+                        <input type="text" class="form-control " name="address"  > 
                     </div>
                     <div class="form-group">
                         <label>ИИН</label>

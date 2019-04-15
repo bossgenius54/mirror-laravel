@@ -11,6 +11,7 @@ use App\Model\SysUserType;
 use App\Model\Company;
 
 use App\ModelFilter\UserFilter;
+use App\Services\SenderMail;
 
 class SimpleDirectorController extends Controller{
     private $title = 'Клиент/Юр лица';
@@ -52,6 +53,11 @@ class SimpleDirectorController extends Controller{
             unset($ar['photo']);
 
         $item = SimpleDirector::create($ar);
+
+        $title = 'У Вас появился личный кабинет в системе OptiCRM';
+        $note = '<p>Ваш логин - '.$request->email.'</p>';
+        $note .= '<p>Ваш пароль - '.$ar['password'].'</p>';
+        SenderMail::send( $request->email, $title, $note);
         
         return redirect()->back()->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }

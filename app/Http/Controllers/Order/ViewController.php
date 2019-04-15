@@ -32,7 +32,7 @@ class ViewController extends Controller{
         $ar['order_services'] = $item->relServices()->with('relService')->get();
         $ar['ar_order_service'] = $item->relServices()->pluck('service_id')->toArray();
         
-        $ar['products'] = Product::where('company_id', $item->company_id)->get();
+        $ar['products'] = Product::where('company_id', $item->company_id)->orderBy('name', 'asc')->get();
         $ar['order_products'] = $item->relProducts()->with('relProduct')->get();
         $ar['ar_order_product'] = $item->relProducts()->pluck('product_id')->toArray();
 

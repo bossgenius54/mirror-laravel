@@ -60,7 +60,7 @@
                                 @php 
                                     $position_count = $product->relPositions()->where('branch_id', $item->from_branch_id)->where('status_id', $pos_status)->count();
                                 @endphp
-                                <option value="{{ $product->id }}" data-count="{{ $position_count }}">{{ $product->name }} ({{ $product->sys_num }}). Есть {{ $position_count }} позиций</option>
+                                <option value="{{ $product->id }}" data-count="{{ $position_count }}">{{ $product->artikul }}|{{ $product->name }} ({{ $product->sys_num }}). Есть {{ $position_count }} позиций</option>
                             @endforeach
                         </select>
                     </div>

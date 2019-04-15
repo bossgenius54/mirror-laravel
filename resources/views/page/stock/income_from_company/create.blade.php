@@ -39,12 +39,14 @@
                     </div>
                     <h3 class="card-title">Позиции/Товары</h3>
                     <hr />
-                    <div class="row js_pr_add_block">
+                    <div class="row js_pr_add_block" style="    background: #bababa;
+                                                                color: #f1f1f1;
+                                                                margin: 10px 0;">
                         <div class="form-group col-md-4">
                             <label>Ассортимент</label>
                             <select  class="form-control js_pr_select" >
                                 @foreach ($products as $pr)
-                                    <option value="{{ $pr->id }}">{{ $pr->name }} ({{ $pr->sys_num }})</option>
+                                    <option value="{{ $pr->id }}">{{ $pr->artikul }}|{{ $pr->name }} ({{ $pr->sys_num }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -149,7 +151,11 @@
                     </div>
                 `;
 
-                $('.js_position_list').append(html);
+                $('.js_position_list').prepend(html);
+
+                count.val(null);
+                cost.val(null);
+                total.val(null);
             });
             
         });

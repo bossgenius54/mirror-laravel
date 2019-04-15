@@ -4,6 +4,37 @@
 @section('title', $title)
 
 @section('content')
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-outline-warning">
+            <div class="card-header">
+                <h4 class="m-b-0 text-white">Форма фильтрации</h4>
+            </div>
+            <div class="card-body">
+                <form class="form-material row" >
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control " placeholder="Категория" name="cat_name" value="{{ $request->cat_name }}" > 
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control " placeholder="Вид опции" name="type_name" value="{{ $request->type_name }}" > 
+                    </div>
+                    <div class="form-group col-md-2">
+                        <input type="text" class="form-control " placeholder="Наименование опции" name="option_name" value="{{ $request->option_name }}" > 
+                    </div>
+                    <div class="form-group col-md-2">
+                        <input type="text" class="form-control " placeholder="Значение опции" name="option_val" value="{{ $request->option_val }}" > 
+                    </div>
+                    
+                    <div class="form-group col-md-2">
+                        <button class="btn btn-warning btn-block" type="submit">Отфильтровать</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12">
         <div class="card">

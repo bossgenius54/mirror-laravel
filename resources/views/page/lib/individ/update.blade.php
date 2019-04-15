@@ -11,26 +11,26 @@
                 <h4 class="m-b-0 text-white">{{ $title }}</h4>
             </div>
             <div class="card-body">
-                <form class="form-material" action="{{ $action }}" method="post" data-mask="(999) 999-9999"   enctype="multipart/form-data">
+                <form class="form-material" action="{{ $action }}" method="post"   enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Телефон</label>
-                        <input type="text" class="form-control " name="phone" value="{{ $item->phone }}" required> 
+                        <input type="text" class="form-control " name="phone" data-mask="(999) 999-9999"  value="{{ $item->phone }}" required> 
                     </div>
                     <div class="form-group">
                         <label>ФИО</label>
-                        <input type="text" class="form-control " name="name" value="{{ $item->name }}" required> 
+                        <input type="text" class="form-control " name="name" value="{{ $item->name }}" > 
                     </div>
                     <div class="form-group">
                         <label>Почтовый адрес</label>
-                        <input type="email" class="form-control " value="{{ $item->email }}"  readonly> 
+                        <input type="email" class="form-control " value="{{ $item->email }}"  > 
                     </div>
                     <div class="form-group">
                         <label>Адрес доставки</label>
-                        <input type="text" class="form-control " name="address" value="{{ $item->address }}"  required> 
+                        <input type="text" class="form-control " name="address" value="{{ $item->address }}"  > 
                     </div>
                     <div class="form-group">
                         <label>ИИН</label>
-                        <input type="text" class="form-control " name="iin" data-mask="999999999999"  value="{{ $item->iin }}" required> 
+                        <input type="text" class="form-control " name="iin" data-mask="999999999999"  value="{{ $item->iin }}" > 
                     </div>
                     <div class="form-group">
                         <label>Фото</label>

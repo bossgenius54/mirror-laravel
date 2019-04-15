@@ -14,7 +14,7 @@
                 <form class="form-material" action="{{ $action }}" method="post"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Наименование</label>
-                        <input type="text" class="form-control " name="name" required> 
+                        <input type="text" class="form-control " name="name" > 
                     </div>
                     <div class="form-group">
                         <label>От филиала</label>

@@ -69,7 +69,7 @@ class IncomeFromCompanyController extends Controller{
 
     function getCreate(Request $request){
         $user = $request->user();
-        $products = Product::where('company_id', $user->company_id)->select('id', 'sys_num', 'name')->get();
+        $products = Product::where('company_id', $user->company_id)->select('id', 'sys_num', 'name', 'artikul')->get();
 
         $ar_company = Company::whereHas('relSeller', function($q) use ($user){
                             $q->where('company_id', $user->company_id);
