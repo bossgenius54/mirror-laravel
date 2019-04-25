@@ -110,7 +110,7 @@ class IncomeFromCompanyController extends Controller{
 
             $ar_el = [];
             $ar_el['branch_id'] = $income->branch_id;
-            $ar_el['status_id'] = SysPositionStatus::ACTIVE;
+            $ar_el['status_id'] = SysPositionStatus::IN_INCOME;
             $ar_el['income_id'] = $income->id;
 
             foreach ($ar['product_id'] as $k => $product_id) {
@@ -152,6 +152,16 @@ class IncomeFromCompanyController extends Controller{
         }
         
         return redirect()->action("Stock\IncomeFromCompanyController@getIndex")->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$income->id);
+    }
+
+    function getActiveProduct(Request $request, IncomeFromCompany $item){
+        Position::where('income_id', $item->id)->update(
+            [
+                'status_id' => SysPositionStatus::ACTIVE
+            ]
+        );
+
+        return redirect()->back()->with('success', 'Позиции  продукции № '.$item->id.' активны');
     }
 
     function getDelete(Request $request, IncomeFromCompany $item){

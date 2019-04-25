@@ -24,4 +24,8 @@ class Income extends Model{
     function relFromUser(){
         return $this->belongsTo('App\User', 'from_user_id');
     }
+
+    function relPositions(){
+        return $this->hasMany('App\Model\Position', 'income_id');
+    }
 }

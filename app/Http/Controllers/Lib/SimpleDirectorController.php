@@ -56,7 +56,7 @@ class SimpleDirectorController extends Controller{
 
         $title = 'У Вас появился личный кабинет в системе OptiCRM';
         $note = '<p>Ваш логин - '.$request->email.'</p>';
-        $note .= '<p>Ваш пароль - '.$ar['password'].'</p>';
+        $note .= '<p>Ваш пароль - '.$request->password.'</p>';
         SenderMail::send( $request->email, $title, $note);
         
         return redirect()->back()->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);

@@ -10,4 +10,5 @@ class SysPositionStatus extends Model{
     CONST RESERVE = 2;
     CONST IN_MOTION = 4;
     CONST DELETED = 5;
+    CONST IN_INCOME = 6;
 }

@@ -117,10 +117,7 @@
 
                 let pr_id = select.val();
                 let pr_name = block.find( ".js_pr_select option:selected" ).text();
-                if ( $( ".js_pr_el_"+pr_id ).length ) {
-                    alert('Указанный ассортимент уже добавлен');
-                    return;
-                }
+                
 
                 let html = `
                     <div class="row js_pr_el_`+pr_id+`">

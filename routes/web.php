@@ -96,6 +96,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('create', 'IncomeFromCompanyController@getCreate')->middleware('can:create,App\Model\View\IncomeFromCompany');
             Route::post('create', 'IncomeFromCompanyController@postCreate')->middleware('can:create,App\Model\View\IncomeFromCompany');
             Route::get('delete/{item}', 'IncomeFromCompanyController@getDelete')->middleware('can:delete,item');
+            Route::get('active-product/{item}', 'IncomeFromCompanyController@getActiveProduct')->middleware('can:create,App\Model\View\IncomeFromCompany');
             Route::get('view/{item}', 'IncomeFromCompanyController@getView')->middleware('can:view,item');
         });
 
