@@ -33,6 +33,10 @@
                         <input type="text" class="form-control " data-mask="999999999999" name="iin" > 
                     </div>
                     <div class="form-group">
+                        <label>Дата рождения</label>
+                        <input type="date" class="form-control " name="b_date" > 
+                    </div>
+                    <div class="form-group">
                         <label>Фото</label>
                         <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                             <div class="form-control" data-trigger="fileinput"> 

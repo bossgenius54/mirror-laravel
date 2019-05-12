@@ -11,7 +11,13 @@
                         <input type="text" class="form-control " placeholder="Системный номер" name="sys_num" value="{{ $request->sys_num }}" > 
                     </div>
                     <div class="form-group col-md-8">
-                        <input type="text" class="form-control " placeholder="Наименование" name="name" value="{{ $request->name }}" > 
+                        <select name="name" class="form-control" >
+                            <option value="">Наименование</option>
+                            @foreach ($items as $pr)
+                                <option value="{{ $pr->name }}" {{ $request->name == $pr->name ? 'selected' : '' }}>{{ $pr->name }}</option>
+                            @endforeach
+                        </select>
+
                     </div>
                     <div class="form-group col-md-10">
                         <select name="cat_id" class="form-control" >

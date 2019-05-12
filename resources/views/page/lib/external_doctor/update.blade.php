@@ -29,6 +29,10 @@
                         <input type="text" class="form-control " name="iin" value="{{ $item->iin }}" required> 
                     </div>
                     <div class="form-group">
+                        <label>Дата рождения</label>
+                        <input type="date" class="form-control " name="b_date" value="{{ $item->b_date }}" > 
+                    </div>
+                    <div class="form-group">
                         <label>Телефон</label>
                         <input type="text" class="form-control " name="phone" value="{{ $item->phone }}" required> 
                     </div>

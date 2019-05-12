@@ -68,7 +68,15 @@
                         @else 
                             <label>Расстояние между центрами зрачков</label>
                         @endif
-                        <input type="text" class="form-control " name="len" > 
+                        @if ($type_id == $contact_type_id)
+                            <select name="len" class="form-control" required>
+                                @for ($i = 10; $i >= -10; $i = round(($i - 0.1), 1))
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                        @else 
+                            <input type="text" class="form-control " name="len" > 
+                        @endif
                     </div>
                     <div class="form-group">
                         <label>Назначение</label>
