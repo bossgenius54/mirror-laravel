@@ -24,6 +24,7 @@
                         <th>Статус</th>
                         <th>Себестоимость</th>
                         <th>Срок годности</th>
+                        <th>Оприхование</th>
                         <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>
@@ -37,6 +38,7 @@
                             <td>{{ isset($ar_status[$i->status_id]) ? $ar_status[$i->status_id] : 'не указано' }}</td>
                             <td>{{ $i->price_cost }}</td>
                             <td>{{ $i->expired_at ? $i->expired_at : 'бессрочна' }}</td>
+                            <td>{{ $i->relIncome ? $i->relIncome->note.' #'.$i->relIncome->id : 'не указано' }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>

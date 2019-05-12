@@ -10,8 +10,16 @@
                     <div class="form-group col-md-4">
                         <input type="text" class="form-control " placeholder="Системный номер" name="sys_num" value="{{ $request->sys_num }}" > 
                     </div>
-                    <div class="form-group col-md-8">
+                    <div class="form-group col-md-5">
                         <input type="text" class="form-control " placeholder="Наименование" name="name" value="{{ $request->name }}" > 
+                    </div>
+                    <div class="form-group col-md-3">
+                        <select name="income_id" class="form-control" >
+                            <option value="">Оприхование</option>
+                            @foreach ($incomes as $id => $in)
+                                <option value="{{ $in->id }}" {{ $request->income_id == $in->id ? 'selected' : '' }}>{{ $in->note.' #'.$in->id }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group col-md-3">
                         <select name="cat_id" class="form-control" >

@@ -29,6 +29,7 @@ class PositionFilter {
         $this->filterCatId();
         $this->filterStatusId();
         $this->filterbBranchId();
+        $this->filterIncomeId();
     }
 
     function getResult(){
@@ -78,6 +79,14 @@ class PositionFilter {
             return;
 
         $this->items->where('branch_id',  $this->request->branch_id);
+    }   
+
+    private function filterIncomeId(){
+        if (!$this->request->has('income_id') || !$this->request->income_id)
+            return;
+
+        $this->items->where('income_id',  $this->request->income_id);
+
     }
 
 }

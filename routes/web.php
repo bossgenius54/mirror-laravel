@@ -98,6 +98,9 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('delete/{item}', 'IncomeFromCompanyController@getDelete')->middleware('can:delete,item');
             Route::get('active-product/{item}', 'IncomeFromCompanyController@getActiveProduct')->middleware('can:create,App\Model\View\IncomeFromCompany');
             Route::get('view/{item}', 'IncomeFromCompanyController@getView')->middleware('can:view,item');
+
+            Route::post('change-position/{item}', 'IncomeFromCompanyController@postChange')->middleware('can:create,App\Model\View\IncomeFromCompany');
+            Route::post('add-position/{item}', 'IncomeFromCompanyController@postAdd')->middleware('can:create,App\Model\View\IncomeFromCompany');
         });
 
         /// product
@@ -138,8 +141,6 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('/', 'BranchProductController@getIndex')->middleware('can:list,App\Model\View\BranchProduct');
         });
     });
-
-
 
     Route::group(['prefix' => 'lib', 'namespace' => 'Lib'], function () {
         /// company categories 

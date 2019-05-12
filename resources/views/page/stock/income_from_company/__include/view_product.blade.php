@@ -26,7 +26,7 @@
                     <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $i->relProduct ? $i->relProduct->name.' ('.$i->relProduct->sys_num.')' : '' }}</td> 
-                        <td>{{ $i->price_before }}</td>
+                        <td>{{ $i->price_cost }}</td>
                         <td>{{ $i->product_count }}</td>
                         <td>{{ $i->product_sum }}</td>
                     </tr>

@@ -49,7 +49,11 @@ class CalcBeginIncome {
             $ar[]= $ar_el;
         }
 
-        if (count($ar) > 0)
-            FinancePosition::insert($ar);
+        $ar = collect($ar);
+        $ar = $ar->chunk(500);
+        
+        foreach ($ar as $a){
+            FinancePosition::insert($a->toArray()); 
+        }
     }
 }

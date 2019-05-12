@@ -51,10 +51,10 @@ class IncomeFromCompanyController extends Controller{
         if ($finance){
             $positions = FinancePosition::where('finance_id', $finance->id)->with('relProduct')->paginate(24);
             $services = FinanceService::where('finance_id', $finance->id)->with('relService')->get();
-            $products = FinancePosition::getStatByPriceBefore($finance->id);
+            $products = Position::getStatByIncome($item->id);
         }
             
-        
+        $user = $request->user();
 
         $ar = array();
         $ar['title'] = 'Детализация элемента списока "'.$this->title.'"';
@@ -63,6 +63,7 @@ class IncomeFromCompanyController extends Controller{
         $ar['services'] = $services;
         $ar['products'] = $products;
         $ar['item'] = $item;
+        $ar['prods'] = Product::where('company_id', $user->company_id)->select('id', 'sys_num', 'name', 'artikul')->get();
 
         return view('page.stock.income_from_company.view', $ar);
     }
@@ -90,6 +91,9 @@ class IncomeFromCompanyController extends Controller{
     }
 
     function postCreate(Request $request){
+        ini_set('memory_limit', '512M');
+        set_time_limit(300);
+
         $ar = $request->all();
         $ar['type_id'] = SysIncomeType::FROM_COMPANY;
         $ar['company_id'] = $request->user()->company_id;
@@ -117,6 +121,7 @@ class IncomeFromCompanyController extends Controller{
                 $ar_el['product_id'] = $product_id;
                 $ar_el['price_cost'] =  $ar['product_cost'][$k];
                 $ar_el['expired_at'] =  $ar['product_date'][$k];
+                $ar_el['group_num'] = $k.rand(100, 999);
                 for ($i = 1; $i <= $ar['product_count'][$k]; $i++) {
                     $max_id++;
                     $ar_el['sys_num'] = $max_id; 
@@ -133,9 +138,20 @@ class IncomeFromCompanyController extends Controller{
             }
             $income->save();
 
-            Position::insert($ar_posiiton); 
+            //dd($ar, count($ar_posiiton));
+            $ar_posiiton = collect($ar_posiiton);
+            $ar_posiiton = $ar_posiiton->chunk(500);
 
-            IncomePosition::insert($ar_income_position); 
+            foreach ($ar_posiiton as $ar_pos){
+                Position::insert($ar_pos->toArray()); 
+            }
+
+            $ar_income_position = collect($ar_income_position);
+            $ar_income_position = $ar_income_position->chunk(500);
+            
+            foreach ($ar_income_position as $ar_income){
+                IncomePosition::insert($ar_income->toArray()); 
+            }
 
             Position::where('income_id', $income->id)->update([
                 'created_at' => date('Y-m-d h:i:s'),
@@ -155,7 +171,7 @@ class IncomeFromCompanyController extends Controller{
     }
 
     function getActiveProduct(Request $request, IncomeFromCompany $item){
-        Position::where('income_id', $item->id)->update(
+        Position::where('income_id', $item->id)->where(['status_id' => SysPositionStatus::IN_INCOME])->update(
             [
                 'status_id' => SysPositionStatus::ACTIVE
             ]
@@ -174,4 +190,161 @@ class IncomeFromCompanyController extends Controller{
         return redirect()->back()->with('success', 'Удален элемент списка "'.$this->title.'" № '.$id);
     }
 
+    function postChange(Request $request, IncomeFromCompany $item){
+        ini_set('memory_limit', '512M');
+        set_time_limit(300);
+        //dd($request->all(), $item);
+
+        $income = $item;
+        DB::beginTransaction();
+        try {
+            Position::where([
+                'income_id' => $item->id,
+                'group_num' => $request->position_group_num
+            ])->delete();
+            
+            Finance::where('income_id', $item->id)->delete();
+
+            if (!$request->need_delete){
+                $max_id = Position::max('id');
+
+                $ar_income_position = [];
+                $ar_posiiton = [];
+    
+                $ar_el = [];
+                $ar_el['branch_id'] = $income->branch_id;
+                $ar_el['status_id'] = SysPositionStatus::IN_INCOME;
+                $ar_el['income_id'] = $income->id;
+                $ar_el['product_id'] = $request->product_id;
+                $ar_el['price_cost'] =  $request->price_cost;
+                $ar_el['expired_at'] =  $request->expired_at;
+                $ar_el['group_num'] =  $request->position_group_num;
+
+    
+            
+                for ($i = 1; $i <= $request->product_count; $i++) {
+                    $max_id++;
+                    $ar_el['sys_num'] = $max_id; 
+
+                    $ar_posiiton[] = $ar_el;
+
+                    $ar_income_position[] = [
+                        'income_id' => $income->id,
+                        'position_sys_num' => $ar_el['sys_num']
+                    ];
+                }
+               
+                $ar_posiiton = collect($ar_posiiton);
+                $ar_posiiton = $ar_posiiton->chunk(500);
+    
+                foreach ($ar_posiiton as $ar_pos){
+                    Position::insert($ar_pos->toArray()); 
+                }
+    
+                $ar_income_position = collect($ar_income_position);
+                $ar_income_position = $ar_income_position->chunk(500);
+                
+                foreach ($ar_income_position as $ar_income){
+                    IncomePosition::insert($ar_income->toArray()); 
+                }
+    
+                Position::where('income_id', $income->id)->where('group_num', $request->position_group_num)->update([
+                    'created_at' => date('Y-m-d h:i:s'),
+                    'updated_at' => date('Y-m-d h:i:s'),
+                ]);
+
+                
+                $income->related_cost = Position::where('income_id', $item->id)->sum('price_cost');
+                $income->save();
+    
+            }
+            
+            CreateFinanceModel::createBeginIncome($item);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+
+        return redirect()->back()->with('success', 'Позиции  продукции № '.$item->id.' изменены');
+    }
+
+
+    function postAdd(Request $request, IncomeFromCompany $item){
+        ini_set('memory_limit', '512M');
+        set_time_limit(300);
+        //dd($request->all(), $item);
+        $income = $item;
+        DB::beginTransaction();
+        try {
+            
+            Finance::where('income_id', $item->id)->delete();
+
+          
+            $max_id = Position::max('id');
+
+            $ar_income_position = [];
+            $ar_posiiton = [];
+
+            $ar_el = [];
+            $ar_el['branch_id'] = $income->branch_id;
+            $ar_el['status_id'] = SysPositionStatus::IN_INCOME;
+            $ar_el['income_id'] = $income->id;
+            $ar_el['product_id'] = $request->product_id;
+            $ar_el['price_cost'] =  $request->price_cost;
+            $ar_el['group_num'] =  $max_id.rand(10000, 99999);
+
+
+        
+            for ($i = 1; $i <= $request->product_count; $i++) {
+                $max_id++;
+                $ar_el['sys_num'] = $max_id; 
+
+                $ar_posiiton[] = $ar_el;
+
+                $ar_income_position[] = [
+                    'income_id' => $income->id,
+                    'position_sys_num' => $ar_el['sys_num']
+                ];
+            }
+
+            
+            $ar_posiiton = collect($ar_posiiton);
+            $ar_posiiton = $ar_posiiton->chunk(500);
+
+            foreach ($ar_posiiton as $ar_pos){
+                Position::insert($ar_pos->toArray()); 
+            }
+
+            $ar_income_position = collect($ar_income_position);
+            $ar_income_position = $ar_income_position->chunk(500);
+            
+            foreach ($ar_income_position as $ar_income){
+                IncomePosition::insert($ar_income->toArray()); 
+            }
+
+            Position::where('income_id', $income->id)->where('group_num', $request->position_group_num)->update([
+                'created_at' => date('Y-m-d h:i:s'),
+                'updated_at' => date('Y-m-d h:i:s'),
+            ]);
+            
+            $income->related_cost = Position::where('income_id', $item->id)->sum('price_cost');
+            $income->save();
+
+            
+            
+            CreateFinanceModel::createBeginIncome($item);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->back()->with('success', 'Позиции  продукции № '.$item->id.' добавлены');
+    }
 }

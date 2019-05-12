@@ -11,6 +11,7 @@ use App\Model\SysPositionStatus;
 use App\Model\Product;
 use App\Model\SysUserType;
 use App\Model\LibProductCat;
+use App\Model\Income;
 
 use App\ModelList\PositionList;
 
@@ -35,6 +36,9 @@ class PositionController extends Controller{
         $ar['ar_cat'] = LibProductCat::pluck('name', 'id')->toArray();
         $ar['ar_status'] = SysPositionStatus::pluck('name', 'id')->toArray();
         $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
+        $ar['incomes'] = Income::latest()->get();
+        //dd($ar['filter_block']);
+
 
         return view('page.stock.position.index', $ar);
     }
