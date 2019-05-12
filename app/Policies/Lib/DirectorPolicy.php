@@ -16,6 +16,9 @@ class DirectorPolicy {
     }
 
     private function mainCheck($user){
+        if (in_array($user->type_id, [SysUserType::ADMIN]))
+            return true;
+
         if ($user->type_id != SysUserType::DIRECTOR)
             return false;
             
@@ -23,6 +26,9 @@ class DirectorPolicy {
     }
 
     private function checkItem($user, $item){
+        if (in_array($user->type_id, [SysUserType::ADMIN]))
+            return true;
+
         if ($user->company_id != $item->company_id)
             return false;
 
@@ -87,6 +93,13 @@ class DirectorPolicy {
             return false;
 
         if ( !$this->mainCheck($user))
+            return false;
+
+        return true;
+    }
+
+    public function updatefull($user, $item){
+        if (!in_array($user->type_id, [SysUserType::ADMIN]))
             return false;
 
         return true;

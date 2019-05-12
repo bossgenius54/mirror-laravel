@@ -46,7 +46,24 @@
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>
-                               
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="ti-settings"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        @can('updatefull', $i)
+                                            <a class="dropdown-item" href="{{ action('Lib\SimpleDirectorController@getUpdate', $i) }}">
+                                                Изменить
+                                            </a>
+                                        @endcan
+                                        @can('updatefull', $i)
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="{{ action('Lib\SimpleDirectorController@getDelete', $i) }}">
+                                                Удалить
+                                            </a>
+                                        @endcan
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

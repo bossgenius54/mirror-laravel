@@ -62,5 +62,41 @@ class SimpleDirectorController extends Controller{
         return redirect()->back()->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
+    function getUpdate(Request $request, SimpleDirector $item){
+        $ar = array();
+        $ar['title'] = 'Изменить элемент № '. $item->id.' списка "'.$this->title.'"';
+        $ar['item'] = $item;
+        $ar['action'] = action('Lib\SimpleDirectorController@postUpdate', $item);
+
+        return view('page.lib.simple_director.update', $ar);
+    }
+
+    function postUpdate(Request $request, SimpleDirector $item){
+        $ar = $request->all();
+        if ($request->has('email'))
+            unset($ar['email']);
+
+        if ($request->has('password') && $request->password)
+            $ar['password'] = Hash::make($ar['password']);
+        else 
+            unset($ar['password']);  
+        
+        $ar['photo'] = UploadPhoto::upload($request->photo);
+        if (!$ar['photo'])
+            unset($ar['photo']);
+        
+        $item->update($ar);
+
+        return redirect()->action("Lib\SimpleDirectorController@getIndex", $item->company_id)->with('success', 'Изменен элемент списка "'.$this->title.'" № '.$item->id);
+    }
+
+    function getDelete(Request $request, SimpleDirector $item){
+        $company_id = $item->company_id;
+        $id = $item->id;
+        $item->delete();
+
+        return redirect()->action("Lib\SimpleDirectorController@getIndex", $company_id)->with('success', 'Удален элемент списка "'.$this->title.'" № '.$id);
+    }
+
 
 }

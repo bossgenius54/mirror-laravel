@@ -21,13 +21,13 @@ class BranchProductController extends Controller{
         $items = ProductList::get($request);
         $items = ProductFilter::filter($request, $items);
 
+        $branches = BranchList::get($request);
 
         $ar = array();
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['filter_block'] = ProductFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(12);
-        $ar['ar_branch'] = BranchList::get($request)->pluck('name', 'id')->toArray();
+        $ar['ar_branch'] = $branches->pluck('name', 'id')->toArray();
         $ar['ar_cat'] = LibProductCat::getAr();
 
         return view('page.stock.branch_product.index', $ar);

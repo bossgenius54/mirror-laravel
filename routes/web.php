@@ -289,7 +289,11 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
         Route::group(['prefix' => 'simple-director'], function () {
             Route::get('/{company}', 'SimpleDirectorController@getIndex')->middleware('can:list,App\Model\View\SimpleDirector');
             Route::get('create/{company}', 'SimpleDirectorController@getCreate')->middleware('can:create,App\Model\View\SimpleDirector');
-            Route::post('create/{company}', 'SimpleDirectorController@postCreate')->middleware('can:create,App\Model\View\SimpleDirector');
+            Route::post('create/{company}', 'SimpleDirectorController@postCreate')->middleware('can:create,App\Model\View\SimpleDirector'); 
+
+            Route::get('update/{item}', 'SimpleDirectorController@getUpdate')->middleware('can:updatefull,item');
+            Route::post('update/{item}', 'SimpleDirectorController@postUpdate')->middleware('can:updatefull,item');
+            Route::get('delete/{item}', 'SimpleDirectorController@getDelete')->middleware('can:updatefull,item');
         });
     });
 
