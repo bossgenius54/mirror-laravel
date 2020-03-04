@@ -108,6 +108,14 @@
                 block.remove();
             });
 
+            $(document).keypress(function (e) {
+                var key = e.which;
+                if(key == 13)  // the enter key code
+                {
+                    return false;  
+                }
+            });
+
             $(document).on('click', '.js_pr_add', function() {
                 let block = $(this).parent().parent();
                 let count = block.find( ".js_pr_count" );
