@@ -65,6 +65,8 @@ class IncomeFromCompanyController extends Controller{
         $ar['item'] = $item;
         $ar['prods'] = Product::where('company_id', $user->company_id)->select('id', 'sys_num', 'name', 'artikul')->get();
 
+        //dd($products);
+
         return view('page.stock.income_from_company.view', $ar);
     }
 
@@ -276,7 +278,7 @@ class IncomeFromCompanyController extends Controller{
     function postAdd(Request $request, IncomeFromCompany $item){
         ini_set('memory_limit', '512M');
         set_time_limit(300);
-        //dd($request->all(), $item);
+
         $income = $item;
         DB::beginTransaction();
         try {
@@ -288,6 +290,7 @@ class IncomeFromCompanyController extends Controller{
 
             $ar_income_position = [];
             $ar_posiiton = [];
+            $group_num = $max_id.rand(100, 999); // creating group num before init to use it later for setting datestamp
 
             $ar_el = [];
             $ar_el['branch_id'] = $income->branch_id;
@@ -295,9 +298,8 @@ class IncomeFromCompanyController extends Controller{
             $ar_el['income_id'] = $income->id;
             $ar_el['product_id'] = $request->product_id;
             $ar_el['price_cost'] =  $request->price_cost;
-            $ar_el['group_num'] =  $max_id.rand(10000, 99999);
-
-
+            $ar_el['group_num'] =  $group_num;
+            
         
             for ($i = 1; $i <= $request->product_count; $i++) {
                 $max_id++;
@@ -311,7 +313,6 @@ class IncomeFromCompanyController extends Controller{
                 ];
             }
 
-            
             $ar_posiiton = collect($ar_posiiton);
             $ar_posiiton = $ar_posiiton->chunk(500);
 
@@ -326,7 +327,8 @@ class IncomeFromCompanyController extends Controller{
                 IncomePosition::insert($ar_income->toArray()); 
             }
 
-            Position::where('income_id', $income->id)->where('group_num', $request->position_group_num)->update([
+            // following sql request adding current datestamp for last updates
+            Position::where('income_id', $income->id)->where('group_num', $group_num)->update([
                 'created_at' => date('Y-m-d h:i:s'),
                 'updated_at' => date('Y-m-d h:i:s'),
             ]);

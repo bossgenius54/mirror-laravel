@@ -90,5 +90,8 @@
                 </tr>
             </tfoot>
         </table>
+        <!-- <pre>
+            {{print_r($products)}}
+        </pre> -->
     </div>
 @endif

@@ -19,7 +19,7 @@ class Position extends Model{
     }
 
     static function getStatByIncome($income_id){
-        return Position::select(DB::raw('COUNT(id) AS product_count, sum(price_cost) AS product_sum, price_cost, product_id, expired_at, group_num'))
+        return Position::selectRaw('COUNT(id) AS product_count, sum(price_cost) AS product_sum, price_cost, product_id, expired_at, group_num')
                                 ->where('income_id', $income_id)
                                 ->groupBy('group_num')
                                 ->with('relProduct')->get();
