@@ -59,10 +59,19 @@ class UserFilter {
     }
 
     private  function filterPhone(){
-        if (!$this->request->has('phone') || !$this->request->phone)
+
+        // here deleting all symbols except numbers and in second line preparing filter elem
+        if (!$this->request->has('phone') || !$this->request->phone){
+
             return;
 
-        $this->items->where('phone', 'like', '%'.$this->request->phone.'%');
+        } else {
+        
+            $phone_filter = preg_replace('/[^0-9]/','',$this->request->phone);
+            $this->request->phone = '%'.chunk_split($phone_filter, 1, '%');
+        }
+
+        $this->items->where('phone', 'like', $this->request->phone);
     }
 
     
