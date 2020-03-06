@@ -16,7 +16,7 @@ class StockCommonPolicy {
     }
 
     private function mainCheck($user){
-        if (!in_array($user->type_id, [SysUserType::DIRECTOR,  SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER]))
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR,  SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER, SysUserType::MANAGER]))
             return false;
             
         return true;
@@ -37,15 +37,21 @@ class StockCommonPolicy {
     }
 
     public function create($user){
-        if ( !$this->mainCheck($user))
+        if ( !$this->mainCheck($user)){
             return false;
+        } elseif ($user->type_id == SysUserType::MANAGER) {
+            return false;
+        }
 
         return true;
     } 
     
     public function update($user, $item){
-        if ( !$this->mainCheck($user))
+        if ( !$this->mainCheck($user)){
             return false;
+        } elseif ($user->type_id == SysUserType::MANAGER) {
+            return false;
+        }
 
         return true;
     }

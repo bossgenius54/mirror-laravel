@@ -17,7 +17,7 @@ class MotionPolicy {
 
 
     public function list($user){
-        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER]))
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER, SysUserType::MANAGER]))
             return false;
         
         return true; 
@@ -31,7 +31,7 @@ class MotionPolicy {
     }
 
     public function view($user, $item){
-        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER]))
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER, SysUserType::MANAGER]))
             return false;
 
         return true;

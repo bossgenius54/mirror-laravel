@@ -14,7 +14,7 @@ class BranchProductPolicy {
     }
 
     private function mainCheck($user){
-        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER]))
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER, SysUserType::MANAGER]))
             return false;
             
         return true;
