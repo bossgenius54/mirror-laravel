@@ -45,7 +45,7 @@ class FormulaController extends Controller{
         $ar['created_user_id'] = $request->user()->id;
         $item = Formula::create($ar);
 
-        $user->update(['name' => $request->user_name]);
+        // $user->update(['name' => $request->user_name]);
         
         return redirect()->action("Common\FormulaController@getIndex", ['user_id'=> $user->id])->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }

@@ -93,7 +93,10 @@
                     </div>
                     <div class="form-group">
                         <label>ФИО</label>
-                        <input type="text" class="form-control" name="user_name" value="{{ $user->name }}" > 
+                        <input type="text" class="form-control" style="color:#000;" name="user_name" value="{{ $user->name }}" readonly />
+                        <p class='text-help text-muted'>
+                            Здесь нельзя изменять ФИО
+                        </p>
                     </div>
                     <button class="btn btn-info pull-right" type="submit">Сохранить</button>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
