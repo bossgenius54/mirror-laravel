@@ -17,6 +17,10 @@
                         <input type="text" class="form-control " name="phone" data-mask="(999) 999-9999"  value="{{ $item->phone }}" required> 
                     </div>
                     <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="password" class="form-control " name="password" value="" placeholder="Введите новый пароль, если оставите, будет старый" > 
+                    </div>
+                    <div class="form-group">
                         <label>ФИО</label>
                         <input type="text" class="form-control " name="name" value="{{ $item->name }}" > 
                     </div>
