@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <label>БИН</label>
-                        <input type="text" class="form-control " name="bin" required> 
+                        <input type="text" class="form-control " data-mask="999-999-999-999" name="bin" required> 
                     </div>
                     <div class="form-group">
                         <label>БИК</label>
