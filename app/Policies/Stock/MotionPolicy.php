@@ -24,7 +24,7 @@ class MotionPolicy {
     }
 
     public function create($user){
-        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER]))
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER, SysUserType::MANAGER]))
             return false;
         
         return true; 
@@ -42,7 +42,7 @@ class MotionPolicy {
         if ($item->status_id != SysMotionStatus::IN_WORK)
             return false;
 
-        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER]))
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::MANAGER]))
             return false;
 
         return true;
@@ -52,7 +52,7 @@ class MotionPolicy {
         if ($item->status_id != SysMotionStatus::IN_WORK)
             return false;
 
-        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER]))
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::MANAGER]))
             return false;
 
         return true;

@@ -72,7 +72,8 @@ class MotionController extends Controller{
         $ar = array();
         $ar['title'] = 'Добавить элемент в список "'.$this->title.'"';
         $ar['action'] = action('Stock\MotionController@postCreate');
-        $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
+        $ar['ar_branch_from'] = Branch::where('company_id', $request->user()->company_id)->byRole()->pluck('name', 'id')->toArray();
+        $ar['ar_branch_to'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
 
         return view('page.stock.motion.create', $ar);
     }

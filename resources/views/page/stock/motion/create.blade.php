@@ -18,16 +18,19 @@
                     </div>
                     <div class="form-group">
                         <label>От филиала</label>
-                        <select name="from_branch_id" class="form-control" required>
-                            @foreach ($ar_branch as $id => $name)
-                                <option value="{{ $id }}">{{ $name }}</option>
-                            @endforeach
-                        </select>
+                        @can('create', App\Model\Motion::class)
+                            <select name="from_branch_id" class="form-control" required>
+                                @foreach ($ar_branch_from as $id => $name)
+                                    <option value="{{ $id }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
+                        @endcan
+
                     </div>
                     <div class="form-group">
                         <label>К филиалу </label>
                         <select name="to_branh_id" class="form-control" required>
-                            @foreach ($ar_branch as $id => $name)
+                            @foreach ($ar_branch_to as $id => $name)
                                 <option value="{{ $id }}">{{ $name }}</option>
                             @endforeach
                         </select>
