@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group">
                         <label>ФИО</label>
-                        <input type="text" class="form-control " name="name" > 
+                        <input type="text" class="form-control " name="name" required> 
                     </div>
                     <div class="form-group">
                         <label>Почтовый адрес</label>

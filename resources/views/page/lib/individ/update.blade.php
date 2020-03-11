@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <label>ФИО</label>
-                        <input type="text" class="form-control " name="name" value="{{ $item->name }}" > 
+                        <input type="text" class="form-control " name="name" value="{{ $item->name }}" required> 
                     </div>
                     <div class="form-group">
                         <label>Почтовый адрес</label>
