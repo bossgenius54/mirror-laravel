@@ -17,11 +17,31 @@
                 <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
                 <li class="nav-item">
 
-                    
                     @can('create', App\Model\Order::class)
-                        <a href="{{ action('Order\CreateOrderController@getCreate', 1) }}" class="nav-link text-muted waves-effect waves-dark ">
-                            <i class="mdi mdi-cart-plus"></i> Новый заказ 
-                        </a>
+
+                        @php
+                            $ar_type = App\Model\SysOrderType::pluck('name', 'id')->toArray();   
+                        @endphp
+
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-info dropdown-toggle" 
+                                    data-toggle="dropdown" 
+                                    aria-haspopup="true" 
+                                    aria-expanded="false"
+                                    style="font-size: 15px;">
+
+                                    <i class="mdi mdi-cart-plus"></i>
+                                    Новый заказ 
+                            </button>
+                            <div class="dropdown-menu">
+                                @foreach ($ar_type as $k=>$v)
+                                    <a href="{{ action('Order\CreateOrderController@getCreate', $k) }}" 
+                                        class="dropdown-item " >
+                                        Добавить "{{ $v }}"
+                                    </a>
+                                @endforeach
+                            </div> 
+                        </div>
                     @endcan
 
                     @can('create', App\Model\View\Individ::class)
