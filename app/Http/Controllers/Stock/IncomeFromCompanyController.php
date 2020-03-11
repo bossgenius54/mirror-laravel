@@ -101,7 +101,7 @@ class IncomeFromCompanyController extends Controller{
         $ar['company_id'] = $request->user()->company_id;
 
         
-        if (!isset($ar['product_id']) && count($ar['product_id']) > 0)
+        if (!isset($ar['product_id']))
             return redirect()->back()->with('error', 'Не указаны товары для оприходования');
       
 
