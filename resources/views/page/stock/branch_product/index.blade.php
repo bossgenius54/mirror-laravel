@@ -52,7 +52,7 @@
                             @endif
 
                             <tr class="footable-even {{ $balans >= 0 ? 'table-success' : 'table-danger' }}">
-                                <td >{{ $name }})</td>
+                                <td >{{ $name }}</td>
                                 <td>{{ $count_pos }}</td>
                                 <td>{{ $i->min_stock_count }}</td>
                                 <td>{{ $balans >= 0 ? 'не нужно' :  -$balans }}</td>
