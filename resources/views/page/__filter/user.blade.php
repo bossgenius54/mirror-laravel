@@ -17,7 +17,7 @@
                         <input type="text" class="form-control " placeholder="ИИН" name="iin" value="{{ $request->iin }}"> 
                     </div>
                     <div class="form-group col-md-2">
-                        <input type="text" class="form-control " placeholder="Телефон" name="phone" value="{{ preg_replace('/[^0-9]/','',$request->phone) }}"> 
+                        <input type="text" class="form-control " placeholder="Телефон" name="phone" value="{{ $request->phone }}"> 
                     </div>
                     <div class="form-group col-md-2">
                         <button class="btn btn-warning btn-block" type="submit">Отфильтровать</button>

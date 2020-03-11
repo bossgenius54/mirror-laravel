@@ -42,7 +42,13 @@
                             <td>{{ $i->iin }}</td>
                             <td>{{ $i->name }}</td>
                             <td>{{ $i->email }}</td>
-                            <td>{{ $i->phone }}</td>
+                            <td>
+                                {{ $i->phone }}
+                                @if($i->second_phone != '' || $i->second_phone != null)
+                                    <br/>
+                                    {{ $i->second_phone }}
+                                @endif
+                            </td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>

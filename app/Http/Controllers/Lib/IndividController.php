@@ -52,7 +52,6 @@ class IndividController extends Controller{
         $ar['type_id'] = SysUserType::FIZ;
         $ar['is_active'] = 1;
         $ar['email'] = $email;
-        // $ar['phone'] = preg_replace('/[^0-9]/','',$request->phone);
         //$ar['password'] = Hash::make(rand(1000, 9999));
         $ar['password'] = Hash::make(346488);
         $ar['photo'] = UploadPhoto::upload($request->photo);

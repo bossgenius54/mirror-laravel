@@ -17,6 +17,10 @@
                         <input type="text" class="form-control " data-mask="(999) 999-9999"  name="phone" required> 
                     </div>
                     <div class="form-group">
+                        <label>Дополнительный телефон</label>
+                        <input type="text" class="form-control " data-mask="(999) 999-9999"  name="second_phone" > 
+                    </div>
+                    <div class="form-group">
                         <label>ФИО</label>
                         <input type="text" class="form-control " name="name" > 
                     </div>

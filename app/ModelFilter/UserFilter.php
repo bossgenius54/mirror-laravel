@@ -68,10 +68,14 @@ class UserFilter {
         } else {
         
             $phone_filter = preg_replace('/[^0-9]/','',$this->request->phone);
-            $this->request->phone = '%'.chunk_split($phone_filter, 1, '%');
+            $second_phone_filter = preg_replace('/[^0-9]/','',$this->request->phone);
+
+            $phone_filter = '%'.chunk_split($phone_filter, 1, '%');
+            $second_phone_filter = '%'.chunk_split($second_phone_filter, 1, '%');
         }
 
-        $this->items->where('phone', 'like', $this->request->phone);
+        $this->items->where('phone', 'like', $phone_filter)
+                    ->orWhere('second_phone', 'like', $second_phone_filter);
     }
 
     
