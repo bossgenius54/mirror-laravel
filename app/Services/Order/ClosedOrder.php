@@ -83,6 +83,7 @@ class ClosedOrder {
     }
 
     private function createOutcomePositions(){
+
         $positions = Position::where('order_id', $this->item->id)->get();
 
         $ar_product_price = OrderPosition::where('order_id', $this->item->id)->pluck('pos_cost', 'product_id')->toArray();
@@ -101,6 +102,7 @@ class ClosedOrder {
                 'created_at' => date('Y-m-d h:i:s'),
                 'updated_at' => date('Y-m-d h:i:s')
             ];
+
         }
         
         if (count($ar) > 0)

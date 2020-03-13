@@ -42,7 +42,7 @@ class PositionOrderController extends Controller{
                 'total_sum' => ($request->pos_count * $request->pos_cost)
             ]);
 
-            Position::where(['status_id' => SysPositionStatus::ACTIVE, 'product_id'=> $request->product_id])->orderBy('id', 'asc')->take($request->pos_count)
+            Position::where(['status_id' => SysPositionStatus::ACTIVE, 'product_id'=> $request->product_id])->where('branch_id', $item->branch_id)->orderBy('id', 'asc')->take($request->pos_count)
                     ->update(['status_id' => SysPositionStatus::RESERVE, 'order_id' => $item->id]);
             
             $item->update([
