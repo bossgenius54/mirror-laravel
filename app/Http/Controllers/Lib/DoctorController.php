@@ -26,6 +26,7 @@ class DoctorController extends Controller{
         $ar['filter_block'] = UserFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
         $ar['ar_branch'] = Branch::getArForCompany($request);
+        // dd($ar);
 
         return view('page.lib.doctor.index', $ar);
     }
@@ -35,7 +36,6 @@ class DoctorController extends Controller{
         $ar['title'] = 'Добавить элемент в список "'.$this->title.'"';
         $ar['action'] = action('Lib\DoctorController@postCreate');
         $ar['ar_branch'] = Branch::getArForCompany($request);
-
         return view('page.lib.doctor.create', $ar);
     }
 

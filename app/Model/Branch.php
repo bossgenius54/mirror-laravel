@@ -30,7 +30,12 @@ class Branch extends Model{
     }
 
     static function getArForCompany(Request $request){
-        return static::where('company_id', $request->user()->company_id)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+        if (Auth::user()->type_id == SysUserType::ADMIN){
+            return static::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+        } else {
+            return static::where('company_id', $request->user()->company_id)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+        }
+        
     }
 
 }
