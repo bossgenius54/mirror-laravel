@@ -5,6 +5,7 @@ use App\Model\Order;
 use App\Model\SysOrderType;
 use App\Model\Outcome;
 use App\Model\SysOutcomeType;
+use App\Model\SysPositionStatus;
 
 use App\Model\OutcomeService;
 use App\Model\OrderService;
@@ -108,6 +109,6 @@ class ClosedOrder {
         if (count($ar) > 0)
             OutcomePosition::insert($ar);
 
-        Position::where('order_id', $this->item->id)->delete();
+        Position::where('order_id', $this->item->id)->update(['status_id' => SysPositionStatus::DELETED]); // setting position as minused from stock by giving status 5
     }
 }
