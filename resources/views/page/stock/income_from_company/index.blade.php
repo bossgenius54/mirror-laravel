@@ -12,16 +12,16 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">
-                    {{ $title }}  
+                    {{ $title }}
                     @can('create', App\Model\View\IncomeFromCompany::class)
-                        <a href="{{ action('Stock\IncomeFromCompanyController@getCreate') }}" type="button" 
+                        <a href="{{ action('Stock\IncomeFromCompanyController@getCreate') }}" type="button"
                             class="btn btn-sm btn-info btn-rounded pull-right" >
                             Добавить
                         </a>
                     @endcan
                 </h4>
             </div>
-            
+
             <table class="table  table-hover color-table muted-table" >
                 <thead>
                     <tr>
@@ -53,9 +53,15 @@
                                     <div class="dropdown-menu">
                                         @can('view', $i)
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{{ action('Stock\IncomeFromCompanyController@getView', $i) }}">
-                                                Просмотр
-                                            </a>
+                                            @if($i->relPositions()->where('status_id', App\Model\SysPositionStatus::IN_INCOME)->count())
+                                                <a class="dropdown-item" href="{{ action('Stock\IncomeFromCompanyController@getView', $i) }}">
+                                                    Изменить
+                                                </a>
+                                            @else
+                                                <a class="dropdown-item" href="{{ action('Stock\IncomeFromCompanyController@getView', $i) }}">
+                                                    Просмотр
+                                                </a>
+                                            @endif
                                         @endcan
 
                                         @can('delete', $i)
@@ -100,8 +106,8 @@
         </div>
     </form>
 </div>
-                            
-                      
+
+
 
 @endsection
 
