@@ -13,11 +13,16 @@
         </div>
     @endcan
     @can('finish', $item)
-        <div class="col-md-6" style="margin-bottom: 10px;">
-            <a class="btn btn-success btn-block" href="{{ action('Stock\MotionController@getFinish', $item) }}">
-                Завершить
-            </a>
-        </div>
+
+        @if($item->user_id != $user->id)
+
+            <div class="col-md-6" style="margin-bottom: 10px;">
+                <a class="btn btn-success btn-block" href="{{ action('Stock\MotionController@getFinish', $item) }}">
+                    Завершить
+                </a>
+            </div>
+        @endif
+
     @endcan
     <div class="col-sm-12">
         <div class="card card-outline-info">
@@ -25,12 +30,12 @@
                 <h4 class="m-b-0 text-white">Перемещение № {{ $item->id }}</h4>
             </div>
             <div class="card-body ">
-                
+
                 <h3 class="card-title">Данные перемещения</h3>
                 <div class="row">
                     <div class="form-group col-md-4" >
                         <label>Наименование</label>
-                        <input type="text" class="form-control " name="name" value="{{ $item->name }}" disabled> 
+                        <input type="text" class="form-control " name="name" value="{{ $item->name }}" disabled>
                     </div>
                     <div class="form-group col-md-4">
                         <label>От филиала</label>
@@ -49,7 +54,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <h3 class="card-title">Форма прикрепления позиций/товаров</h3>
                 <form class="form-material row" action="{{ $action }}" method="post"  enctype="multipart/form-data">
                     <div class="form-group col-md-6">
@@ -57,7 +62,7 @@
                         <select name="product_id" id="product_id" class="form-control" required>
                             <option value="">Выберите ассортимент</option>
                             @foreach ($products as $product)
-                                @php 
+                                @php
                                     $position_count = $product->relPositions()->where('branch_id', $item->from_branch_id)->where('status_id', $pos_status)->count();
                                 @endphp
                                 <option value="{{ $product->id }}" data-count="{{ $position_count }}">{{ $product->artikul }}|{{ $product->name }} ({{ $product->sys_num }}). Есть {{ $position_count }} позиций</option>
@@ -66,7 +71,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label>Единиц</label>
-                        <input type="number" class="form-control " name="count_position" id="count_position" required> 
+                        <input type="number" class="form-control " name="count_position" id="count_position" required>
                     </div>
                     <div class="form-group col-md-2">
                         <label>&nbsp; </label>
@@ -74,17 +79,17 @@
                     </div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </form>
-                
+
                 <h3 class="card-title">Список прикрепленных позиций/товаров</h3>
                 @foreach ($motion_products as $i)
                     <div class="form-material row" >
                         <div class="form-group col-md-6">
                             <label>Ассортимент</label>
-                            <input type="text" class="form-control" value="{{ $i->relProduct->name }} ({{ $product->sys_num }})" disabled> 
+                            <input type="text" class="form-control" value="{{ $i->relProduct->name }} ({{ $product->sys_num }})" disabled>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Единиц</label>
-                            <input type="text" class="form-control" value="{{ $i->count_position }}" disabled> 
+                            <input type="text" class="form-control" value="{{ $i->count_position }}" disabled>
                         </div>
                         <div class="form-group col-md-2">
                             <label>&nbsp; </label>
