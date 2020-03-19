@@ -13,7 +13,7 @@
         @include('page.order.view.__include.view_service_block')
 
         @include('page.order.view.__include.view_product_block')
-       
+
     </div>
     <div class="col-sm-4">
         <a href="?for_print=1" class="btn btn-block btn-outline-secondary" style="margin-bottom: 10px;">
@@ -43,7 +43,11 @@
                 let cost = parseInt($('#service_cost').val());
                 let count = parseInt($('#service_count').val());
 
-                $('#service_total_sum').val(cost * count);
+                if(count > 0){
+                    $('#service_total_sum').val(cost * count);
+                } else {
+                    $('#service_count').val('');
+                }
             }
 
             $(document).on('change', '#service_cost', function() {
@@ -73,7 +77,12 @@
                 let cost = parseInt($('#pos_cost').val());
                 let count = parseInt($('#pos_count').val());
 
-                $('#pos_total_sum').val(cost * count);
+
+                if(count > 0){
+                    $('#pos_total_sum').val(cost * count);
+                } else {
+                    $('#pos_count').val('');
+                }
             }
 
             $(document).on('change', '#pos_cost', function() {

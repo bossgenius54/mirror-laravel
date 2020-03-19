@@ -38,7 +38,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    @else 
+                    @else
                         <div class="form-group">
                             <label>Юр. лицо</label>
                             <select name="from_company_id" class="form-control" required>
@@ -50,9 +50,9 @@
                     @endif
                     <div class="form-group">
                         <label>Заметка</label>
-                        <input type="text" class="form-control" name="name" > 
+                        <input type="text" class="form-control" name="name" >
                     </div>
-                    <button class="btn btn-info pull-right" type="submit">Сохранить</button>
+                    <button class="btn btn-info pull-right" type="submit">Далее</button>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </form>
             </div>
