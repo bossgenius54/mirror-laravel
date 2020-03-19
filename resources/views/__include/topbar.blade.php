@@ -56,14 +56,14 @@
                 <li class="nav-item dropdown">
                     <a  class="nav-link dropdown-toggle text-muted waves-effect waves-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                             href="" >
-                        <img src="{{ Auth::user()->photo ? Auth::user()->photo : '/assets/images/users/1.jpg' }}" alt="user" class="profile-pic" />
+                        <img src="{{ Auth::user()->photo ? Auth::user()->photo : '/assets/images/users/user-default-1.svg' }}" alt="user" class="profile-pic" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-right scale-up">
                         <ul class="dropdown-user">
                             <li>
                                 <div class="dw-user-box">
                                     <div class="u-img">
-                                        <img src="{{ Auth::user()->photo ? Auth::user()->photo : '/assets/images/users/1.jpg' }}" alt="user">
+                                        <img src="{{ Auth::user()->photo ? Auth::user()->photo : '/assets/images/users/user-default-1.svg' }}" alt="user">
                                     </div>
                                     <div class="u-text">
                                         <h4 style="max-width: 140px;">{{ Auth::user()->name }}</h4>
