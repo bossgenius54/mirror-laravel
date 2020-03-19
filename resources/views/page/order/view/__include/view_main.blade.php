@@ -5,6 +5,8 @@
     </div>
     <div class="card-body">
 
+        <h5>Заказ № {{ $item->id }}</h5>
+
         <small class="text-muted">Тип</small>
         <h6>{{ $item->is_retail ? 'Розница' : 'Оптовая' }} {{ $item->is_onlain ? '(онлайн)' : '' }}</h6>
         <small class="text-muted">От</small>
@@ -31,6 +33,8 @@
         @endif
         <small class="text-muted">Менеджер</small>
         <h6>{{ $item->relCreatedUser ? $item->relCreatedUser->name : '' }}</h6>
+        <small>Заметка</small>
+        <h6>{{ $item->note }}</h6>
         <small class="text-muted">Создано</small>
         <h6>{{ $item->created_at }}</h6>
         <small class="text-muted">Изменено</small>
