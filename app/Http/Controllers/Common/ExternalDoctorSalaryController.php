@@ -15,7 +15,7 @@ use App\ModelList\ExternalDoctorList;
 use App\ModelFilter\ExternalDoctorSalaryFilter;
 
 class ExternalDoctorSalaryController  extends Controller{
-    private $title = 'Комисионные внешнего врача';
+    private $title = 'Комиссионные внешнего врача';
 
     function getIndex (Request $request){
         $user = $request->user();
@@ -47,7 +47,7 @@ class ExternalDoctorSalaryController  extends Controller{
         $ar['company_id'] = $request->user()->company_id;
 
         $item = ExternalDoctorSalary::create($ar);
-        
+
         return redirect()->action("Common\ExternalDoctorSalaryController@getIndex")->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 

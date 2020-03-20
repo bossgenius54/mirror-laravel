@@ -12,41 +12,41 @@ class CompanyPolicy {
     use HandlesAuthorization;
 
     public function __construct(){
-        
+
     }
 
     private function mainCheck($user){
         if (!in_array($user->type_id, [SysUserType::ADMIN, SysUserType::DIRECTOR, SysUserType::MANAGER, SysUserType::ACCOUNTER]))
             return false;
-            
+
         return true;
     }
 
     private function itemCheck($user, $item){
-        if (in_array($user->type_id, [SysUserType::ADMIN]))
+        if (in_array($user->type_id, [SysUserType::ADMIN, SysUserType::ACCOUNTER]))
             return true;
 
         if ($item->type_id == SysCompanyType::FULL)
             return false;
-        
+
         if ($item->created_user_id != $user->id)
             return false;
-        
+
         return true;
     }
 
     public function list($user){
         if (!$this->mainCheck($user))
             return false;
-        
-        return true; 
+
+        return true;
     }
 
     public function view($user){
         if (!$this->mainCheck($user))
             return false;
 
-        return true; 
+        return true;
     }
 
     public function create($user){
@@ -54,15 +54,15 @@ class CompanyPolicy {
             return false;
 
         return true;
-    } 
-    
+    }
+
     public function update($user, $item){
         if ( !$this->mainCheck($user))
             return false;
 
         if ( !$this->itemCheck($user, $item))
-            return false;    
-      
+            return false;
+
 
         return true;
     }
@@ -72,7 +72,10 @@ class CompanyPolicy {
             return false;
 
         if ( !$this->itemCheck($user, $item))
-            return false; 
+            return false;
+
+        if ( $user->type_id == SysUserType::ACCOUNTER)
+            return false;
 
         return true;
     }
@@ -85,7 +88,10 @@ class CompanyPolicy {
             return false;
 
         if ( !$this->itemCheck($user, $item))
-            return false; 
+            return false;
+
+        if ( $user->type_id == SysUserType::ACCOUNTER)
+            return false;
 
         return true;
     }
@@ -94,6 +100,9 @@ class CompanyPolicy {
             return false;
 
         if (!in_array($user->type_id, [SysUserType::ADMIN]))
+            return false;
+
+        if ( $user->type_id == SysUserType::ACCOUNTER)
             return false;
 
         return true;

@@ -12,16 +12,16 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">
-                    {{ $title }}  
+                    {{ $title }}
                     @can('create', App\Model\ExternalDoctorSalary::class)
-                        <a href="{{ action('Common\ExternalDoctorSalaryController@getCreate') }}" type="button" 
+                        <a href="{{ action('Common\ExternalDoctorSalaryController@getCreate') }}" type="button"
                             class="btn btn-sm btn-info btn-rounded pull-right" >
                             Добавить
                         </a>
                     @endcan
                 </h4>
             </div>
-            
+
             <table class="table  table-hover color-table muted-table" >
                 <thead>
                     <tr>
@@ -39,7 +39,7 @@
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                             <td>{{ $i->id }}</td>
                             <td>{{ $i->relDoctor ? $i->relDoctor->name : ''  }}</td>
-                            <td>{{ $i->relOrder ? $i->relOrder->name : ''  }}</td>
+                            <td>Заказ № {{ $i->relOrder ? ( $i->relOrder->id . ' (' . $i->relOrder->name . ")" ) : ''  }}</td>
                             <td>{{ $i->salary }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
@@ -49,7 +49,7 @@
                                         <i class="ti-settings"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                       
+
                                         @can('delete', $i)
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="{{ action('Common\ExternalDoctorSalaryController@getDelete', $i) }}">
