@@ -40,6 +40,7 @@ class MotionController extends Controller{
         $ar = array();
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
+        $ar['user'] = $request->user();
         $ar['filter_block'] = MotionFilter::getFilterBlock($request);
         $user = Auth::user();
 

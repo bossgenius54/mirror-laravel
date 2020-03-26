@@ -64,9 +64,11 @@
                                             @endif
                                         @endcan
                                         @can('finish', $i)
+                                            @if($user->id != $i->user_id)
                                             <a class="dropdown-item" href="{{ action('Stock\MotionController@getFinish', $i) }}">
                                                 Завершить
                                             </a>
+                                            @endif
                                         @endcan
                                         @can('cancel', $i)
                                             <a class="dropdown-item" href="{{ action('Stock\MotionController@getCanceled', $i) }}">
