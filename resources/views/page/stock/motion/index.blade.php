@@ -12,7 +12,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">
-                    {{ $title }}  
+                    {{ $title }}
                     @can('create', App\Model\Motion::class)
                         <a href="{{ action('Stock\MotionController@getCreate') }}" type="button" class="btn btn-sm btn-info btn-rounded pull-right" >
                             Добавить
@@ -20,7 +20,7 @@
                     @endcan
                 </h4>
             </div>
-            
+
             <table class="table  table-hover color-table muted-table" >
                 <thead>
                     <tr>
@@ -62,9 +62,11 @@
                                             </a>
                                         @endcan
                                         @can('finish', $i)
+                                            @if($user->id != $i->user_id)
                                             <a class="dropdown-item" href="{{ action('Stock\MotionController@getFinish', $i) }}">
                                                 Завершить
                                             </a>
+                                            @endif
                                         @endcan
                                         @can('cancel', $i)
                                             <a class="dropdown-item" href="{{ action('Stock\MotionController@getCanceled', $i) }}">

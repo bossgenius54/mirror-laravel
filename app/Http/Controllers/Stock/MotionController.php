@@ -38,6 +38,7 @@ class MotionController extends Controller{
         $ar = array();
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
+        $ar['user'] = $request->user();
         $ar['filter_block'] = MotionFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
         $ar['ar_status'] = SysMotionStatus::pluck('name', 'id')->toArray();
@@ -83,18 +84,18 @@ class MotionController extends Controller{
         $ar['company_id'] = $request->user()->company_id;
         $ar['status_id'] = SysMotionStatus::IN_WORK;
         $ar['user_id'] = $request->user()->id;
-       
+
         DB::beginTransaction();
         try {
             $item = Motion::create($ar);
-           
+
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
 
             return redirect()->back()->with('error', $e->getMessage());
         }
-        
+
         return redirect()->action('Stock\MotionController@getUpdate', $item)->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
@@ -120,22 +121,22 @@ class MotionController extends Controller{
 
         if (Position::where('product_id', $request->product_id)->where('branch_id', $item->from_branch_id)->where('status_id', SysPositionStatus::ACTIVE)->count() < $request->count_position)
             return redirect()->back()->with('error', 'Позиции не хватает');
-                
+
         DB::beginTransaction();
         try {
-            // create motion product 
+            // create motion product
             $motion_product = MotionProduct::create([
-                'motion_id' => $item->id, 
-                'product_id' => $request->product_id, 
+                'motion_id' => $item->id,
+                'product_id' => $request->product_id,
                 'count_position' => $request->count_position
             ]);
-            
+
             // update positon status to in motion and create motion product
             $ar_position = Position::where('product_id', $request->product_id)
                                     ->where('branch_id', $item->from_branch_id)
                                     ->where('status_id', SysPositionStatus::ACTIVE)
                                     ->orderBy('id', 'asc')->take($request->count_position)->pluck('sys_num')->toArray();
-            
+
             Position::whereIn('sys_num', $ar_position)->update(['status_id'=>SysPositionStatus::IN_MOTION, 'motion_id' => $item->id]);
             $insert = [];
             foreach ($ar_position as $pos_id){
@@ -165,7 +166,7 @@ class MotionController extends Controller{
 
             Position::whereIn('sys_num', $ar_position)->update(['status_id'=>SysPositionStatus::ACTIVE, 'motion_id' => null]);
             $motion_product->delete();
-            
+
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -188,7 +189,7 @@ class MotionController extends Controller{
                 'branch_id' => $item->to_branh_id,
                 'motion_id' => null
             ]);
-                
+
             $item->update(['status_id' => SysMotionStatus::FINISH]);
 
             DB::commit();
@@ -210,7 +211,7 @@ class MotionController extends Controller{
             MotionProduct::where([
                 'motion_id' => $item->id
             ])->delete();
-                
+
             $item->update(['status_id' => SysMotionStatus::CANCEL]);
 
             DB::commit();
