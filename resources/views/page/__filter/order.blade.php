@@ -24,23 +24,37 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <input type="text" class="form-control " placeholder="Филиал" name="branch" value="{{ $request->branch }}" > 
+                        <input type="text" class="form-control " placeholder="Филиал" name="branch" value="{{ $request->branch }}" >
                     </div>
                     <div class="form-group col-md-5">
-                        <input type="text" class="form-control " placeholder="От клиента компании" name="from_company" value="{{ $request->from_company }}" > 
+                        <input type="text" class="form-control " placeholder="От клиента компании" name="from_company" value="{{ $request->from_company }}" >
                     </div>
                     <div class="form-group col-md-5">
-                        <input type="text" class="form-control " placeholder="От клиента физ. лица" name="from_user" value="{{ $request->from_user }}" > 
+                        <input type="text" class="form-control " placeholder="От клиента физ. лица" name="from_user" value="{{ $request->from_user }}" >
                     </div>
-                 
 
-                    
-                    
                     <div class="form-group col-md-2">
                         <button class="btn btn-warning btn-block" type="submit">Отфильтровать</button>
+                        <a href="#" class="btn btn-warning btn-block reset">Сбросить</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@section('js_block')
+    <script type="text/javascript">
+        $(function () {
+            $('.reset').on('click', function(e){
+                e.preventDefault();
+                console.log('clearing a filter ---');
+                $('input').val('');
+                $('select').children('option').attr('selected', false);
+                $('select').children('option').first().attr('selected',true);
+
+                $('form').submit();
+            });
+        });
+	</script>
+@endsection

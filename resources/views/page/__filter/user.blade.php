@@ -8,22 +8,39 @@
             <div class="card-body">
                 <form class="form-material row" >
                     <div class="form-group col-md-3">
-                        <input type="text" class="form-control " placeholder="Почтовый адрес" name="email" value="{{ $request->email }}"> 
+                        <input type="text" class="form-control " placeholder="Почтовый адрес" name="email" value="{{ $request->email }}">
                     </div>
                     <div class="form-group col-md-3">
-                        <input type="text" class="form-control " placeholder="ФИО" name="name" value="{{ $request->name }}" > 
+                        <input type="text" class="form-control " placeholder="ФИО" name="name" value="{{ $request->name }}" >
                     </div>
                     <div class="form-group col-md-2">
-                        <input type="text" class="form-control " placeholder="ИИН" name="iin" value="{{ $request->iin }}"> 
+                        <input type="text" class="form-control " placeholder="ИИН" name="iin" value="{{ $request->iin }}">
                     </div>
                     <div class="form-group col-md-2">
-                        <input type="text" class="form-control " placeholder="Телефон" name="phone" value="{{ $request->phone }}"> 
+                        <input type="text" class="form-control " placeholder="Телефон" name="phone" value="{{ $request->phone }}">
                     </div>
                     <div class="form-group col-md-2">
                         <button class="btn btn-warning btn-block" type="submit">Отфильтровать</button>
+                        <a href="#" class="btn btn-warning btn-block reset">Сбросить</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@section('js_block')
+    <script type="text/javascript">
+        $(function () {
+            $('.reset').on('click', function(e){
+                e.preventDefault();
+                console.log('clearing a filter ---');
+                $('input').val('');
+                $('select').children('option').attr('selected', false);
+                $('select').children('option').first().attr('selected',true);
+
+                $('form').submit();
+            });
+        });
+	</script>
+@endsection
