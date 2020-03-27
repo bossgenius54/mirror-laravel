@@ -12,16 +12,16 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">
-                    {{ $title }}  
+                    {{ $title }}
                     @can('create', App\Model\View\Individ::class)
-                        <a href="{{ action('Lib\IndividController@getCreate') }}" type="button" 
+                        <a href="{{ action('Lib\IndividController@getCreate') }}" type="button"
                             class="btn btn-sm btn-info btn-rounded pull-right" >
                             Добавить
                         </a>
                     @endcan
                 </h4>
             </div>
-            
+
             <table class="table  table-hover color-table muted-table" >
                 <thead>
                     <tr>
@@ -109,12 +109,8 @@
         </div>
     </form>
 </div>
-                            
-                      
 
 @endsection
-
-
 
 
 @section('js_block')
