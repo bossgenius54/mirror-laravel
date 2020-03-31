@@ -8,10 +8,10 @@
             <div class="card-body">
                 <form class="form-material row" >
                     <div class="form-group col-md-4">
-                        <input type="text" class="form-control " placeholder="Системный номер" name="sys_num" value="{{ $request->sys_num }}" > 
+                        <input type="text" class="form-control " placeholder="Системный номер" name="sys_num" value="{{ $request->sys_num }}" >
                     </div>
                     <div class="form-group col-md-5">
-                        <input type="text" class="form-control " placeholder="Наименование" name="name" value="{{ $request->name }}" > 
+                        <input type="text" class="form-control " placeholder="Наименование" name="name" value="{{ $request->name }}" >
                     </div>
                     <div class="form-group col-md-3">
                         <select name="income_id" class="form-control" >
@@ -45,12 +45,29 @@
                             @endforeach
                         </select>
                     </div>
-                    
+
                     <div class="form-group col-md-2">
                         <button class="btn btn-warning btn-block" type="submit">Отфильтровать</button>
+                        <a href="#" class="btn btn-warning btn-block reset">Сбросить</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@section('js_block')
+    <script type="text/javascript">
+        $(function () {
+            $('.reset').on('click', function(e){
+                e.preventDefault();
+                console.log('clearing a filter ---');
+                $('input').val('');
+                $('select').children('option').attr('selected', false);
+                $('select').children('option').first().attr('selected',true);
+
+                $('form').submit();
+            });
+        });
+	</script>
+@endsection

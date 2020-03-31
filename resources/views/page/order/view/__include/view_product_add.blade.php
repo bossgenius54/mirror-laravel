@@ -9,33 +9,33 @@
                         @if (in_array($product->id, $ar_order_product))
                             @continue
                         @endif
-                        @php 
+                        @php
                             $position_count = $product->relPositions()->where('branch_id', $item->branch_id)->where('status_id', App\Model\SysPositionStatus::ACTIVE)->count();
                         @endphp
-                        
-                        <option     value="{{ $product->id }}"  
-                                    data-count="{{ $position_count }}" 
+
+                        <option     value="{{ $product->id }}"
+                                    data-count="{{ $position_count }}"
                                     data-price="{{ $item->is_retail ? $product->price_retail : $product->price_opt }}">
-                            {{ $product->artikul }}|{{ $product->name }} ({{ $product->sys_num }}).  
-                            Цена {{ $item->is_retail ? $product->price_retail : $product->price_opt }}
+                            {{ $product->artikul }}|{{ $product->name }} ({{ $product->sys_num }}).
+                            Цена {{ $item->is_retail ? $product->price_retail : $product->price_opt }}`
                         </option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group col-md-2">
                 <label>Кол-во</label>
-                <input type="number" class="form-control " name="pos_count" id="pos_count" value="1" max="5" required  > 
+                <input type="number" class="form-control " name="pos_count" id="pos_count" value="1" max="5" required  >
             </div>
             <div class="form-group col-md-2">
                 <label>Цена за единицу</label>
-                <input type="number" class="form-control" name="pos_cost" id="pos_cost"  readonly > 
+                <input type="number" class="form-control" name="pos_cost" id="pos_cost"  readonly >
             </div>
             <div class="form-group col-md-2">
                 <label>Общая сумма</label>
-                <input type="number" class="form-control" id="pos_total_sum" readonly > 
+                <input type="number" class="form-control" id="pos_total_sum" readonly >
             </div>
             <div class="form-group col-md-2">
-                <label>&nbsp;</label>  
+                <label>&nbsp;</label>
                 <button class="btn btn-info btn-block" type="submit">Добавить</button>
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -50,14 +50,14 @@
                         @if (in_array($product->id, $ar_order_product))
                             @continue
                         @endif
-                        @php 
+                        @php
                             $position_count = $product->relPositions()->where('branch_id', $item->branch_id)->where('status_id', App\Model\SysPositionStatus::ACTIVE)->count();
                         @endphp
-                        
-                        <option     value="{{ $product->id }}"  
-                                    data-count="{{ $position_count }}" 
+
+                        <option     value="{{ $product->id }}"
+                                    data-count="{{ $position_count }}"
                                     data-price="{{ $item->is_retail ? $product->price_retail : $product->price_opt }}">
-                            {{ $product->artikul }}|{{ $product->name }} ({{ $product->sys_num }}). 
+                            {{ $product->artikul }}|{{ $product->name }} ({{ $product->sys_num }}).
                             Цена {{ $item->is_retail ? $product->price_retail : $product->price_opt }}
                         </option>
                     @endforeach
@@ -65,18 +65,18 @@
             </div>
             <div class="form-group col-md-2">
                 <label>Кол-во</label>
-                <input type="number" class="form-control " name="pos_count" id="pos_count" value="1" max="5" required  > 
+                <input type="number" class="form-control " name="pos_count" id="pos_count" value="1" max="5" required  >
             </div>
             <div class="form-group col-md-2">
                 <label>Цена за единицу</label>
-                <input type="number" class="form-control" name="pos_cost" id="pos_cost"  readonly > 
+                <input type="number" class="form-control" name="pos_cost" id="pos_cost"  readonly >
             </div>
             <div class="form-group col-md-2">
                 <label>Общая сумма</label>
-                <input type="number" class="form-control" id="pos_total_sum" readonly > 
+                <input type="number" class="form-control" id="pos_total_sum" readonly >
             </div>
             <div class="form-group col-md-2">
-                <label>&nbsp;</label>  
+                <label>&nbsp;</label>
                 <button class="btn btn-info btn-block" type="submit">Добавить</button>
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -92,33 +92,36 @@
                             @continue
                         @endif
 
-                        @php 
+                        @php
                             $position_count = $product->relPositions()->where('branch_id', $item->branch_id)->where('status_id', App\Model\SysPositionStatus::ACTIVE)->count();
                         @endphp
-                        
-                        <option     value="{{ $product->id }}"  
-                                    data-count="{{ $position_count }}" 
+
+
+                        @if( $position_count > 0 )
+                        <option     value="{{ $product->id }}"
+                                    data-count="{{ $position_count }}"
                                     data-price="{{ $item->is_retail ? $product->price_retail : $product->price_opt }}">
-                            {{ $product->artikul }}|{{ $product->name }} ({{ $product->sys_num }}). Есть {{ $position_count }} позиций. 
+                            {{ $product->artikul }}|{{ $product->name }} ({{ $product->sys_num }}). Есть {{ $position_count }} позиций.
                             Цена {{ $item->is_retail ? $product->price_retail : $product->price_opt }}
                         </option>
+                        @endif
                     @endforeach
                 </select>
             </div>
             <div class="form-group col-md-2">
                 <label>Кол-во</label>
-                <input type="number" class="form-control " name="pos_count" id="pos_count" value="1" required  > 
+                <input type="number" class="form-control " name="pos_count" id="pos_count" value="1" required  >
             </div>
             <div class="form-group col-md-2">
                 <label>Цена за единицу</label>
-                <input type="number" class="form-control" name="pos_cost" id="pos_cost"  required > 
+                <input type="number" class="form-control" name="pos_cost" id="pos_cost"  required >
             </div>
             <div class="form-group col-md-2">
                 <label>Общая сумма</label>
-                <input type="number" class="form-control" id="pos_total_sum" readonly > 
+                <input type="number" class="form-control" id="pos_total_sum" readonly >
             </div>
             <div class="form-group col-md-2">
-                <label>&nbsp;</label>  
+                <label>&nbsp;</label>
                 <button class="btn btn-info btn-block" type="submit">Добавить</button>
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
