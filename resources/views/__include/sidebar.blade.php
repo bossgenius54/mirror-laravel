@@ -48,9 +48,19 @@
                     </li>
                 @endcan
 
+                @php
+                    $user = Auth::user();
+                @endphp
+
+                @if( $user->can('list, App\Model\View\BranchProduct::class') || $user->can('list', App\Model\View\IncomeFromCompany::class)
+                        || $user->can('list', App\Model\Outcome::class) || $user->can('list', App\Model\View\IncomeReturned::class)
+                        || $user->can('list', App\Model\Motion::class) || $user->can('list', App\Model\Position::class)
+                        || $user->can('list', App\Model\Product::class) )
                 
-                <li class="nav-small-cap">Склад</li>
-                
+                    <li class="nav-small-cap">Склад</li>
+
+                @endif
+
                 @can('list', App\Model\View\BranchProduct::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Stock\BranchProductController@getIndex') }}">
@@ -124,7 +134,13 @@
                     </li>
                 @endcan
                 
-                <li class="nav-small-cap">Финансы</li>
+
+                @if( $user->can('list', App\Model\FinanceService::class) || $user->can('list', App\Model\FinancePosition::class) )
+                
+                    <li class="nav-small-cap">Финансы</li>
+                
+                @endif
+
                 @can('list', App\Model\FinanceService::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Finance\FinanseServiceController@getIndex') }}">
@@ -145,7 +161,16 @@
                         </a>
                     </li>
                 @endcan
-                <li class="nav-small-cap">Справочники</li>
+
+                @if( $user->can('list', App\Model\Company::class) || $user->can('list', App\Model\View\Doctor::class)
+                        || $user->can('list', App\Model\View\Manager::class) || $user->can('list', App\Model\View\StockManager::class)
+                        || $user->can('list', App\Model\View\Accounter::class) || $user->can('list', App\Model\View\ExternalDoctor::class)
+                        || $user->can('list', App\Model\CompanyService::class) || $user->can('list', App\Model\Branch::class)
+                        || $user->can('list', App\Model\View\Director::class) || $user->can('list', App\Model\LibProductCat::class)
+                        || $user->can('list', App\Model\LibProductOption::class) || $user->can('list', App\Model\SysAuthLog::class) )
+                    <li class="nav-small-cap">Справочники</li>
+                @endif
+
                 @can('list', App\Model\Company::class)
                     <li>
                         <a class="" href="{{ action('Lib\CompanyController@getIndex') }}">
