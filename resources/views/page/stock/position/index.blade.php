@@ -102,7 +102,18 @@
 
                 $('.js_change_status_form').attr('action', $(this).attr('href'))
                 $('#modal_change_status').modal("show");
-            })
+            });
+
+            // reseting func of filter
+            $('.reset').on('click', function(e){
+                e.preventDefault();
+                console.log('clearing a filter ---');
+                $('input').val('');
+                $('select').children('option').attr('selected', false);
+                $('select').children('option').first().attr('selected',true);
+
+                $('form').submit();
+            });
 
         });
 	</script>

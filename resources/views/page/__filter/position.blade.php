@@ -48,26 +48,10 @@
 
                     <div class="form-group col-md-2">
                         <button class="btn btn-warning btn-block" type="submit">Отфильтровать</button>
-                        <a href="#" class="btn btn-warning btn-block reset">Сбросить</a>
+                        <a href="#" class="btn btn-warning btn-block reset">Сбросить</a> <!-- Функционал сброса расположен в JS block в index странице -->
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-@section('js_block')
-    <script type="text/javascript">
-        $(function () {
-            $('.reset').on('click', function(e){
-                e.preventDefault();
-                console.log('clearing a filter ---');
-                $('input').val('');
-                $('select').children('option').attr('selected', false);
-                $('select').children('option').first().attr('selected',true);
-
-                $('form').submit();
-            });
-        });
-	</script>
-@endsection
