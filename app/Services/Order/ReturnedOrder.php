@@ -52,6 +52,7 @@ class ReturnedOrder {
             $el->from_company_id = $this->item->from_company_id;
         }
 
+        $el->order_id = $this->item->id;
         $el->company_id = $this->item->company_id;
         $el->branch_id = $this->item->branch_id;
         $el->name = $this->item->name;

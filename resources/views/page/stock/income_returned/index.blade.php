@@ -22,6 +22,7 @@
                         <th>id</th>
                         <th>Тип</th>
                         <th>Филиал</th>
+                        <th>Номер заказа</th>
                         <th>Сумма</th>
                         <th>Наименование</th>
                         <th>Изменен</th>
@@ -35,6 +36,15 @@
                             <td>{{ $i->id }}</td>
                             <th>{{ isset($ar_type[$i->type_id]) ? $ar_type[$i->type_id] : '' }}</th>
                             <td>{{ $i->relBranch ? $i->relBranch->name : '' }}</td>
+                            <td>
+                                @if( $i->order_id )
+                                    @php
+                                        $url = url("/order/item/view/{$i->order_id}");
+                                    @endphp
+                                    
+                                    <a href="{{ $url }}"> № {{ $i->order_id }} </a>
+                                @endif
+                            </td>
                             <td>{{ $i->related_cost }}</td>
                             <td>{{ $i->name }}</td>
                             <td>{{ $i->updated_at }}</td>
