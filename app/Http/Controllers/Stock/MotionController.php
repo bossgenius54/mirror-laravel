@@ -58,23 +58,35 @@ class MotionController extends Controller{
     }
 
     function getView(Request $request, Motion $item){
-        $positions = false;
-        $services = false;
-        $products = false;
-        $finance = Finance::where('motion_id', $item->id)->where('type_id', SysFinanceType::MOVE_FROM)->first();
-        if ($finance){
-            $positions = FinancePosition::where('finance_id', $finance->id)->with('relProduct')->get();
-            $services = FinanceService::where('finance_id', $finance->id)->with('relService')->get();
-            $products = FinancePosition::getStatByPriceAfter($finance->id);
-        }
+        // $positions = false;
+        // $services = false;
+        // $products = false;
+        // $finance = Finance::where('motion_id', $item->id)->where('type_id', SysFinanceType::MOVE_FROM)->first();
+        // if ($finance){
+        //     $positions = FinancePosition::where('finance_id', $finance->id)->with('relProduct')->get();
+        //     $services = FinanceService::where('finance_id', $finance->id)->with('relService')->get();
+        //     $products = FinancePosition::getStatByPriceAfter($finance->id);
+        // }
 
+        // $ar = array();
+        // $ar['title'] = 'Детализация элемента списока "'.$this->title.'"';
+        // $ar['ar_status'] = SysMotionStatus::pluck('name', 'id')->toArray();
+        // $ar['positions'] = $positions;
+        // $ar['products'] = $products;
+        // $ar['services'] = $services;
+        // $ar['item'] = $item;
         $ar = array();
-        $ar['title'] = 'Детализация элемента списока "'.$this->title.'"';
-        $ar['ar_status'] = SysMotionStatus::pluck('name', 'id')->toArray();
-        $ar['positions'] = $positions;
-        $ar['products'] = $products;
-        $ar['services'] = $services;
+        $ar['title'] = 'Изменить элемент № '. $item->id.' списка "'.$this->title.'"';
         $ar['item'] = $item;
+        $ar['user'] = Auth::user();
+        $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
+        $ar['products'] = Product::where('company_id', $request->user()->company_id)
+                                    ->whereHas('relPositions', function($q) use ($item){
+                                        $q->where('branch_id', $item->from_branch_id)->where('status_id', SysPositionStatus::ACTIVE);
+                                    })->get();
+        $ar['action'] = action('Stock\MotionController@postUpdate', $item);
+        $ar['pos_status'] = SysPositionStatus::ACTIVE;
+        $ar['motion_products'] = MotionProduct::where('motion_id', $item->id)->with('relProduct')->get();
 
         return view('page.stock.motion.view', $ar);
     }
