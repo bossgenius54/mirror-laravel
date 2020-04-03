@@ -89,6 +89,7 @@ class ReturnedOrder {
         $ar_el['branch_id'] = $this->income->branch_id;
         $ar_el['status_id'] = SysPositionStatus::ACTIVE;
         $ar_el['income_id'] = $this->income->id;
+
         foreach ($positions as $s) {
 
             $ar_el['product_id'] = $s->product_id;
@@ -97,16 +98,17 @@ class ReturnedOrder {
             $ar_el['sys_num'] = $s->position_sys_num;
             $ar_el['created_at'] = date('Y-m-d h:i:s');
             $ar_el['updated_at'] = date('Y-m-d h:i:s');
-            $ar [] = $ar_el;
+            $ar = $ar_el;
+
+            if (count($ar) > 0)
+                Position::where( 'sys_num', $s->position_sys_num )->update($ar);
 
             $ar_income_position[] = [
                 'income_id' => $this->income->id,
                 'position_sys_num' => $ar_el['sys_num']
             ];
+            // dd($ar);
         }
-        
-        if (count($ar) > 0)
-            Position::insert($ar);
         
         if (count($ar_income_position) > 0)
             IncomePosition::insert($ar_income_position); 
