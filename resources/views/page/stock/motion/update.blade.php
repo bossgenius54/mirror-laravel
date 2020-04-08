@@ -14,16 +14,29 @@
     @endcan
     @can('finish', $item)
 
-        @if($item->user_id != $user->id)
+        @if( $item->to_branh_id == $user->branch_id || in_array($user->type_id, [ App\Model\SysUserType::DIRECTOR, App\Model\SysUserType::STOCK_MANAGER ]) )
 
             <div class="col-md-6" style="margin-bottom: 10px;">
                 <a class="btn btn-success btn-block" href="{{ action('Stock\MotionController@getFinish', $item) }}">
                     Завершить
                 </a>
             </div>
+
         @endif
 
     @endcan
+    @can('update', $item)
+
+        @if( $item->status_id == App\Model\SysMotionStatus::IN_WORK && ( $item->from_branch_id == $user->branch_id || in_array($user->type_id, [ App\Model\SysUserType::DIRECTOR, App\Model\SysUserType::STOCK_MANAGER ]) ) )
+            <div class="col-md-6" style="margin-bottom: 10px;">
+                <a class="btn btn-success btn-block" href="{{ action('Stock\MotionController@getConfirm', $item) }}">
+                    Подтвердить и отправить
+                </a>
+            </div>
+        @endif
+
+    @endcan
+
     <div class="col-sm-12">
         <div class="card card-outline-info">
             <div class="card-header">
@@ -85,7 +98,7 @@
                     <div class="form-material row" >
                         <div class="form-group col-md-6">
                             <label>Ассортимент</label>
-                            <input type="text" class="form-control" value="{{ $i->relProduct->name }} ({{ $product->sys_num }})" disabled>
+                            <input type="text" class="form-control" value="{{ $i->relProduct->name }} ({{ $i->relProduct->sys_num }})" disabled>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Единиц</label>

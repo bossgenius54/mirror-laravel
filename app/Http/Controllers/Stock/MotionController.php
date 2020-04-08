@@ -45,7 +45,9 @@ class MotionController extends Controller{
         $user = Auth::user();
 
         if( $user->type_id == SysUserType::MANAGER ){
-            $ar['items'] = $items->where('user_id',$user->id)->orWhere('to_branh_id',$user->branch_id)->latest()->paginate(24);
+            $ar['items'] = $items->where( 'user_id', $user->id )
+                                    ->orWhere( 'to_branh_id', $user->branch_id )
+                                    ->latest()->paginate(24);
         } else {
             $ar['items'] = $items->latest()->paginate(24);
         }
@@ -200,6 +202,11 @@ class MotionController extends Controller{
         return redirect()->back()->with('success', 'У перемещения № '.$item->id.' откреплены товары');
     }
 
+    function getConfirm(Request $request, Motion $item) {
+        $item->update(['status_id' => SysMotionStatus::CONFIRMED]);
+
+        return redirect()->action('Stock\MotionController@getIndex')->with('success', 'Подтвержден и отправлен "'.$this->title.'" № '.$item->id);
+    }
 
     function getFinish(Request $request, Motion $item){
         DB::beginTransaction();

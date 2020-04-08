@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which 
+| routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
 */
@@ -19,14 +19,14 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
     Route::get('/', 'IndexController@getIndex');
 
     Route::group(['prefix' => 'order', 'namespace' => 'Order'], function () {
-        
+
         Route::get('/', 'ListOrderController@getIndex')->middleware('can:list,App\Model\Order');
 
         Route::group(['prefix' => 'create'], function () {
             Route::get('{type}', 'CreateOrderController@getCreate')->middleware('can:create,App\Model\Order');
             Route::post('{type}', 'CreateOrderController@postCreate')->middleware('can:create,App\Model\Order');
         });
-        
+
         Route::group(['prefix' => 'create-person'], function () {
             Route::get('/', 'CreateFizOrderController@getCreate')->middleware('can:createForFiz,App\Model\Order');
             Route::post('/', 'CreateFizOrderController@postCreate')->middleware('can:createForFiz,App\Model\Order');
@@ -51,7 +51,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::post('add/{item}', 'PositionOrderController@postAddProduct')->middleware('can:position,item');
             Route::get('delete/{item}/{order_product}', 'PositionOrderController@getDeleteProduct')->middleware('can:position,item');
         });
-        
+
         Route::group(['prefix' => 'status'], function () {
             Route::get('change/{item}/{status}', 'StatusOrderController@getChangeStatus')->middleware('can:status,item,status');
         });
@@ -119,6 +119,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('update/{item}', 'MotionController@getUpdate')->middleware('can:update,item');
             Route::post('update/{item}', 'MotionController@postUpdate')->middleware('can:update,item');
             Route::get('unset-product/{item}/{motion_product}', 'MotionController@getUnsetProduct')->middleware('can:update,item');
+            Route::get('confirm/{item}', 'MotionController@getConfirm')->middleware('can:update,item');
             Route::get('finish/{item}', 'MotionController@getFinish')->middleware('can:finish,item');
             Route::get('canceleld/{item}', 'MotionController@getCanceled')->middleware('can:cancel,item');
             Route::get('view/{item}', 'MotionController@getView')->middleware('can:view,item');
@@ -129,7 +130,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('/', 'IncomeReturnedController@getIndex')->middleware('can:list,App\Model\View\IncomeReturned');
             Route::get('view/{item}', 'IncomeReturnedController@getView')->middleware('can:view,item');
         });
-        
+
         /// outcome
         Route::group(['prefix' => 'outcome'], function () {
             Route::get('/', 'OutcomeController@getIndex')->middleware('can:list,App\Model\Outcome');
@@ -143,7 +144,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
     });
 
     Route::group(['prefix' => 'lib', 'namespace' => 'Lib'], function () {
-        /// company categories 
+        /// company categories
         Route::group(['prefix' => 'company-cat'], function () {
             Route::get('/', 'LibCompanyCatController@getIndex')->middleware('can:list,App\Model\LibCompanyCat');
             Route::get('create', 'LibCompanyCatController@getCreate')->middleware('can:create,App\Model\LibCompanyCat');
@@ -153,7 +154,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('delete/{item}', 'LibCompanyCatController@getDelete')->middleware('can:delete,item');
         });
 
-        // product categories 
+        // product categories
         Route::group(['prefix' => 'product-cat'], function () {
             Route::get('/', 'LibProductCatController@getIndex')->middleware('can:list,App\Model\LibProductCat');
             Route::get('create', 'LibProductCatController@getCreate')->middleware('can:create,App\Model\LibProductCat');
@@ -163,7 +164,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('delete/{item}', 'LibProductCatController@getDelete')->middleware('can:delete,item');
         });
 
-        // product type 
+        // product type
         Route::group(['prefix' => 'product-type'], function () {
             Route::get('/', 'LibProductTypeController@getIndex')->middleware('can:list,App\Model\LibProductType');
             Route::get('create', 'LibProductTypeController@getCreate')->middleware('can:create,App\Model\LibProductType');
@@ -173,7 +174,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('delete/{item}', 'LibProductTypeController@getDelete')->middleware('can:delete,item');
         });
 
-        // product option 
+        // product option
         Route::group(['prefix' => 'product-option'], function () {
             Route::get('/', 'LibProductOptionController@getIndex')->middleware('can:list,App\Model\LibProductOption');
             Route::get('create', 'LibProductOptionController@getCreate')->middleware('can:create,App\Model\LibProductOption');
@@ -244,7 +245,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::post('update/{item}', 'DoctorController@postUpdate')->middleware('can:update,item');
             Route::get('delete/{item}', 'DoctorController@getDelete')->middleware('can:delete,item');
         });
-        
+
         // manager
         Route::group(['prefix' => 'stock-manager'], function () {
             Route::get('/', 'StockManagerController@getIndex')->middleware('can:list,App\Model\View\StockManager');
@@ -290,7 +291,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
         Route::group(['prefix' => 'simple-director'], function () {
             Route::get('/{company}', 'SimpleDirectorController@getIndex')->middleware('can:list,App\Model\View\SimpleDirector');
             Route::get('create/{company}', 'SimpleDirectorController@getCreate')->middleware('can:create,App\Model\View\SimpleDirector');
-            Route::post('create/{company}', 'SimpleDirectorController@postCreate')->middleware('can:create,App\Model\View\SimpleDirector'); 
+            Route::post('create/{company}', 'SimpleDirectorController@postCreate')->middleware('can:create,App\Model\View\SimpleDirector');
 
             Route::get('update/{item}', 'SimpleDirectorController@getUpdate')->middleware('can:updatefull,item');
             Route::post('update/{item}', 'SimpleDirectorController@postUpdate')->middleware('can:updatefull,item');
@@ -322,6 +323,6 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
     Route::get('profile', 'ProfileController@getIndex');
     Route::post('profile', 'ProfileController@postIndex');
 
-    Route::get('logout', 'LoginController@getLogout');    
+    Route::get('logout', 'LoginController@getLogout');
 });
 

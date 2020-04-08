@@ -57,17 +57,17 @@
                                         @endcan
 
                                         @can('update', $i)
-                                            @if($i->user_id == $user->id)
+                                            @if($i->user_id == $user->id || in_array($user->type_id, [ App\Model\SysUserType::DIRECTOR, App\Model\SysUserType::STOCK_MANAGER ]) )
                                                 <a class="dropdown-item" href="{{ action('Stock\MotionController@getUpdate', $i) }}">
                                                     Изменить
                                                 </a>
                                             @endif
                                         @endcan
                                         @can('finish', $i)
-                                            @if($user->id != $i->user_id)
-                                            <a class="dropdown-item" href="{{ action('Stock\MotionController@getFinish', $i) }}">
-                                                Завершить
-                                            </a>
+                                            @if($user->id != $i->user_id || in_array($user->type_id, [ App\Model\SysUserType::DIRECTOR, App\Model\SysUserType::STOCK_MANAGER ]))
+                                                <a class="dropdown-item" href="{{ action('Stock\MotionController@getFinish', $i) }}">
+                                                    Завершить
+                                                </a>
                                             @endif
                                         @endcan
                                         @can('cancel', $i)

@@ -12,17 +12,24 @@
             </a>
         </div>
     @endcan
+
     @can('finish', $item)
 
-        @if($item->user_id != $user->id)
+        @if( $item->to_branh_id == $user->branch_id || in_array($user->type_id, [ App\Model\SysUserType::DIRECTOR, App\Model\SysUserType::STOCK_MANAGER ]) )
 
             <div class="col-md-6" style="margin-bottom: 10px;">
                 <a class="btn btn-success btn-block" href="{{ action('Stock\MotionController@getFinish', $item) }}">
                     Завершить
                 </a>
             </div>
-        
-        @elseif( $item->from_branch_id == $user->branch_id && $item->status_id == 1)
+
+        @endif
+
+    @endcan
+
+    @can('update', $item)
+
+        @if( $item->from_branch_id == $user->branch_id || in_array($user->type_id, [ App\Model\SysUserType::DIRECTOR, App\Model\SysUserType::STOCK_MANAGER ]))
             <div class="col-md-6" style="margin-bottom: 10px;">
                 <a class="btn btn-warning btn-block" href="{{ action('Stock\MotionController@getUpdate', $item) }}">
                     Изменить
@@ -31,6 +38,7 @@
         @endif
 
     @endcan
+
     <div class="col-sm-12">
         <div class="card card-outline-info">
             <div class="card-header">
@@ -62,7 +70,7 @@
                     </div>
                 </div>
 
-               
+
 
                 <h3 class="card-title">Список прикрепленных позиций/товаров</h3>
                 @foreach ($motion_products as $i)

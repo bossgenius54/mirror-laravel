@@ -12,22 +12,22 @@ class MotionPolicy {
     use HandlesAuthorization;
 
     public function __construct(){
-        
+
     }
 
 
     public function list($user){
         if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER, SysUserType::MANAGER]))
             return false;
-        
-        return true; 
+
+        return true;
     }
 
     public function create($user){
         if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::ACCOUNTER, SysUserType::MANAGER]))
             return false;
-        
-        return true; 
+
+        return true;
     }
 
     public function view($user, $item){
@@ -37,7 +37,7 @@ class MotionPolicy {
         return true;
     }
 
-    
+
     public function update($user, $item){
         if ($item->status_id != SysMotionStatus::IN_WORK)
             return false;
@@ -47,9 +47,9 @@ class MotionPolicy {
 
         return true;
     }
-    
+
     public function finish($user, $item){
-        if ($item->status_id != SysMotionStatus::IN_WORK)
+        if ($item->status_id != SysMotionStatus::CONFIRMED)
             return false;
 
         if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::STOCK_MANAGER, SysUserType::MANAGER]))
