@@ -17,11 +17,11 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label>Кол-во</label>
-                    <input name="product_count" type="number" class="form-control "  > 
+                    <input name="product_count" type="number" class="form-control "  >
                 </div>
                 <div class="form-group col-md-2">
                     <label>Цена </label>
-                    <input name="price_cost" type="number" class="form-control "  > 
+                    <input name="price_cost" type="number" class="form-control "  >
                 </div>
                 <div class="form-group col-md-4 ">
                     <label>&nbsp;</label>
@@ -29,12 +29,12 @@
                 </div>
             </div>
         </form>
-        
+
         @php
             $total_count = 0;
             $total_summ = 0;
         @endphp
-        <table class="table  table-hover color-table muted-table" >
+        <table class="table  table-hover color-table table-responsive" >
             <thead>
                 <tr>
                     <th>№</th>
@@ -54,15 +54,15 @@
                     @endphp
                     <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $i->relProduct ? $i->relProduct->name.' ('.$i->relProduct->sys_num.')' : '' }}</td> 
-                        <td>    
-                            <input type="date" class="form-control js_change_position" data-hidden_input="expired_at_{{ $i->group_num }}" value="{{ $i->expired_at }}"  />
+                        <td>{{ $i->relProduct ? $i->relProduct->name.' ('.$i->relProduct->sys_num.')' : '' }}</td>
+                        <td>
+                            <input type="date" style="width:200px!important;" class="form-control js_change_position" data-hidden_input="expired_at_{{ $i->group_num }}" value="{{ $i->expired_at }}"  />
                         </td>
                         <td>
-                            <input type="number" class="form-control js_change_position" data-hidden_input="price_cost_{{ $i->group_num }}" value="{{ $i->price_cost }}" /> 
+                            <input type="number" style="width:100px!important;" class="form-control js_change_position" data-hidden_input="price_cost_{{ $i->group_num }}" value="{{ $i->price_cost }}" />
                         </td>
                         <td>
-                            <input type="number" class="form-control js_change_position" data-hidden_input="product_count_{{ $i->group_num }}" value="{{ $i->product_count }}" /> 
+                            <input type="number" style="width:100px!important;" class="form-control js_change_position" data-hidden_input="product_count_{{ $i->group_num }}" value="{{ $i->product_count }}" />
                         </td>
                         <td>{{ $i->product_sum }}</td>
                         <td>
