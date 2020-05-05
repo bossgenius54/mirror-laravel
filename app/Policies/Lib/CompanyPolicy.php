@@ -84,6 +84,9 @@ class CompanyPolicy {
         if ($item->type_id != SysCompanyType::EMPTY)
             return false;
 
+        if ( $user->type_id == SysUserType::DIRECTOR )
+            return false;
+
         if ( !$this->mainCheck($user))
             return false;
 
@@ -95,6 +98,7 @@ class CompanyPolicy {
 
         return true;
     }
+
     public function upgradeToFullPermission($user, $item){
         if ($item->type_id != SysCompanyType::HALF)
             return false;
