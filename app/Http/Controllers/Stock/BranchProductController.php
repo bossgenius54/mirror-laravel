@@ -9,6 +9,7 @@ use App\ModelList\ProductList;
 use App\ModelList\BranchList;
 use App\ModelFilter\ProductFilter;
 use App\Model\LibProductCat;
+use App\Model\Product;
 use App\Model\SysPositionStatus;
 use DB;
 use Exception;
@@ -29,6 +30,7 @@ class BranchProductController extends Controller{
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['ar_branch'] = $branches->pluck('name', 'id')->toArray();
+        $ar['filter_names'] = ProductList::get($request)->latest()->get();
 
         $branch_array = [];
         foreach ( $ar['ar_branch'] as $id => $name )
