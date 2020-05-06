@@ -9,21 +9,21 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">
-                    {{ $title }}  
+                    {{ $title }}
                     @can('create', App\Model\Company::class)
-                        <a href="{{ action('Lib\CompanyController@getCreate') }}" type="button" 
+                        <a href="{{ action('Lib\CompanyController@getCreate') }}" type="button"
                             class="btn btn-sm btn-info btn-rounded pull-right" >
                             Добавить
                         </a>
                     @endcan
                 </h4>
             </div>
-            
+
             <table class="table  table-hover color-table muted-table" >
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>Права в системе</th>
+                        {{-- <th>Права в системе</th> --}}
                         <th>Форма собственности</th>
                         <th>Наименование</th>
                         <th>Изменен</th>
@@ -35,7 +35,7 @@
                     @foreach ($items as $i)
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                             <td>{{ $i->id }}</td>
-                            <td>{{ isset($ar_type[$i->type_id]) ? $ar_type[$i->type_id] : 'не указано' }}</td>
+                            {{-- <td>{{ isset($ar_type[$i->type_id]) ? $ar_type[$i->type_id] : 'не указано' }}</td> --}}
                             <td>{{ isset($ar_cat[$i->cat_id]) ? $ar_cat[$i->cat_id] : 'не указано' }}</td>
                             <td>{{ $i->name }}</td>
                             <td>{{ $i->updated_at }}</td>
@@ -48,18 +48,15 @@
                                     <div class="dropdown-menu">
                                         @can('upgradeToHalfPermission', $i)
                                             <a class="dropdown-item" href="{{ action('Lib\CompanyController@getUpgradeToHalfPermission', $i) }}">
-                                                Дать возможность онлайн покупок 
-                                            </a>
-
-                                            <a class="dropdown-item" href="{{ action('Lib\SimpleDirectorController@getIndex', $i) }}">
-                                                Аккаунты покупателей
+                                                Дать возможность онлайн покупок
                                             </a>
                                         @endcan
                                         @can('upgradeToFullPermission', $i)
                                             <a class="dropdown-item" href="{{ action('Lib\CompanyController@getUpgradeToFullPermission', $i) }}">
                                                 Полный доступ
                                             </a>
-                                            
+                                        @endcan
+                                        @can('list', 'App\Model\Company')
                                             <a class="dropdown-item" href="{{ action('Lib\SimpleDirectorController@getIndex', $i) }}">
                                                 Аккаунты покупателей
                                             </a>

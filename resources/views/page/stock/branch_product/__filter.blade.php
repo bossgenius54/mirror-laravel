@@ -8,12 +8,12 @@
             <div class="card-body">
                 <form class="form-material row" >
                     <div class="form-group col-md-4">
-                        <input type="text" class="form-control " placeholder="Системный номер" name="sys_num" value="{{ $request->sys_num }}" > 
+                        <input type="text" class="form-control " placeholder="Системный номер" name="sys_num" value="{{ $request->sys_num }}" >
                     </div>
                     <div class="form-group col-md-4">
                         <select name="name" class="form-control" >
                             <option value="">Наименование</option>
-                            @foreach ($items as $pr)
+                            @foreach ($filter_names as $pr)
                                 <option value="{{ $pr->name }}" {{ $request->name == $pr->name ? 'selected' : '' }}>{{ $pr->name }}</option>
                             @endforeach
                         </select>
@@ -45,7 +45,7 @@
                             <option value="minus"  {{ $request->balans_diff == 'minus' ? 'selected' : '' }}>Нужно докупить</option>
                         </select>
                     </div>
-                    
+
 
                     <div class="form-group col-md-2">
                         <button class="btn btn-warning btn-block" type="submit">Отфильтровать</button>

@@ -9,7 +9,7 @@
             @include('page.stock.income_from_company.__include.view_service')
             @if ($item->relPositions()->where('status_id', App\Model\SysPositionStatus::IN_INCOME)->count())
                 @include('page.stock.income_from_company.__include.view_income_product')
-            @else 
+            @else
                 @include('page.stock.income_from_company.__include.view_product')
             @endif
             @include('page.stock.income_from_company.__include.view_position')
@@ -24,8 +24,6 @@
         </div>
     </div>
 @endsection
-
-
 
 @section('js_block')
     <script type="text/javascript">
