@@ -13,7 +13,7 @@
             <div class="card-body">
                 <form class="form-material" action="{{ $action }}" method="post"  enctype="multipart/form-data">
                     <div class="form-group">
-                        <label>Заказ</label>
+                        <label>Заказ (Заметка)</label>
                         <select name="order_id" class="form-control select2" required>
                             @foreach ($orders as $id => $name)
                                 <option value="{{ $id }}">Заказ "{{ $name }}"" № {{ $id }}</option>
@@ -30,9 +30,9 @@
                     </div>
                     <div class="form-group">
                         <label>Сумма</label>
-                        <input type="number" class="form-control " name="salary" required> 
+                        <input type="number" class="form-control " name="salary" required>
                     </div>
-                    
+
                     <button class="btn btn-info pull-right" type="submit">Сохранить</button>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </form>

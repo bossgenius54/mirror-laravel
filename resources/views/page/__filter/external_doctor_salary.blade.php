@@ -7,11 +7,20 @@
             </div>
             <div class="card-body">
                 <form class="form-material row filter" >
-                    <div class="form-group col-md-5">
-                        <input type="text" class="form-control " placeholder="ФИО врача" name="name" value="{{ $request->name }}" >
-                    </div>
-                    <div class="form-group col-md-5">
-                        <input type="text" class="form-control " placeholder="Заказ" name="order_name" value="{{ $request->order_name }}" >
+
+
+                    <div class="col-md-10 row">
+
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control " placeholder="ФИО врача" name="name" value="{{ $request->name }}" >
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control " placeholder="Название заказа" name="order_name" value="{{ $request->order_name }}" >
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control " placeholder="Номер заказа" name="order_num" value="{{ $request->order_num }}" >
+                        </div>
+
                     </div>
 
                     <div class="form-group col-md-2">
