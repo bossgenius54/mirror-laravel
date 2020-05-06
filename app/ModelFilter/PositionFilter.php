@@ -4,6 +4,7 @@ namespace App\ModelFilter;
 use Illuminate\Http\Request;
 
 use App\Model\SysUserType;
+use Illuminate\Support\Facades\DB;
 
 class PositionFilter {
     private $items = null;
@@ -16,7 +17,7 @@ class PositionFilter {
     static function filter(Request $request, $items){
         $el = new PositionFilter();
         $el->start($request, $items);
-        
+
         return  $el->getResult();
     }
 
@@ -30,6 +31,7 @@ class PositionFilter {
         $this->filterStatusId();
         $this->filterbBranchId();
         $this->filterIncomeId();
+        $this->filterDate();
     }
 
     function getResult(){
@@ -50,7 +52,7 @@ class PositionFilter {
     private  function filterSysNum(){
         if (!$this->request->has('sys_num') || !$this->request->sys_num)
             return;
-        
+
         $request = $this->request;
         $this->items->whereHas('relProduct', function($q) use ($request){
             $q->where('sys_num', 'like', '%'.$request->sys_num.'%');
@@ -60,7 +62,7 @@ class PositionFilter {
     private  function filterCatId(){
         if (!$this->request->has('cat_id') || !$this->request->cat_id)
             return;
-        
+
         $request = $this->request;
         $this->items->whereHas('relProduct', function($q) use ($request){
             $q->where('cat_id', $request->cat_id);
@@ -79,7 +81,7 @@ class PositionFilter {
             return;
 
         $this->items->where('branch_id',  $this->request->branch_id);
-    }   
+    }
 
     private function filterIncomeId(){
         if (!$this->request->has('income_id') || !$this->request->income_id)
@@ -87,6 +89,18 @@ class PositionFilter {
 
         $this->items->where('income_id',  $this->request->income_id);
 
+    }
+
+    private function filterDate(){
+        if (!$this->request->has('first_date') || !$this->request->first_date)
+            return;
+
+        if(!$this->request->has('second_date') || !$this->request->second_date)
+        {
+            $this->items->where('created_at', 'like', $this->request->first_date.'%');
+        } else {
+            $this->items->whereBetween(DB::raw('DATE(created_at)'), array($this->request->first_date, $this->request->second_date));
+        }
     }
 
 }
