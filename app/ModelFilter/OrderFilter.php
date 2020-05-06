@@ -4,6 +4,7 @@ namespace App\ModelFilter;
 use Illuminate\Http\Request;
 
 use App\Model\SysUserType;
+use Illuminate\Support\Facades\DB;
 
 class OrderFilter {
     private $items = null;
@@ -111,9 +112,9 @@ class OrderFilter {
 
         if(!$this->request->has('second_date') || !$this->request->second_date)
         {
-            $this->items->where('created_at', $this->request->first_date);
+            $this->items->where('created_at', 'like', $this->request->first_date.'%');
         } else {
-            $this->items->whereBetween('created_at', [$this->request->first_date,$this->request->second_date]);
+            $this->items->whereBetween(DB::raw('DATE(created_at)'), array($this->request->first_date, $this->request->second_date));
         }
     }
 

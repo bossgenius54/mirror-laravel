@@ -23,9 +23,9 @@ use App\Model\FinanceService;
 use App\Services\Finance\CreateFinanceModel;
 
 use App\ModelFilter\IncomeFromCompanyFilter;
-
 use DB;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class IncomeFromCompanyController extends Controller{
     private $title = 'Оприходование';
@@ -33,12 +33,18 @@ class IncomeFromCompanyController extends Controller{
     function getIndex (Request $request){
         $items = IncomeFromCompanyList::get($request);
         $items = IncomeFromCompanyFilter::filter($request, $items);
+        $user = Auth::user();
 
         $ar = array();
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = IncomeFromCompanyFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
+
+        $ar['ar_branch'] = Branch::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
+        $ar['ar_company'] = Company::where('id','<>', $user->company_id)->pluck('name', 'id')->toArray();
+        $ar['in_income'] = SysPositionStatus::IN_INCOME;
+        $ar['active'] = SysPositionStatus::ACTIVE;
 
         return view('page.stock.income_from_company.index', $ar);
     }
@@ -53,7 +59,7 @@ class IncomeFromCompanyController extends Controller{
             $services = FinanceService::where('finance_id', $finance->id)->with('relService')->get();
             $products = Position::getStatByIncome($item->id);
         }
-            
+
         $user = $request->user();
 
         $ar = array();
@@ -100,17 +106,17 @@ class IncomeFromCompanyController extends Controller{
         $ar['type_id'] = SysIncomeType::FROM_COMPANY;
         $ar['company_id'] = $request->user()->company_id;
 
-        
+
         if (!isset($ar['product_id']))
             return redirect()->back()->with('error', 'Не указаны товары для оприходования');
-      
+
 
         DB::beginTransaction();
         try {
             $income = IncomeFromCompany::create($ar);
             $max_id = Position::max('id');
 
-            
+
             $ar_income_position = [];
             $ar_posiiton = [];
 
@@ -126,7 +132,7 @@ class IncomeFromCompanyController extends Controller{
                 $ar_el['group_num'] = $k.rand(100, 999);
                 for ($i = 1; $i <= $ar['product_count'][$k]; $i++) {
                     $max_id++;
-                    $ar_el['sys_num'] = $max_id; 
+                    $ar_el['sys_num'] = $max_id;
 
                     $ar_posiiton[] = $ar_el;
 
@@ -145,14 +151,14 @@ class IncomeFromCompanyController extends Controller{
             $ar_posiiton = $ar_posiiton->chunk(500);
 
             foreach ($ar_posiiton as $ar_pos){
-                Position::insert($ar_pos->toArray()); 
+                Position::insert($ar_pos->toArray());
             }
 
             $ar_income_position = collect($ar_income_position);
             $ar_income_position = $ar_income_position->chunk(500);
-            
+
             foreach ($ar_income_position as $ar_income){
-                IncomePosition::insert($ar_income->toArray()); 
+                IncomePosition::insert($ar_income->toArray());
             }
 
             Position::where('income_id', $income->id)->update([
@@ -168,7 +174,7 @@ class IncomeFromCompanyController extends Controller{
 
             return redirect()->back()->with('error', $e->getMessage());
         }
-        
+
         return redirect()->action("Stock\IncomeFromCompanyController@getIndex")->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$income->id);
     }
 
@@ -204,7 +210,7 @@ class IncomeFromCompanyController extends Controller{
                 'income_id' => $item->id,
                 'group_num' => $request->position_group_num
             ])->delete();
-            
+
             Finance::where('income_id', $item->id)->delete();
 
             if (!$request->need_delete){
@@ -212,7 +218,7 @@ class IncomeFromCompanyController extends Controller{
 
                 $ar_income_position = [];
                 $ar_posiiton = [];
-    
+
                 $ar_el = [];
                 $ar_el['branch_id'] = $income->branch_id;
                 $ar_el['status_id'] = SysPositionStatus::IN_INCOME;
@@ -222,11 +228,11 @@ class IncomeFromCompanyController extends Controller{
                 $ar_el['expired_at'] =  $request->expired_at;
                 $ar_el['group_num'] =  $request->position_group_num;
 
-    
-            
+
+
                 for ($i = 1; $i <= $request->product_count; $i++) {
                     $max_id++;
-                    $ar_el['sys_num'] = $max_id; 
+                    $ar_el['sys_num'] = $max_id;
 
                     $ar_posiiton[] = $ar_el;
 
@@ -235,32 +241,32 @@ class IncomeFromCompanyController extends Controller{
                         'position_sys_num' => $ar_el['sys_num']
                     ];
                 }
-               
+
                 $ar_posiiton = collect($ar_posiiton);
                 $ar_posiiton = $ar_posiiton->chunk(500);
-    
+
                 foreach ($ar_posiiton as $ar_pos){
-                    Position::insert($ar_pos->toArray()); 
+                    Position::insert($ar_pos->toArray());
                 }
-    
+
                 $ar_income_position = collect($ar_income_position);
                 $ar_income_position = $ar_income_position->chunk(500);
-                
+
                 foreach ($ar_income_position as $ar_income){
-                    IncomePosition::insert($ar_income->toArray()); 
+                    IncomePosition::insert($ar_income->toArray());
                 }
-    
+
                 Position::where('income_id', $income->id)->where('group_num', $request->position_group_num)->update([
                     'created_at' => date('Y-m-d h:i:s'),
                     'updated_at' => date('Y-m-d h:i:s'),
                 ]);
 
-                
+
                 $income->related_cost = Position::where('income_id', $item->id)->sum('price_cost');
                 $income->save();
-    
+
             }
-            
+
             CreateFinanceModel::createBeginIncome($item);
 
             DB::commit();
@@ -282,10 +288,10 @@ class IncomeFromCompanyController extends Controller{
         $income = $item;
         DB::beginTransaction();
         try {
-            
+
             Finance::where('income_id', $item->id)->delete();
 
-          
+
             $max_id = Position::max('id');
 
             $ar_income_position = [];
@@ -299,11 +305,11 @@ class IncomeFromCompanyController extends Controller{
             $ar_el['product_id'] = $request->product_id;
             $ar_el['price_cost'] =  $request->price_cost;
             $ar_el['group_num'] =  $group_num;
-            
-        
+
+
             for ($i = 1; $i <= $request->product_count; $i++) {
                 $max_id++;
-                $ar_el['sys_num'] = $max_id; 
+                $ar_el['sys_num'] = $max_id;
 
                 $ar_posiiton[] = $ar_el;
 
@@ -317,14 +323,14 @@ class IncomeFromCompanyController extends Controller{
             $ar_posiiton = $ar_posiiton->chunk(500);
 
             foreach ($ar_posiiton as $ar_pos){
-                Position::insert($ar_pos->toArray()); 
+                Position::insert($ar_pos->toArray());
             }
 
             $ar_income_position = collect($ar_income_position);
             $ar_income_position = $ar_income_position->chunk(500);
-            
+
             foreach ($ar_income_position as $ar_income){
-                IncomePosition::insert($ar_income->toArray()); 
+                IncomePosition::insert($ar_income->toArray());
             }
 
             // following sql request adding current datestamp for last updates
@@ -332,12 +338,12 @@ class IncomeFromCompanyController extends Controller{
                 'created_at' => date('Y-m-d h:i:s'),
                 'updated_at' => date('Y-m-d h:i:s'),
             ]);
-            
+
             $income->related_cost = Position::where('income_id', $item->id)->sum('price_cost');
             $income->save();
 
-            
-            
+
+
             CreateFinanceModel::createBeginIncome($item);
 
             DB::commit();
