@@ -10,30 +10,27 @@
 
                     <div class="col-md-10 row">
 
-                        <div class="form-group col-md-12">
-                            <input type="text" class="form-control " placeholder="Наименование" name="name" value="{{ $request->name }}" >
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control " placeholder="Номер рецепта" name="formula_id" value="{{ $request->formula_id }}" >
                         </div>
+
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control " placeholder="ФИО клиента" name="client_name" value="{{ $request->client_name }}" >
+                        </div>
+
                         <div class="form-group col-md-2">
-                            <select name="status_id" class="form-control" >
-                                <option value="">Статус</option>
-                                @foreach ($ar_status as $id => $name)
-                                    <option value="{{ $id }}" {{ $request->status_id == $id ? 'selected' : '' }}>{{ $name }}</option>
-                                @endforeach
+                            <select name="type_id" class="form-control" >
+                                <option value="">Тип линз</option>
+                                <option value="{{ $simple_type_id }}" {{ $request->type_id == $simple_type_id ? 'selected' : '' }}>Очковые линзы</option>
+                                <option value="{{ $contact_type_id }}" {{ $request->type_id == $contact_type_id ? 'selected' : '' }}>Контактные линзы</option>
                             </select>
                         </div>
+
                         <div class="form-group col-md-4">
-                            <select name="from_branch_id" class="form-control" >
-                                <option value="">От филиала</option>
-                                @foreach ($ar_branch as $id => $name)
-                                    <option value="{{ $id }}" {{ $request->from_branch_id == $id ? 'selected' : '' }}>{{ $name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <select name="to_branh_id" class="form-control" >
-                                <option value="">К филиалу</option>
-                                @foreach ($ar_branch as $id => $name)
-                                    <option value="{{ $id }}" {{ $request->to_branh_id == $id ? 'selected' : '' }}>{{ $name }}</option>
+                            <select name="created_user_id" class="form-control" >
+                                <option value="">Врач</option>
+                                @foreach ($doctors as $doctor)
+                                    <option value="{{ $doctor->id }}" {{ $request->created_user_id == $doctor->id ? 'selected' : '' }}>{{ $doctor->name }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -7,17 +7,25 @@ use Illuminate\Http\Request;
 use App\Model\Formula;
 use App\Model\View\Individ;
 use App\Model\SysUserType;
+use App\ModelFilter\FormulaFilter;
 use App\ModelList\FormulaList;
+use App\User;
 
 class FormulaController extends Controller{
     private $title = 'Рецепты';
 
     function getIndex (Request $request){
         $ar = array();
+
+        $items = FormulaList::get($request);
+        $item = FormulaFilter::filter($request,$items);
+
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['items'] = FormulaList::get($request)->latest()->paginate(24);
+        $ar['items'] = $items->latest()->paginate(24);
+        $ar['doctors'] = User::where('type_id',SysUserType::DOCTOR)->get();
         $ar['ar_propose'] = Formula::getProposeAr();
+        $ar['simple_type_id'] = Formula::SIMPLE_TYPE_ID;
         $ar['contact_type_id'] = Formula::CONTACT_TYPE_ID;
 
         return view('page.common.formula.index', $ar);
@@ -46,7 +54,7 @@ class FormulaController extends Controller{
         $item = Formula::create($ar);
 
         // $user->update(['name' => $request->user_name]);
-        
+
         return redirect()->action("Common\FormulaController@getIndex", ['user_id'=> $user->id])->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
@@ -66,7 +74,7 @@ class FormulaController extends Controller{
         $item->update($ar);
 
         $user->update(['name' => $request->user_name]);
-        
+
         return redirect()->action("Common\FormulaController@getIndex", ['user_id'=> $user->id])->with('success', 'Изменен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
