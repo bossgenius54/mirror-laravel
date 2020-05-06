@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Stock;
 
 use App\Http\Controllers\Controller;
+use App\Model\Branch;
 use Illuminate\Http\Request;
 
 
@@ -24,12 +25,10 @@ class BranchProductController extends Controller{
         $items = ProductList::get($request);
         $items = ProductFilter::filter($request, $items);
 
-        $branches = BranchList::get($request);
-
         $ar = array();
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['ar_branch'] = $branches->pluck('name', 'id')->toArray();
+        $ar['ar_branch'] = Branch::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
         $ar['filter_names'] = ProductList::get($request)->latest()->get();
 
         $branch_array = [];
@@ -48,7 +47,7 @@ class BranchProductController extends Controller{
         }
 
         $ar['ar_cat'] = LibProductCat::getAr();
-        // dd($ar['branch_array']);
+        // dd($ar['items']);
 
         return view('page.stock.branch_product.index', $ar);
     }

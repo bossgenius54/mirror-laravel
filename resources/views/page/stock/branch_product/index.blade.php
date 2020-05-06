@@ -72,7 +72,7 @@
 
                         @if (!$has_el)
                             <tr class="footable-even table-info">
-                                <td colspan="4" class="text-center" >Нет елементов по выбранному запросу</td>
+                                <td colspan="4" class="text-center" >Нет элементов по выбранному запросу</td>
                             </tr>
                         @endif
 
