@@ -4,6 +4,7 @@ namespace App\ModelFilter;
 use Illuminate\Http\Request;
 
 use App\Model\SysUserType;
+use Illuminate\Support\Facades\DB;
 
 class FinancePositionFilter {
     private $items = null;
@@ -16,7 +17,7 @@ class FinancePositionFilter {
     static function filter(Request $request, $items){
         $el = new FinancePositionFilter();
         $el->start($request, $items);
-        
+
         return  $el->getResult();
     }
 
@@ -27,32 +28,31 @@ class FinancePositionFilter {
         $this->filterBranch();
         $this->filterProduct();
         $this->filterSysname();
+        $this->filterDate();
     }
 
     function getResult(){
         return $this->items;
     }
-    
+
     private  function filterBranch(){
-        if (!$this->request->has('b_name') || !$this->request->b_name)
+        if (!$this->request->has('branch_id') || !$this->request->branch_id)
             return;
 
         $request = $this->request;
-        $this->items->whereHas('relBranch', function($q) use ($request){
-            $q->where('name', 'like', '%'.$request->b_name.'%');
-        });
+        $this->items->where('branch_id',$this->request->branch_id);
     }
 
     private  function filterProduct(){
-        if (!$this->request->has('p_name') || !$this->request->p_name)
+        if (!$this->request->has('product_id') || !$this->request->product_id)
             return;
 
         $request = $this->request;
         $this->items->whereHas('relProduct', function($q) use ($request){
-            $q->where('name', 'like', '%'.$request->p_name.'%');
+            $q->where('id', $request->product_id);
         });
     }
-    
+
     private function filterSysname(){
         if (!$this->request->has('position_sys_num') || !$this->request->position_sys_num)
             return;
@@ -60,8 +60,18 @@ class FinancePositionFilter {
         $this->items->where('position_sys_num', 'like', '%'.$this->request->position_sys_num.'%');
     }
 
-    
+    private function filterDate(){
+        if (!$this->request->has('first_date') || !$this->request->first_date)
+            return;
 
-   
+        if(!$this->request->has('second_date') || !$this->request->second_date)
+        {
+            $this->items->where('created_at', 'like', $this->request->first_date.'%');
+        } else {
+            $this->items->whereBetween(DB::raw('DATE(created_at)'), array($this->request->first_date, $this->request->second_date));
+        }
+    }
+
+
 
 }
