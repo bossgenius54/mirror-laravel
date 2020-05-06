@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Stock;
 
 use App\Http\Controllers\Controller;
+use App\Model\Branch;
 use Illuminate\Http\Request;
 
 use App\Model\View\IncomeReturned;
@@ -18,6 +19,7 @@ use App\ModelFilter\IncomeReturnedFilter;
 
 use DB;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class IncomeReturnedController extends Controller{
     private $title = 'Возвраты';
@@ -25,6 +27,7 @@ class IncomeReturnedController extends Controller{
     function getIndex (Request $request){
         $items = IncomeReturnedList::get($request);
         $items = IncomeReturnedFilter::filter($request, $items);
+        $user = Auth::user();
 
         $ar = array();
         $ar['title'] = 'Список элементов "'.$this->title.'"';
@@ -32,6 +35,8 @@ class IncomeReturnedController extends Controller{
         $ar['filter_block'] = IncomeReturnedFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
         $ar['ar_type'] = SysIncomeType::pluck('name', 'id')->toArray();
+        $ar['user'] = $user;
+        $ar['ar_branch'] = Branch::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
 
         return view('page.stock.income_returned.index', $ar);
     }
@@ -44,8 +49,8 @@ class IncomeReturnedController extends Controller{
             $income_position = FinancePosition::where('finance_id', $finance->id)->with('relProduct')->get();
             $products = FinancePosition::getStatByPriceBefore($finance->id);
         }
-           
-        
+
+
 
         $ar = array();
         $ar['title'] = 'Детализация элемента списока "'.$this->title.'"';

@@ -15,7 +15,7 @@
                     {{ $title }}
                 </h4>
             </div>
-            
+
             <table class="table  table-hover color-table muted-table" >
                 <thead>
                     <tr>
@@ -24,7 +24,7 @@
                         <th>Филиал</th>
                         <th>Номер заказа</th>
                         <th>Сумма</th>
-                        <th>Наименование</th>
+                        <th>Заметка</th>
                         <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>
@@ -41,12 +41,12 @@
                                     @php
                                         $url = url("/order/item/view/{$i->order_id}");
                                     @endphp
-                                    
+
                                     <a href="{{ $url }}"> № {{ $i->order_id }} </a>
                                 @endif
                             </td>
                             <td>{{ $i->related_cost }}</td>
-                            <td>{{ $i->name }}</td>
+                            <td>{{ $i->note }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>

@@ -16,7 +16,7 @@ class IncomeReturnedFilter {
     static function filter(Request $request, $items){
         $el = new IncomeReturnedFilter();
         $el->start($request, $items);
-        
+
         return  $el->getResult();
     }
 
@@ -25,14 +25,15 @@ class IncomeReturnedFilter {
         $this->items = $items;
 
         $this->filterName();
-        $this->filterInBranch();
+        $this->filterToBranch();
         $this->filterFromCompany();
+        $this->filterDate();
     }
 
     function getResult(){
         return $this->items;
     }
-    
+
     private  function filterName(){
         if (!$this->request->has('name') || !$this->request->name)
             return;
@@ -40,18 +41,15 @@ class IncomeReturnedFilter {
         $this->items->where('name', 'like', '%'.$this->request->name.'%');
     }
 
-    
-    private  function filterInBranch(){
-        if (!$this->request->has('in_branch') || !$this->request->in_branch)
+
+    private  function filterToBranch(){
+        if (!$this->request->has('branch_id') || !$this->request->in_branch)
             return;
 
         $request = $this->request;
-        $this->items->whereHas('relBranch', function($q) use ($request){
-            $q->where('name', 'like', '%'.$request->in_branch.'%');
-        });
+        $this->items->where('branch_id',$this->request->branch_id);
     }
 
-    
     private  function filterFromCompany(){
         if (!$this->request->has('from_company') || !$this->request->from_company)
             return;
@@ -62,6 +60,18 @@ class IncomeReturnedFilter {
         });
     }
 
-   
+    private function filterDate(){
+        if (!$this->request->has('first_date') || !$this->request->first_date)
+            return;
+
+        if(!$this->request->has('second_date') || !$this->request->second_date)
+        {
+            $this->items->where('created_at', 'like', $this->request->first_date.'%');
+        } else {
+            $this->items->whereBetween(DB::raw('DATE(created_at)'), array($this->request->first_date, $this->request->second_date));
+        }
+    }
+
+
 
 }
