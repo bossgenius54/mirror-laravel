@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Stock;
 
 use App\Http\Controllers\Controller;
+use App\Model\Branch;
 use Illuminate\Http\Request;
 
 use App\Model\Outcome;
@@ -17,6 +18,7 @@ use App\ModelFilter\OutcomeFilter;
 
 use DB;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class OutcomeController extends Controller{
     private $title = 'Отгрузки';
@@ -24,13 +26,17 @@ class OutcomeController extends Controller{
     function getIndex (Request $request){
         $items = OutcomeList::get($request);
         $items = OutcomeFilter::filter($request, $items);
+        $user = Auth::user();
 
         $ar = array();
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = OutcomeFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
+        $ar['user'] = $user;
+
         $ar['ar_type'] = SysOutcomeType::pluck('name', 'id')->toArray();
+        $ar['ar_branch'] = Branch::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
 
         return view('page.stock.outcome.index', $ar);
     }
@@ -46,8 +52,8 @@ class OutcomeController extends Controller{
             $services = FinanceService::where('finance_id', $finance->id)->with('relService')->get();
             $products = FinancePosition::getStatByPriceAfter($finance->id);
         }
-            
-        
+
+
 
         $ar = array();
         $ar['title'] = 'Детализация элемента списока "'.$this->title.'"';

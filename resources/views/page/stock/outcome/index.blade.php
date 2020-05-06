@@ -15,7 +15,7 @@
                     {{ $title }}
                 </h4>
             </div>
-            
+
             <table class="table  table-hover color-table muted-table" >
                 <thead>
                     <tr>
@@ -23,7 +23,7 @@
                         <th>Тип</th>
                         <th>Филиал</th>
                         <th>Сумма</th>
-                        <th>Наименование</th>
+                        <th>Заметка</th>
                         <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>
@@ -36,7 +36,7 @@
                             <th>{{ isset($ar_type[$i->type_id]) ? $ar_type[$i->type_id] : '' }}</th>
                             <td>{{ $i->relBranch ? $i->relBranch->name : '' }}</td>
                             <td>{{ $i->related_cost }}</td>
-                            <td>{{ $i->name }}</td>
+                            <td>{{ $i->note }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>
