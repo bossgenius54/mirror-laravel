@@ -16,7 +16,7 @@ class OrderFilter {
     static function filter(Request $request, $items){
         $el = new OrderFilter();
         $el->start($request, $items);
-        
+
         return  $el->getResult();
     }
 
@@ -32,6 +32,7 @@ class OrderFilter {
         $this->filterFromCompany();
         $this->filterFromUser();
         $this->filterBranch();
+        $this->filterDate();
     }
 
     function getResult(){
@@ -39,12 +40,12 @@ class OrderFilter {
     }
 
     private  function filterBranch(){
-        if (!$this->request->has('branch') || !$this->request->branch)
+        if (!$this->request->has('branch_id') || !$this->request->branch_id)
             return;
 
         $request = $this->request;
         $this->items->whereHas('relBranch', function($q) use ($request){
-            $q->where('name', 'like', '%'.$request->branch.'%');
+            $q->where('id', $request->branch_id);
         });
     }
 
@@ -55,7 +56,7 @@ class OrderFilter {
 
         $this->items->where('name', 'like', '%'.$this->request->name.'%');
     }
- 
+
     private  function filterStatus(){
         if (!$this->request->has('status_id') || !$this->request->status_id)
             return;
@@ -69,21 +70,21 @@ class OrderFilter {
 
         $this->items->where('is_onlain',  $this->request->is_onlain);
     }
-    
+
     private  function filterRetail(){
-        if (!$this->request->has('is_retail') )
+        if (!$this->request->has('is_retail') && $this->request->is_retail == '' || $this->request->is_retail == null )
             return;
 
         $this->items->where('is_retail',  $this->request->is_retail);
     }
- 
+
     private  function filterType(){
         if (!$this->request->has('type_id') || !$this->request->type_id)
             return;
 
         $this->items->where('type_id',  $this->request->type_id);
     }
-    
+
     private  function filterFromCompany(){
         if (!$this->request->has('from_company') || !$this->request->from_company)
             return;
@@ -103,4 +104,18 @@ class OrderFilter {
             $q->where('name', 'like', '%'.$request->from_user.'%');
         });
     }
+
+    private function filterDate(){
+        if (!$this->request->has('first_date') || !$this->request->first_date)
+            return;
+
+        if(!$this->request->has('second_date') || !$this->request->second_date)
+        {
+            $this->items->where('created_at', $this->request->first_date);
+        } else {
+            $this->items->whereBetween('created_at', [$this->request->first_date,$this->request->second_date]);
+        }
+    }
+
+
 }

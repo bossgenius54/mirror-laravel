@@ -13,38 +13,38 @@ class OrderPolicy {
     use HandlesAuthorization;
 
     public function __construct(){
-        
+
     }
 
     public function list($user){
         if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::MANAGER, SysUserType::ADMIN,  SysUserType::ACCOUNTER,  SysUserType::FIZ,  SysUserType::COMPANY_CLIENT]))
             return false;
-        
-        return true; 
+
+        return true;
     }
 
     public function create($user){
         if (!in_array($user->type_id, [SysUserType::MANAGER,  SysUserType::DIRECTOR]))
             return false;
-        
-        return true; 
+
+        return true;
     }
 
-    
+
     public function createForFiz($user){
-        return false; 
+        return false;
 
         if (!in_array($user->type_id, [SysUserType::FIZ]))
             return false;
-        
-        return true; 
+
+        return true;
     }
 
     public function createForCompanyClient($user){
         if (!in_array($user->type_id, [SysUserType::COMPANY_CLIENT]))
             return false;
-        
-        return true; 
+
+        return true;
     }
 
     public function view($user, $item){
@@ -57,10 +57,10 @@ class OrderPolicy {
 
             return true;
         }
-            
+
         if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::MANAGER, SysUserType::ADMIN,  SysUserType::ACCOUNTER, SysUserType::FIZ]))
             return false;
-        
+
         if ($user->type_id == SysUserType::FIZ && $item->from_user_id != $user->id)
             return false;
 
@@ -112,7 +112,7 @@ class OrderPolicy {
 
             if ($item->status_id != SysOrderStatus::CREATED)
                 return false;
-                
+
             return true;
         }
 
@@ -143,7 +143,7 @@ class OrderPolicy {
         if ($user->type_id == SysUserType::COMPANY_CLIENT){
             if ($item->is_onlain != 1)
                 return false;
-                
+
             if ($user->company_id != $item->from_company_id)
                 return false;
 
@@ -164,8 +164,15 @@ class OrderPolicy {
 
     public function status($user, $item, $status){
         $ar_can_change = CanChangeOrderStatusRules::getArStatus($user, $item);
-        
+
 
         return in_array($status->id, $ar_can_change);
+    }
+
+    public function filterManager($user){
+        if (!in_array($user->type_id, [SysUserType::DIRECTOR, SysUserType::ADMIN, SysUserType::ACCOUNTER]))
+            return false;
+
+        return true;
     }
 }
