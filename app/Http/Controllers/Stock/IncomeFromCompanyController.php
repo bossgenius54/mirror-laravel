@@ -80,9 +80,7 @@ class IncomeFromCompanyController extends Controller{
         $user = $request->user();
         $products = Product::where('company_id', $user->company_id)->select('id', 'sys_num', 'name', 'artikul')->get();
 
-        $ar_company = Company::whereHas('relSeller', function($q) use ($user){
-                            $q->where('company_id', $user->company_id);
-                        })->pluck('name', 'id')->toArray();
+        $ar_company = Company::where('id', '<>', $request->user()->company_id)->pluck('name', 'id')->toArray();
 
         $branches = Branch::where('company_id', $request->user()->company_id);
         if (in_array($user->type_id, [SysUserType::MANAGER]))
