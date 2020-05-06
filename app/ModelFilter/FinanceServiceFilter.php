@@ -16,7 +16,7 @@ class FinanceServiceFilter {
     static function filter(Request $request, $items){
         $el = new FinanceServiceFilter();
         $el->start($request, $items);
-        
+
         return  $el->getResult();
     }
 
@@ -26,34 +26,40 @@ class FinanceServiceFilter {
 
         $this->filterBranch();
         $this->filterService();
+        $this->filterDate();
     }
 
     function getResult(){
         return $this->items;
     }
-    
+
     private  function filterBranch(){
-        if (!$this->request->has('b_name') || !$this->request->b_name)
+        if (!$this->request->has('branch_id') || !$this->request->branch_id)
             return;
 
         $request = $this->request;
-        $this->items->whereHas('relBranch', function($q) use ($request){
-            $q->where('name', 'like', '%'.$request->b_name.'%');
-        });
+        $this->items->where('branch_id', $this->request->branch_id);
     }
 
     private  function filterService(){
-        if (!$this->request->has('s_name') || !$this->request->s_name)
+        if (!$this->request->has('service_id') || !$this->request->service_id)
             return;
 
-        $request = $this->request;
-        $this->items->whereHas('relService', function($q) use ($request){
-            $q->where('name', 'like', '%'.$request->s_name.'%');
-        });
+        $this->items->where('service_id', $this->request->service_id);
     }
 
-    
+    private function filterDate(){
+        if (!$this->request->has('first_date') || !$this->request->first_date)
+            return;
 
-   
+        if(!$this->request->has('second_date') || !$this->request->second_date)
+        {
+            $this->items->where('created_at', 'like', $this->request->first_date.'%');
+        } else {
+            $this->items->whereBetween(DB::raw('DATE(created_at)'), array($this->request->first_date, $this->request->second_date));
+        }
+    }
+
+
 
 }
