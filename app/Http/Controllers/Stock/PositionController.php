@@ -35,6 +35,7 @@ class PositionController extends Controller{
         $ar['items'] = $items->with('relProduct')->latest()->paginate(48);
         $ar['ar_cat'] = LibProductCat::pluck('name', 'id')->toArray();
         $ar['ar_status'] = SysPositionStatus::pluck('name', 'id')->toArray();
+        // dd($ar['ar_status']);
         $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
         $ar['incomes'] = Income::latest()->get();
         //dd($ar['filter_block']);

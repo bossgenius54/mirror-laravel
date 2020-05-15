@@ -1,4 +1,4 @@
-<?php  
+<?php
 namespace App\Services\Order;
 
 use App\Model\Order;
@@ -30,7 +30,7 @@ class ClosedOrder {
     }
 
     public function calc(){
-        
+
         $this->createOutcome();
         $this->createOutcomeServices();
         $this->createOutcomePositions();
@@ -59,7 +59,7 @@ class ClosedOrder {
         $el->save();
 
         $this->outcome = $el;
-        
+
         Order::where('id', $this->item->id)->update([
             'outcome_id' => $el->id
         ]);
@@ -72,10 +72,10 @@ class ClosedOrder {
         $ar = [];
         foreach ($order_services as $i) {
             $ar [] = [
-                'outcome_id' => $this->outcome->id, 
-                'service_id' => $i->service_id, 
-                'service_count' => $i->service_count, 
-                'service_cost' => $i->service_cost, 
+                'outcome_id' => $this->outcome->id,
+                'service_id' => $i->service_id,
+                'service_count' => $i->service_count,
+                'service_cost' => $i->service_cost,
                 'total_sum' => $i->total_sum
             ];
         }
@@ -92,23 +92,23 @@ class ClosedOrder {
         $ar = [];
         foreach ($positions as $i) {
             $ar [] = [
-                'outcome_id' => $this->outcome->id, 
-                'product_id' => $i->product_id, 
-                'position_id' => $i->id, 
-                'branch_id' => $i->branch_id,  
-                'position_sys_num' => $i->sys_num, 
-                'price_cost' => $i->price_cost, 
-                'price_sell' => (isset($ar_product_price[$i->product_id]) ? $ar_product_price[$i->product_id] : 0), 
+                'outcome_id' => $this->outcome->id,
+                'product_id' => $i->product_id,
+                'position_id' => $i->id,
+                'branch_id' => $i->branch_id,
+                'position_sys_num' => $i->sys_num,
+                'price_cost' => $i->price_cost,
+                'price_sell' => (isset($ar_product_price[$i->product_id]) ? $ar_product_price[$i->product_id] : 0),
                 'expired_at' => $i->expired_at,
                 'created_at' => date('Y-m-d h:i:s'),
                 'updated_at' => date('Y-m-d h:i:s')
             ];
 
         }
-        
+
         if (count($ar) > 0)
             OutcomePosition::insert($ar);
 
-        Position::where('order_id', $this->item->id)->update(['status_id' => SysPositionStatus::DELETED]); // setting position as minused from stock by giving status 5
+        Position::where('order_id', $this->item->id)->update(['status_id' => SysPositionStatus::SOLD]); // sold out
     }
 }
