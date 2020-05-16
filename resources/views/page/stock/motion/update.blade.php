@@ -70,7 +70,7 @@
 
                 <h3 class="card-title">Форма прикрепления позиций/товаров</h3>
                 <form class="form-material row" action="{{ $action }}" method="post"  enctype="multipart/form-data">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label>Ассортимент</label>
                         <select name="product_id" id="product_id" class="form-control" required>
                             <option value="">Выберите ассортимент</option>
@@ -94,22 +94,60 @@
                 </form>
 
                 <h3 class="card-title">Список прикрепленных позиций/товаров</h3>
+
+                @php
+                    $total_count = 0;
+                    $total_sum = 0;
+                @endphp
+
                 @foreach ($motion_products as $i)
                     <div class="form-material row" >
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label>Ассортимент</label>
                             <input type="text" class="form-control" value="{{ $i->relProduct->name }} ({{ $i->relProduct->sys_num }})" disabled>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-2">
+                            <label>Цена за единицу</label>
+                            <input type="text" class="form-control" value="{{ $i->relProduct->price_retail }}" disabled>
+                        </div>
+                        <div class="form-group col-md-2">
                             <label>Единиц</label>
                             <input type="text" class="form-control" value="{{ $i->count_position }}" disabled>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Общая цена</label>
+                            <input type="text" class="form-control" value="{{ $i->relProduct->price_retail * $i->count_position }}" disabled>
                         </div>
                         <div class="form-group col-md-2">
                             <label>&nbsp; </label>
                             <a href="{{ action('Stock\MotionController@getUnsetProduct', [$item, $i]) }}" class="btn btn-danger btn-block" >Открепить</a>
                         </div>
                     </div>
+
+                    @php
+                        $total_count += $i->count_position;
+                        $total_sum += $i->relProduct->price_retail * $i->count_position;
+                    @endphp
+
                 @endforeach
+
+                <div class="form-material row" >
+                    <div class="form-group col-md-6">
+                        <h4>Итог</h4>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Общее количество</label>
+                        <input type="text" class="form-control" value="{{ $total_count }}" disabled>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Общая сумма</label>
+                        <input type="text" class="form-control" value="{{ $total_sum }}" disabled>
+                    </div>
+                    <!-- <div class="form-group col-md-2">
+                        <label>&nbsp; </label>
+                        <a href="{{ action('Stock\MotionController@getUnsetProduct', [$item, $i]) }}" class="btn btn-danger btn-block" >Открепить</a>
+                    </div> -->
+                </div>
 
             </div>
         </div>

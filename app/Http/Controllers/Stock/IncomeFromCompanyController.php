@@ -71,7 +71,7 @@ class IncomeFromCompanyController extends Controller{
         $ar['item'] = $item;
         $ar['prods'] = Product::where('company_id', $user->company_id)->select('id', 'sys_num', 'name', 'artikul')->get();
 
-        //dd($products);
+        // dd($products);
 
         return view('page.stock.income_from_company.view', $ar);
     }

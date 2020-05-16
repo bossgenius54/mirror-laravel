@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Заметка</label>
-                            <input type="text" class="form-control" name="note" > 
+                            <input type="text" class="form-control" name="note" >
                         </div>
                     </div>
                     <h3 class="card-title">Позиции/Товары</h3>
@@ -52,15 +52,15 @@
                         </div>
                         <div class="form-group col-md-1">
                             <label>Кол-во</label>
-                            <input type="number" class="form-control js_pr_count"  > 
+                            <input type="number" class="form-control js_pr_count"  >
                         </div>
                         <div class="form-group col-md-1">
                             <label>Цена </label>
-                            <input type="number" class="form-control js_pr_cost"  > 
+                            <input type="number" class="form-control js_pr_cost" step="any" >
                         </div>
                         <div class="form-group col-md-2">
                             <label>Общая </label>
-                            <input type="number" class="form-control js_pr_total" readonly  > 
+                            <input type="number" class="form-control js_pr_total" readonly  >
                         </div>
                         <div class="form-group col-md-4 ">
                             <label>&nbsp;</label>
@@ -99,7 +99,7 @@
                 let cost = block.find( ".js_pr_cost" );
                 let total = block.find( ".js_pr_total" );
 
-                let total_sum = parseInt(count.val()) * parseInt(cost.val());
+                let total_sum = parseInt(count.val()) * parseFloat(cost.val());
                 total.val(total_sum);
             });
 
@@ -112,7 +112,7 @@
                 var key = e.which;
                 if(key == 13)  // the enter key code
                 {
-                    return false;  
+                    return false;
                 }
             });
 
@@ -125,30 +125,30 @@
 
                 let pr_id = select.val();
                 let pr_name = block.find( ".js_pr_select option:selected" ).text();
-                
+
 
                 let html = `
                     <div class="row js_pr_el_`+pr_id+`">
                         <div class="form-group col-md-4">
                             <label>Ассортимент</label>
-                            <input type="text" class="form-control" value="`+pr_name+`" readonly> 
-                            <input type="hidden" name="product_id[]" value="`+pr_id+`" class="form-control"  > 
+                            <input type="text" class="form-control" value="`+pr_name+`" readonly>
+                            <input type="hidden" name="product_id[]" value="`+pr_id+`" class="form-control"  >
                         </div>
                         <div class="form-group col-md-1">
                             <label>Кол-во</label>
-                            <input type="number" name="product_count[]" value="` + parseInt( count.val() ) + `" class="form-control js_pr_count"  > 
+                            <input type="number" name="product_count[]" value="` + parseInt( count.val() ) + `" class="form-control js_pr_count"  >
                         </div>
                         <div class="form-group col-md-1">
                             <label>Цена </label>
-                            <input type="number" name="product_cost[]"  value="` + parseInt( cost.val() ) + `" class="form-control js_pr_cost"  > 
+                            <input type="number" name="product_cost[]"  value="` + parseFloat( cost.val() ) + `" class="form-control js_pr_cost"  >
                         </div>
                         <div class="form-group col-md-2">
                             <label>Общая </label>
-                            <input type="number" class="form-control js_pr_total" value="` + parseInt( total.val() ) + `" readonly  > 
+                            <input type="number" class="form-control js_pr_total" value="` + parseFloat( total.val() ) + `" readonly  >
                         </div>
                         <div class="form-group col-md-2">
                             <label>Дата истечения</label>
-                            <input type="date" name="product_date[]" class="form-control "  > 
+                            <input type="date" name="product_date[]" class="form-control "  >
                         </div>
                         <div class="form-group col-md-2">
                             <button class="btn btn-danger btn-block js_pr_remove" type="button">Убрать</button>
@@ -162,7 +162,7 @@
                 cost.val(null);
                 total.val(null);
             });
-            
+
         });
 	</script>
 @endsection

@@ -74,7 +74,7 @@
             });
 
             function calcTotalProductSum(){
-                let cost = parseInt($('#pos_cost').val());
+                let cost = parseFloat($('#pos_cost').val());
                 let count = parseInt($('#pos_count').val());
 
 

@@ -34,6 +34,7 @@ class OutcomeController extends Controller{
         $ar['filter_block'] = OutcomeFilter::getFilterBlock($request);
         $ar['items'] = $items->latest()->paginate(24);
         $ar['user'] = $user;
+        // dd($ar['items']);
 
         $ar['ar_type'] = SysOutcomeType::pluck('name', 'id')->toArray();
         $ar['ar_branch'] = Branch::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();

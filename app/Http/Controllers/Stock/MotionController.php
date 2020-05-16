@@ -89,6 +89,7 @@ class MotionController extends Controller{
         $ar['action'] = action('Stock\MotionController@postUpdate', $item);
         $ar['pos_status'] = SysPositionStatus::ACTIVE;
         $ar['motion_products'] = MotionProduct::where('motion_id', $item->id)->with('relProduct')->get();
+        // dd($ar['motion_products']);
 
         return view('page.stock.motion.view', $ar);
     }
@@ -136,6 +137,8 @@ class MotionController extends Controller{
         $ar['action'] = action('Stock\MotionController@postUpdate', $item);
         $ar['pos_status'] = SysPositionStatus::ACTIVE;
         $ar['motion_products'] = MotionProduct::where('motion_id', $item->id)->with('relProduct')->get();
+
+        // dd($ar['products']);
 
         return view('page.stock.motion.update', $ar);
     }
