@@ -143,10 +143,6 @@
                         <label>Общая сумма</label>
                         <input type="text" class="form-control" value="{{ $total_sum }}" disabled>
                     </div>
-                    <!-- <div class="form-group col-md-2">
-                        <label>&nbsp; </label>
-                        <a href="{{ action('Stock\MotionController@getUnsetProduct', [$item, $i]) }}" class="btn btn-danger btn-block" >Открепить</a>
-                    </div> -->
                 </div>
 
             </div>
