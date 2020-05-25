@@ -47,7 +47,6 @@ class IncomeFromCompanyFilter {
         $this->items->where('name', 'like', '%'.$this->request->name.'%');
     }
 
-
     private  function filterInBranch(){
         if (!$this->request->has('branch_id') || !$this->request->branch_id)
             return;
@@ -79,7 +78,7 @@ class IncomeFromCompanyFilter {
         $request = $this->request;
         $this->items->whereHas('relPositions', function($q) use ($request){
             $q->where('status_id', SysPositionStatus::ACTIVE);
-        });
+        })->where('branch_id', Auth::user()->branch_id);
     }
 
     private function filterDate(){

@@ -32,6 +32,7 @@ class OrderFilter {
         $this->filterType();
         $this->filterFromCompany();
         $this->filterFromUser();
+        $this->filterCreatedUser();
         $this->filterBranch();
         $this->filterDate();
     }
@@ -104,6 +105,13 @@ class OrderFilter {
         $this->items->whereHas('relPersonCLient', function($q) use ($request){
             $q->where('name', 'like', '%'.$request->from_user.'%');
         });
+    }
+
+    private  function filterCreatedUser(){
+        if (!$this->request->has('created_user_id') || !$this->request->created_user_id)
+            return;
+
+        $this->items->where('created_user_id', $this->request->created_user_id);
     }
 
     private function filterDate(){

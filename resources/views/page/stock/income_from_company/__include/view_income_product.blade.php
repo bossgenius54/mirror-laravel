@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label>Цена </label>
-                    <input name="price_cost" type="number" class="form-control "  >
+                    <input name="price_cost" type="number" class="form-control " step="any" >
                 </div>
                 <div class="form-group col-md-4 ">
                     <label>&nbsp;</label>

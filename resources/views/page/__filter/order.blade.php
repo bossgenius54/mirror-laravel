@@ -47,9 +47,9 @@
                         @can('filterManager','App\Model\Order')
                             <div class="form-group col-md-4">
                                 <select name="created_user_id" class="form-control" >
-                                    <option value="">Менеджера</option>
+                                    <option value="">Создатель</option>
                                     @foreach ($ar_managers as $id => $name)
-                                        <option value="{{ $id }}" {{ $request->status_id == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                        <option value="{{ $id }}" {{ $request->created_user_id == $id ? 'selected' : '' }}>{{ $name }}</option>
                                     @endforeach
                                 </select>
                             </div>

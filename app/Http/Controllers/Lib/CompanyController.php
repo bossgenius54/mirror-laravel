@@ -22,7 +22,7 @@ class CompanyController extends Controller{
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['items'] = CompanyList::get($request)->latest()->paginate(24);
-        
+
         $ar['ar_cat'] = LibCompanyCat::getAr();
         $ar['ar_type'] = SysCompanyType::getAr();
 
@@ -46,7 +46,8 @@ class CompanyController extends Controller{
             $ar = $request->all();
             $ar['type_id'] = SysCompanyType::EMPTY;
             $ar['created_user_id'] = $request->user()->id;
-            
+            $ar['created_company_id'] = $request->user()->company_id;
+
             $item = Company::create($ar);
             $ar['company_id'] = $item->id;
             $data = CompanyData::create($ar);
@@ -57,8 +58,8 @@ class CompanyController extends Controller{
 
             return redirect()->back()->with('error', $e->getMessage());
         }
-       
-        
+
+
         return redirect()->action("Lib\CompanyController@getIndex")->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
@@ -82,11 +83,11 @@ class CompanyController extends Controller{
             $item->update($ar);
             $data = $item->relData;
             $data->update($ar);
-            
+
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
-            
+
             return redirect()->back()->with('error', $e->getMessage());
         }
 

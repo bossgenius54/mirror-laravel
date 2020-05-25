@@ -7,13 +7,13 @@ use App\Model\SysCompanyType;
 
 class Company extends Model{
     protected $table = 'company';
-    protected $fillable = ['type_id', 'cat_id', 'name', 'created_user_id'];
+    protected $fillable = ['type_id', 'cat_id', 'name', 'created_user_id', 'created_company_id'];
     use DateHelper;
-    
+
     static function getAr(){
         return static::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
     }
-    
+
     function relData(){
         return $this->hasOne('App\Model\CompanyData', 'company_id');
     }

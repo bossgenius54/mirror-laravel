@@ -43,6 +43,7 @@ class IncomeFromCompanyController extends Controller{
 
         $ar['ar_branch'] = Branch::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
         $ar['ar_company'] = Company::where('id','<>', $user->company_id)->pluck('name', 'id')->toArray();
+        $ar['ar_status'] = SysPositionStatus::pluck('name', 'id')->toArray();
         $ar['in_income'] = SysPositionStatus::IN_INCOME;
         $ar['active'] = SysPositionStatus::ACTIVE;
 

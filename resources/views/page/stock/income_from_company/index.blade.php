@@ -30,6 +30,7 @@
                         <th>От компании</th>
                         <th>Сумма</th>
                         <th>Заметка</th>
+                        <th>Статус</th>
                         <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>
@@ -43,6 +44,7 @@
                             <td>{{ $i->relFromCompany ? $i->relFromCompany->name : '' }}</td>
                             <td>{{ $i->related_cost }}</td>
                             <td>{{ $i->note }}</td>
+                            <td>{{ isset($ar_status[$i->relPositions->first()->status_id]) ? $ar_status[$i->relPositions->first()->status_id] : 'не указано' }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>

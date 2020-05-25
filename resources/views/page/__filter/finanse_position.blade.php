@@ -15,22 +15,13 @@
                         </div>
 
                         @can('filterBranch', 'App\Model\FinancePosition')
-                        <div class="form-group col-md-4">
-                            <select name="branch_id" class="form-control" >
-                                <option value="">Филиалы</option>
-                                @foreach ($ar_branch as $id => $name)
-                                    <option value="{{ $id }}" {{ $request->branch_id == $id ? 'selected' : '' }}>{{ $name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @else
                             <div class="form-group col-md-4">
-                                <label for="first_date">Филиал</label>
-                                @foreach($ar_branch as $id => $name)
-                                    @if($id == $user->branch_id)
-                                        <input type="text" class="form-control " id="branch" placeholder="" name="branch" disabled value="{{ $name }}" >
-                                    @endif
-                                @endforeach
+                                <select name="branch_id" class="form-control" >
+                                    <option value="">Филиалы</option>
+                                    @foreach ($ar_branch as $id => $name)
+                                        <option value="{{ $id }}" {{ $request->branch_id == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         @endcan
 
@@ -38,7 +29,7 @@
                             <select name="product_id" class="form-control" >
                                 <option value="">Продукция</option>
                                 @foreach ($items_filter as $id => $name)
-                                    <option value="{{ $id }}" {{ $request->type_id == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                    <option value="{{ $id }}" {{ $request->product_id == $id ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                         </div>

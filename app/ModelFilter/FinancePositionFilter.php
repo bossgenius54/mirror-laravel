@@ -4,6 +4,7 @@ namespace App\ModelFilter;
 use Illuminate\Http\Request;
 
 use App\Model\SysUserType;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class FinancePositionFilter {
@@ -29,10 +30,19 @@ class FinancePositionFilter {
         $this->filterProduct();
         $this->filterSysname();
         $this->filterDate();
+        $this->filterForManager();
     }
 
     function getResult(){
         return $this->items;
+    }
+
+    private  function filterForManager(){
+        if (Auth::user()->type_id != SysUserType::MANAGER)
+            return;
+
+        $request = $this->request;
+        $this->items->where('branch_id', Auth::user()->branch_id);
     }
 
     private  function filterBranch(){

@@ -10,7 +10,7 @@
 
                     <div class="col-md-10 row">
 
-                        @can('filterBranch', 'App\Model\View\BranchProduct')
+                        @can('filterBranch', 'App\Model\Outcome')
                             <div class="form-group col-md-4">
                                 <select name="branch_id" class="form-control" >
                                     <option value="">В Филиалы</option>
@@ -20,17 +20,6 @@
                                 </select>
                             </div>
                         @endcan
-
-                        @cannot('filterBranch', 'App\Model\View\BranchProduct')
-                            <div class="form-group col-md-4">
-                                <label for="first_date">Филиал</label>
-                                @foreach($ar_branch as $id => $name)
-                                    @if($id == $user->branch_id)
-                                        <input type="text" class="form-control " id="branch" placeholder="" name="branch" disabled value="{{ $name }}" >
-                                    @endif
-                                @endforeach
-                            </div>
-                        @endcannot
 
                         <div class="form-group col-md-5">
                             <input type="text" class="form-control " placeholder="Заметка" name="note" value="{{ $request->note }}" >

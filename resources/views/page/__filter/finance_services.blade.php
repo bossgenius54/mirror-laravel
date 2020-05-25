@@ -10,13 +10,6 @@
 
                     <div class="col-md-10 row">
 
-                        <div class="form-group col-md-5">
-                            <input type="text" class="form-control " placeholder="Филиал" name="b_name" value="{{ $request->b_name }}" >
-                        </div>
-                        <div class="form-group col-md-5">
-                            <input type="text" class="form-control " placeholder="Услуга" name="s_name" value="{{ $request->s_name }}" >
-                        </div>
-
                         @can('filterBranch', 'App\Model\FinancePosition')
                             <div class="form-group col-md-5">
                                 <select name="branch_id" class="form-control" >

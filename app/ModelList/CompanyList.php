@@ -35,7 +35,12 @@ class CompanyList {
         $this->user = $request->user();
 
         $this->getItems();
+        $this->getByCompanyId();
+    }
 
+    private function getByCompanyId(){
+
+        $this->items->where('created_company_id',$this->user->company_id);
     }
 
     function getResult(){

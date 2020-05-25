@@ -16,6 +16,7 @@ use App\ModelFilter\ProductFilter;
 
 use DB;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller{
     private $title = 'Ассортимент товаров';
@@ -23,11 +24,13 @@ class ProductController extends Controller{
     function getIndex (Request $request){
         $items = ProductList::get($request);
         $items = ProductFilter::filter($request, $items);
+        $user = Auth::user();
 
         $ar = array();
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = ProductFilter::getFilterBlock($request);
+        $ar['filter_names'] = Product::where('company_id',$user->company_id)->get();
         $ar['items'] = $items->latest()->paginate(24);
         $ar['ar_cat'] = LibProductCat::getAr();
 
@@ -50,7 +53,7 @@ class ProductController extends Controller{
         $ar['company_id'] = $request->user()->company_id;
         $ar['cat_id'] = $cat->id;
         $ar['sys_num'] = $this->sys_name;
-        
+
         if (Product::where([    'company_id' => $request->user()->company_id,
                                 'cat_id' => $cat->id,
                                 'sys_num' => $this->sys_name])->count() > 0)
@@ -62,11 +65,11 @@ class ProductController extends Controller{
             $lib_options = LibProductOption::whereIn('id', $this->ar_option)->where('cat_id', $cat->id)->get();
             foreach ($lib_options as $o) {
                 $option = ProductOption::create([
-                    'product_id' => $item->id, 
-                    'option_id' => $o->id, 
-                    'label' => $o->label, 
-                    'name' => $o->option_name, 
-                    'val' => $o->option_val 
+                    'product_id' => $item->id,
+                    'option_id' => $o->id,
+                    'label' => $o->label,
+                    'name' => $o->option_name,
+                    'val' => $o->option_val
                 ]);
             }
 
@@ -76,7 +79,7 @@ class ProductController extends Controller{
 
             return redirect()->back()->with('error', $e->getMessage());
         }
-        
+
         return redirect()->action("Stock\ProductController@getIndex")->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
@@ -108,7 +111,7 @@ class ProductController extends Controller{
                                 'cat_id' => $cat->id,
                                 'sys_num' => $this->sys_name])->where('id', '<>', $item->id)->count() > 0)
             return redirect()->back()->with('error', 'Указанный ассортимент уже присутствует');
-        
+
         DB::beginTransaction();
         try {
             $item->update($ar);
@@ -118,11 +121,11 @@ class ProductController extends Controller{
 
             foreach ($lib_options as $o) {
                 $option = ProductOption::create([
-                    'product_id' => $item->id, 
-                    'option_id' => $o->id, 
-                    'label' => $o->label, 
-                    'name' => $o->option_name, 
-                    'val' => $o->option_val 
+                    'product_id' => $item->id,
+                    'option_id' => $o->id,
+                    'label' => $o->label,
+                    'name' => $o->option_name,
+                    'val' => $o->option_val
                 ]);
             }
 
@@ -154,15 +157,15 @@ class ProductController extends Controller{
         foreach ($ar_option_type as $type_id) {
             if (!isset($ar['option'][$type_id]))
                 continue;
-            
+
             $option = LibProductOption::find($ar['option'][$type_id]);
             if (!$option)
                 continue;
-        
+
             $this->sys_name .= ' '.$option->option_val;
             $this->ar_option [] = $option->id;
         }
-        
+
 
     }
 }

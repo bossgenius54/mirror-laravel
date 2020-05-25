@@ -13,7 +13,7 @@
                     <div class="form-group col-md-8">
                         <select name="name" class="form-control" >
                             <option value="">Наименование</option>
-                            @foreach ($items as $pr)
+                            @foreach ($filter_names as $pr)
                                 <option value="{{ $pr->name }}" {{ $request->name == $pr->name ? 'selected' : '' }}>{{ $pr->name }}</option>
                             @endforeach
                         </select>
