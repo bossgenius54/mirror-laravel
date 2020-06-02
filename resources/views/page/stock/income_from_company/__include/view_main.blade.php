@@ -8,7 +8,7 @@
         <small class="text-muted">Филиал</small>
         <h6>{{ $item->relBranch ? $item->relBranch->name : '' }}</h6>
         @if ($item->relFromCompany)
-            <small class="text-muted">Клиент</small>
+            <small class="text-muted">Поставщик</small>
             <h6>{{ $item->relFromCompany->name }}</h6>
         @endif
         @if ($item->relFromUser)
