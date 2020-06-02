@@ -24,7 +24,7 @@ class MotionList {
             $items->where('company_id', $this->user->company_id);
         if (in_array($this->request->user()->type_id, [SysUserType::MANAGER])){
             $items->where('to_branh_id', $this->request->user()->branch_id)
-                    ->orWhere('user_id', $this->request->user()->id);
+                    ->orWhere('from_branch_id', $this->request->user()->branch_id);
         }
 
         $this->items = $items;
