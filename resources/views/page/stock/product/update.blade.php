@@ -16,27 +16,27 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Артикул</label>
-                                <input type="text" class="form-control " name="artikul" value="{{ $item->artikul }}" > 
+                                <input type="text" class="form-control " name="artikul" value="{{ $item->artikul }}" >
                             </div>
                             <div class="form-group">
                                 <label>Наименование</label>
-                                <input type="text" class="form-control " name="name" value="{{ $item->name }}" required> 
+                                <input type="text" class="form-control " name="name" value="{{ $item->name }}" required>
                             </div>
                             <div class="form-group">
                                 <label>Цена розницы</label>
-                                <input type="number" class="form-control " name="price_retail" value="{{ $item->price_retail }}" required> 
+                                <input type="number" class="form-control " name="price_retail" value="{{ $item->price_retail }}" step="any" required>
                             </div>
                             <div class="form-group">
                                 <label>Цена оптов.</label>
-                                <input type="number" class="form-control " name="price_opt" value="{{ $item->price_opt }}" required> 
+                                <input type="number" class="form-control " name="price_opt" value="{{ $item->price_opt }}" step="any" required>
                             </div>
                             <div class="form-group">
                                 <label>Мин. кол-во на складе</label>
-                                <input type="number" class="form-control " name="min_stock_count" value="{{ $item->min_stock_count }}" required> 
-                            </div>  
+                                <input type="number" class="form-control " name="min_stock_count" value="{{ $item->min_stock_count }}" required>
+                            </div>
                         </div>
                         <div class="col-md-8">
-                            @foreach ($types as $type) 
+                            @foreach ($types as $type)
                                 <div class="form-group">
                                     <label>{{ $type->name }}</label>
                                     <div class="demo-radio-button">
@@ -48,7 +48,7 @@
                                             <label for="radio_{{ $type->id }}_{{ $option->id }}">{{ $option->option_name }} </label>
                                         @endforeach
                                     </div>
-                                </div>  
+                                </div>
                             @endforeach
                         </div>
                     </div>
