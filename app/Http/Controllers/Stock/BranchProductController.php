@@ -10,6 +10,7 @@ use App\ModelList\ProductList;
 use App\ModelList\BranchList;
 use App\ModelFilter\ProductFilter;
 use App\Model\LibProductCat;
+use App\Model\LibProductOption;
 use App\Model\Product;
 use App\Model\SysPositionStatus;
 use DB;
@@ -28,8 +29,12 @@ class BranchProductController extends Controller{
         $ar = array();
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
-        $ar['ar_branch'] = Branch::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
+
+        $ar['ar_cat'] = LibProductCat::getAr();
+        $ar['p_options'] = LibProductCat::with('relProductOptions')->get();
+
         $ar['filter_names'] = ProductList::get($request)->latest()->get();
+        $ar['ar_branch'] = Branch::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
 
         $branch_array = [];
         foreach ( $ar['ar_branch'] as $id => $name )
@@ -45,9 +50,6 @@ class BranchProductController extends Controller{
         } else {
             $ar['items'] = $items->latest()->paginate(12);
         }
-
-        $ar['ar_cat'] = LibProductCat::getAr();
-        // dd($ar['items']);
 
         return view('page.stock.branch_product.index', $ar);
     }

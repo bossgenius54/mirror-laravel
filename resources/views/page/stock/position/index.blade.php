@@ -115,6 +115,22 @@
                 $('form').submit();
             });
 
+            var lastOpenedOption = 0;
+            $('.category-select').on('select2:select', function(e) {
+                console.log(e.params.data.id);
+                console.log(lastOpenedOption);
+                $('#p-option-'+lastOpenedOption).toggle();
+                $('#p-option-'+e.params.data.id).toggle();
+                lastOpenedOption = e.params.data.id;
+            });
+
+            $(document).ready(function(){
+                let category = $('.category-select').val();
+
+                lastOpenedOption = category;
+                $('#p-option-'+category).toggle();
+            });
+
         });
 	</script>
 @endsection

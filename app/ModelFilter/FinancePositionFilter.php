@@ -29,6 +29,7 @@ class FinancePositionFilter {
         $this->filterBranch();
         $this->filterProduct();
         $this->filterSysname();
+        $this->filterByOption();
         $this->filterDate();
         $this->filterForManager();
     }
@@ -43,6 +44,18 @@ class FinancePositionFilter {
 
         $request = $this->request;
         $this->items->where('branch_id', Auth::user()->branch_id);
+    }
+
+    private  function filterByOption(){
+        if (!$this->request->has('option') || !$this->request->option)
+            return;
+
+        $request = $this->request;
+        $this->items->whereHas('relProduct', function($q) use ($request){
+            $q->whereHas('relOptions', function($q) use ($request){
+                $q->where('option_id', $request->option);
+            });
+        });
     }
 
     private  function filterBranch(){

@@ -30,9 +30,12 @@ class ProductController extends Controller{
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = ProductFilter::getFilterBlock($request);
-        $ar['filter_names'] = Product::where('company_id',$user->company_id)->get();
+
+        $ar['ar_cat'] = LibProductCat::pluck('name', 'id')->toArray();
+        $ar['p_options'] = LibProductCat::with('relProductOptions')->get();
+        $ar['filter_names'] = ProductList::get($request)->latest()->get();
+
         $ar['items'] = $items->latest()->paginate(24);
-        $ar['ar_cat'] = LibProductCat::getAr();
 
         return view('page.stock.product.index', $ar);
     }

@@ -16,7 +16,7 @@ use App\Model\Income;
 use App\ModelList\PositionList;
 
 use App\ModelFilter\PositionFilter;
-
+use App\ModelList\ProductList;
 use DB;
 use Exception;
 
@@ -33,7 +33,11 @@ class PositionController extends Controller{
         $ar['request'] = $request;
         $ar['filter_block'] = PositionFilter::getFilterBlock($request);
         $ar['items'] = $items->with('relProduct')->latest()->paginate(48);
+
         $ar['ar_cat'] = LibProductCat::pluck('name', 'id')->toArray();
+        $ar['p_options'] = LibProductCat::with('relProductOptions')->get();
+        $ar['filter_names'] = ProductList::get($request)->latest()->get();
+
         $ar['ar_status'] = SysPositionStatus::pluck('name', 'id')->toArray();
         // dd($ar['ar_status']);
         $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();

@@ -16,7 +16,7 @@ class ProductFilter {
     static function filter(Request $request, $items){
         $el = new ProductFilter();
         $el->start($request, $items);
-        
+
         return  $el->getResult();
     }
 
@@ -26,13 +26,13 @@ class ProductFilter {
 
         $this->filterName();
         $this->filterSysNum();
+        $this->filterByOptionId();
         $this->filterCatId();
     }
 
     function getResult(){
         return $this->items;
     }
-
 
     private  function filterName(){
         if (!$this->request->has('name') || !$this->request->name)
@@ -44,17 +44,26 @@ class ProductFilter {
     private  function filterSysNum(){
         if (!$this->request->has('sys_num') || !$this->request->sys_num)
             return;
-        
+
         $this->items->where('sys_num', 'like', '%'.$this->request->sys_num.'%');
+    }
+
+    private  function filterByOptionId(){
+        if (!$this->request->has('option') || !$this->request->option)
+            return;
+        $request = $this->request;
+        $this->items->whereHas('relOptions', function($q) use ($request){
+            $q->whereIn('option_id', $request->option);
+        });
     }
 
     private  function filterCatId(){
         if (!$this->request->has('cat_id') || !$this->request->cat_id)
             return;
-        
+
         $this->items->where('cat_id', $this->request->cat_id);
     }
 
-   
+
 
 }

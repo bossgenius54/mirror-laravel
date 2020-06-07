@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 
 use App\Model\FinancePosition;
+use App\Model\LibProductCat;
 use App\Model\Product;
 use App\ModelList\FinancePositionList;
 
@@ -29,6 +30,9 @@ class FinancePositionController extends Controller{
         $ar['items_filter'] = Product::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
         $ar['ar_branch'] = Branch::where('company_id',$user->company_id)->pluck('name', 'id')->toArray();
         $ar['user'] = $user;
+
+        $ar['ar_cat'] = LibProductCat::pluck('name', 'id')->toArray();
+        $ar['p_options'] = LibProductCat::with('relProductOptions')->get();
 
         return view('page.finance.position.index', $ar);
     }
