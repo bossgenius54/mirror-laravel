@@ -39,7 +39,7 @@ class IncomeFromCompanyController extends Controller{
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = IncomeFromCompanyFilter::getFilterBlock($request);
-        $ar['items'] = $items->latest()->paginate(24);
+        $ar['items'] = $items->with('relCreatedUser')->latest()->paginate(24);
 
         $ar['ar_branch'] = Branch::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
         $ar['ar_company'] = Company::where('id','<>', $user->company_id)->pluck('name', 'id')->toArray();
@@ -104,6 +104,8 @@ class IncomeFromCompanyController extends Controller{
         $ar = $request->all();
         $ar['type_id'] = SysIncomeType::FROM_COMPANY;
         $ar['company_id'] = $request->user()->company_id;
+        $ar['from_user_id'] = $request->user()->id;
+        $ar['user_id'] = $request->user()->id;
 
 
         if (!isset($ar['product_id']))

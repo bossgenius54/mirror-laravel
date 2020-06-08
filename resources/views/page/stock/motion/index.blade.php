@@ -29,6 +29,7 @@
                         <th>От филиала</th>
                         <th>К филиалу</th>
                         <th>Наименование</th>
+                        <th>Автор</th>
                         <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>
@@ -42,6 +43,7 @@
                             <td>{{ isset($ar_branch[$i->from_branch_id]) ? $ar_branch[$i->from_branch_id] : 'не указано' }}</td>
                             <td>{{ isset($ar_branch[$i->to_branh_id]) ? $ar_branch[$i->to_branh_id] : 'не указано' }}</td>
                             <td>{{ $i->name }}</td>
+                            <td>{{ $i->relCreatedUser ? $i->relCreatedUser->name : ''  }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>

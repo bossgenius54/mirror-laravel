@@ -29,6 +29,7 @@
                         <th>ФИО врача</th>
                         <th>Заказ {№} "Заметка"</th>
                         <th>Сумма</th>
+                        <th>Автор</th>
                         <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>
@@ -41,6 +42,7 @@
                             <td>{{ $i->relDoctor ? $i->relDoctor->name : ''  }}</td>
                             <td>Заказ № {{ $i->relOrder ? ( $i->relOrder->id . ' (' . $i->relOrder->name . ")" ) : ''  }}</td>
                             <td>{{ $i->salary }}</td>
+                            <td>{{ $i->relCreatedUser ? $i->relCreatedUser->name : ''  }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>

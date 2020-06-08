@@ -26,7 +26,7 @@ class ExternalDoctorSalaryController  extends Controller{
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = ExternalDoctorSalaryFilter::getFilterBlock($request);
-        $ar['items'] = $items->latest()->paginate(24);
+        $ar['items'] = $items->with('relCreatedUser')->latest()->paginate(24);
 
         return view('page.common.external_doctor_salary.index', $ar);
     }
@@ -45,6 +45,7 @@ class ExternalDoctorSalaryController  extends Controller{
     function postCreate(Request $request){
         $ar = $request->all();
         $ar['company_id'] = $request->user()->company_id;
+        $ar['user_id'] = $request->user()->id;
 
         $item = ExternalDoctorSalary::create($ar);
 

@@ -32,7 +32,7 @@ class OutcomeController extends Controller{
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = OutcomeFilter::getFilterBlock($request);
-        $ar['items'] = $items->latest()->paginate(24);
+        $ar['items'] = $items->with('relCreatedUser')->latest()->paginate(24);
         $ar['user'] = $user;
         // dd($ar['items']);
 

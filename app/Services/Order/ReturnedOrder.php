@@ -1,4 +1,4 @@
-<?php  
+<?php
 namespace App\Services\Order;
 
 use App\Model\Order;
@@ -17,6 +17,7 @@ use App\Model\IncomePosition;
 
 use App\Model\Outcome;
 use App\Services\Finance\CreateFinanceModel;
+use Illuminate\Support\Facades\Auth;
 
 class ReturnedOrder {
     private $item = false;
@@ -36,7 +37,7 @@ class ReturnedOrder {
         $this->createIncomeServices();
         $this->createIncomePosition();
 
-        $outcome = Outcome::findOrFail($this->item->outcome_id); 
+        $outcome = Outcome::findOrFail($this->item->outcome_id);
         CreateFinanceModel::createReturn($this->income, $outcome);
     }
 
@@ -58,6 +59,7 @@ class ReturnedOrder {
         $el->name = $this->item->name;
         $el->note = $this->item->note;
         $el->related_cost = $this->item->total_sum;
+        $el->user_id = Auth::user()->id;
         $el->save();
 
         $this->income = $el;
@@ -68,14 +70,14 @@ class ReturnedOrder {
         $ar = [];
         foreach ($services as $s) {
             $ar [] = [
-                'income_id' => $this->income->id, 
-                'service_id' => $s->service_id, 
-                'service_count' => $s->service_count, 
-                'service_cost' => $s->service_cost, 
+                'income_id' => $this->income->id,
+                'service_id' => $s->service_id,
+                'service_count' => $s->service_count,
+                'service_cost' => $s->service_cost,
                 'total_sum' => $s->total_sum
             ];
         }
-        
+
         if (count($ar) > 0)
             IncomeService::insert($ar);
     }
@@ -85,7 +87,7 @@ class ReturnedOrder {
 
         $ar_income_position = [];
         $ar = [];
-        $ar_el = []; 
+        $ar_el = [];
         $ar_el['branch_id'] = $this->income->branch_id;
         $ar_el['status_id'] = SysPositionStatus::ACTIVE;
         $ar_el['income_id'] = $this->income->id;
@@ -109,9 +111,9 @@ class ReturnedOrder {
             ];
             // dd($ar);
         }
-        
+
         if (count($ar_income_position) > 0)
-            IncomePosition::insert($ar_income_position); 
+            IncomePosition::insert($ar_income_position);
     }
 
 }

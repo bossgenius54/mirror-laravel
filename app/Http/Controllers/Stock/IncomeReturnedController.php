@@ -33,7 +33,7 @@ class IncomeReturnedController extends Controller{
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = IncomeReturnedFilter::getFilterBlock($request);
-        $ar['items'] = $items->latest()->paginate(24);
+        $ar['items'] = $items->with('relCreatedUser')->latest()->paginate(24);
         $ar['ar_type'] = SysIncomeType::pluck('name', 'id')->toArray();
         $ar['user'] = $user;
         $ar['ar_branch'] = Branch::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();

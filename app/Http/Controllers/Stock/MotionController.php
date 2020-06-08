@@ -42,7 +42,7 @@ class MotionController extends Controller{
         $ar['request'] = $request;
         $ar['user'] = $request->user();
         $ar['filter_block'] = MotionFilter::getFilterBlock($request);
-        $ar['items'] = $items->latest()->paginate(24);
+        $ar['items'] = $items->with('relCreatedUser')->latest()->paginate(24);
         $user = Auth::user();
 
         $ar['user'] = $user;

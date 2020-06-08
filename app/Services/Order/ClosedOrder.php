@@ -15,6 +15,7 @@ use App\Model\OrderPosition;
 use App\Model\OutcomePosition;
 
 use App\Services\Finance\CreateFinanceModel;
+use Illuminate\Support\Facades\Auth;
 
 class ClosedOrder {
     private $item = false;
@@ -56,6 +57,7 @@ class ClosedOrder {
         $el->note = $this->item->note;
         $el->related_cost = $this->item->total_sum;
         $el->is_retail = $this->item->is_retail;
+        $el->user_id = Auth::user()->id;
         $el->save();
 
         $this->outcome = $el;

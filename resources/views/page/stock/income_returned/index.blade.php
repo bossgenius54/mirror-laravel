@@ -25,6 +25,7 @@
                         <th>Номер заказа</th>
                         <th>Сумма</th>
                         <th>Заметка</th>
+                        <th>Автор</th>
                         <th>Изменен</th>
                         <th>Создан</th>
                         <th></th>
@@ -47,6 +48,7 @@
                             </td>
                             <td>{{ $i->related_cost }}</td>
                             <td>{{ $i->note }}</td>
+                            <td>{{ $i->relCreatedUser ? $i->relCreatedUser->name : ''  }}</td>
                             <td>{{ $i->updated_at }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>

@@ -6,9 +6,9 @@ use App\Helper\Traits\DateHelper;
 
 class Outcome extends Model{
     protected $table = 'outcome';
-    protected $fillable = ['type_id', 'company_id', 'branch_id', 'to_company_id', 'to_branch_id', 'to_user_id', 'name', 'related_cost', 'note', 'is_retail'];
+    protected $fillable = ['type_id', 'company_id', 'branch_id', 'to_company_id', 'to_branch_id', 'to_user_id', 'name', 'related_cost', 'note', 'user_id', 'is_retail'];
     use DateHelper;
-    
+
     function relCompany(){
         return $this->belongsTo('App\Model\Company', 'company_id');
     }
@@ -23,6 +23,10 @@ class Outcome extends Model{
 
     function relToUser(){
         return $this->belongsTo('App\User', 'to_user_id');
+    }
+
+    function relCreatedUser(){
+        return $this->belongsTo('App\User', 'user_id');
     }
 
 }
