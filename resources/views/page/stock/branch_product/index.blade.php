@@ -9,16 +9,17 @@
 
 <div class="row">
     <div class="col-12">
-        <div class="card">
+        <div class="card table-responsive-lg">
             <div class="card-body">
                 <h4 class="card-title">
                     {{ $title }}
                 </h4>
             </div>
 
-            <table class="table  table-hover color-table muted-table" >
+            <table class="table  table-hover color-table muted-table responsible" >
                 <thead>
                     <tr>
+                        <th>Продукт</th>
                         <th>Филиал</th>
                         <th>Кол-во на складе</th>
                         <th>Нужно на складе</th>
@@ -29,7 +30,7 @@
                     @foreach ($items as $i)
 
                         <tr class=" footable-odd" >
-                            <td colspan="4" class="text-center" >{{ $i->name }} ({{ $i->sys_num }})</td>
+                            <td rowspan="{{ count($ar_branch) + 1 }}" class="text-center" >{{ $i->name }} ({{ $i->sys_num }})</td>
                         </tr>
 
                         @php
