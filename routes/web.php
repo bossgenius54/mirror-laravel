@@ -39,6 +39,8 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
 
         Route::group(['prefix' => 'item'], function () {
             Route::get('view/{item}', 'ViewController@getView')->middleware('can:view,item');
+            Route::get('add_position/{item}', 'ViewController@getPositions')->middleware('can:view,item');
+            Route::post('get-positions', 'ViewController@jsonGetPositions');
             Route::post('update/{item}', 'ViewController@postUpdate')->middleware('can:update,item');
         });
 
@@ -49,6 +51,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
 
         Route::group(['prefix' => 'product'], function () {
             Route::post('add/{item}', 'PositionOrderController@postAddProduct')->middleware('can:position,item');
+            Route::post('add-basket/{item}', 'PositionOrderController@basketAddProduct')->middleware('can:position,item');
             Route::get('delete/{item}/{order_product}', 'PositionOrderController@getDeleteProduct')->middleware('can:position,item');
         });
 

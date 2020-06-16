@@ -19,6 +19,9 @@
         <a href="?for_print=1" class="btn btn-block btn-outline-secondary" style="margin-bottom: 10px;">
             Версия для печати
         </a>
+        <a href="{{ action('Order\ViewController@getPositions',$item) }}" class="btn btn-block btn-secondary" style="margin-bottom: 10px;">
+            Добавить товар по одному
+        </a>
         @include('page.order.view.__include.view_change_status')
         @include('page.order.view.__include.view_total_sum_status')
         @include('page.order.view.__include.view_formula_block')
