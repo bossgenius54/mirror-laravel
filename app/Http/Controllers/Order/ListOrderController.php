@@ -30,8 +30,10 @@ class ListOrderController extends Controller{
         $ar['title'] = 'Список элементов "'.$this->title.'"';
         $ar['request'] = $request;
         $ar['filter_block'] = OrderFilter::getFilterBlock($request);
-        $ar['items'] = $items->latest()->paginate(24);
+        $ar['items'] = $items->with('relStatus')->latest()->paginate(24);
         $ar['ar_status'] = SysOrderStatus::pluck('name', 'id')->toArray();
+        $ar['status_closed'] = SysOrderStatus::CLOSED;
+        $ar['status_returned'] = SysOrderStatus::RETURNED;
         $ar['ar_managers'] = User::where('type_id', SysUserType::MANAGER)->where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
         $ar['ar_branch'] = Branch::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
         $ar['ar_type'] = SysOrderType::pluck('name', 'id')->toArray();

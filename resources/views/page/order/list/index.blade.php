@@ -46,6 +46,7 @@
             <table class="table  table-hover color-table muted-table" >
                 <thead>
                     <tr>
+                        <th></th>
                         <th>id</th>
                         <th>Тип</th>
                         <th>От</th>
@@ -63,7 +64,16 @@
                     @foreach ($items as $i)
                         @if($i->total_sum != null || $i->total_sum != '')
                             <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
-                                <td>{{ $i->id }}</td>
+                                <td>
+                                    @if( $i->relStatus->id == $status_closed || $i->relStatus->id == $status_returned )
+                                        <i class="fa fa-circle" style="color: rgb(0, 123, 255);;"></i>
+                                    @else
+                                        <i class="fa fa-circle" style="color: rgb(255, 193, 7);"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ $i->id }}
+                                </td>
                                 <td>{{ $i->is_retail ? 'Розница' : 'Оптовая' }}</td>
                                 <td>{{ isset($ar_type[$i->type_id]) ? $ar_type[$i->type_id] : 'не указано' }}</td>
                                 <td>{{ isset($ar_status[$i->status_id]) ? $ar_status[$i->status_id] : 'не указано' }}</td>
