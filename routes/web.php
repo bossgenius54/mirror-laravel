@@ -115,6 +115,16 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
         });
 
         /// product
+        Route::group(['prefix' => 'deletion'], function () {
+            Route::get('list', 'DeletionController@getIndex')->middleware('can:list,App\Model\Deletion');
+            Route::get('view/{item}', 'DeletionController@getView')->middleware('can:list,App\Model\Deletion');
+            Route::get('confirm-item/{item}', 'DeletionController@confirm')->middleware('can:list,App\Model\Deletion');
+            Route::get('create', 'DeletionController@getCreate')->middleware('can:delete,App\Model\Deletion');
+            Route::post('confirm', 'DeletionController@postConfirm')->middleware('can:delete,App\Model\Deletion');
+            Route::post('create', 'DeletionController@postCreate')->middleware('can:delete,App\Model\Deletion');
+        });
+
+        /// product
         Route::group(['prefix' => 'motion'], function () {
             Route::get('/', 'MotionController@getIndex')->middleware('can:list,App\Model\Motion');
             Route::get('create', 'MotionController@getCreate')->middleware('can:create,App\Model\Motion');

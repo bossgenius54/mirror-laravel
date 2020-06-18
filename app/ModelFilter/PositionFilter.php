@@ -33,6 +33,7 @@ class PositionFilter {
         $this->filterbBranchId();
         $this->filterIncomeId();
         $this->filterDate();
+        $this->filterExpired();
     }
 
     function getResult(){
@@ -113,6 +114,18 @@ class PositionFilter {
             $this->items->where('created_at', 'like', $this->request->first_date.'%');
         } else {
             $this->items->whereBetween(DB::raw('DATE(created_at)'), array($this->request->first_date, $this->request->second_date));
+        }
+    }
+
+    private function filterExpired(){
+        if (!$this->request->has('expired_first') || !$this->request->expired_first)
+            return;
+
+        if(!$this->request->has('expired_second') || !$this->request->second)
+        {
+            $this->items->where('expired_at', $this->request->expired_first);
+        } else {
+            $this->items->whereBetween(DB::raw('DATE(expired_at)'), array($this->request->first_date, $this->request->second_date));
         }
     }
 

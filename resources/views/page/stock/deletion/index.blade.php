@@ -5,7 +5,7 @@
 
 @section('content')
 
-@include($filter_block)
+{{-- @include('page.stock.deletion.__include.filter') --}}
 
 <div class="row">
     <div class="col-12">
@@ -14,61 +14,44 @@
                 <h4 class="card-title">
                     {{ $title }}
 
-                    @can('delete', App\Model\Deletion::class)
-                        <a href="{{ action('Stock\DeletionController@getCreate') }}" type="button" class="btn btn-danger pull-right">
-                            Списать товары
-                        </a>
-                    @endcan
-
-                    @can('list', App\Model\Deletion::class)
-                        <a href="{{ action('Stock\DeletionController@getIndex') }}" type="button" class="btn btn-info pull-right" style="margin-right:15px;">
-                            Список списанных партии
-                        </a>
-                    @endcan
-
                 </h4>
-
             </div>
 
             <table class="table  table-hover color-table muted-table" >
                 <thead>
                     <tr>
-                        <th>Ассортимент</th>
-                        <th>Филиал</th>
+                        <th>id</th>
+                        <th>Наименование</th>
                         <th>Статус</th>
-                        <th>Себестоимость</th>
-                        <th>Срок годности</th>
-                        <th>Оприхование</th>
-                        <th>Изменен</th>
-                        <th>Создан</th>
+                        <th>Филиал</th>
+                        <th>Дата списания</th>
+                        <th>Создатель</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($items as $i)
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
-                            <td>{{ $i->relProduct->name }} ({{ $i->relProduct->sys_num }})</td>
-                            <td>{{ isset($ar_branch[$i->branch_id]) ? $ar_branch[$i->branch_id] : 'не указано' }}</td>
-                            <td>{{ isset($ar_status[$i->status_id]) ? $ar_status[$i->status_id] : 'не указано' }}</td>
-                            <td>{{ $i->price_cost }}</td>
-                            <td>{{ $i->expired_at ? $i->expired_at : 'бессрочна' }}</td>
-                            <td>{{ $i->relIncome ? $i->relIncome->note.' #'.$i->relIncome->id : 'не указано' }}</td>
-                            <td>{{ $i->updated_at }}</td>
+                            <td>{{ $i->id }}</td>
+                            <td>{{ $i->name }}</td>
+                            <td>{{ $i->relStatus->name }}</td>
+                            <td>{{ $i->relBranch->name }}</td>
                             <td>{{ $i->created_at }}</td>
+                            <td>{{ $i->relCreatedUser->name }}</td>
                             <td>
                                 <div class="btn-group btn-group-sm">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="ti-settings"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        @can('update', $i)
-                                            <a class="dropdown-item" href="{{ action('Stock\PositionController@getUpdate', $i) }}">
-                                                Изменить
+                                        @can('list', $i)
+                                            <a class="dropdown-item" href="{{ action('Stock\DeletionController@getView', $i) }}">
+                                                Посмотреть списанные позиции
                                             </a>
                                         @endcan
                                         @can('delete', $i)
-                                            <a class="dropdown-item js_accept_change_status" href="{{ action('Stock\PositionController@getDelete', $i) }}">
-                                                Списать
+                                            <a class="dropdown-item js_accept_change_status" href="{{ '' }}">
+                                                Подтвердить
                                             </a>
                                         @endcan
                                     </div>
@@ -77,13 +60,6 @@
                         </tr>
                     @endforeach
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="4">
-                            {!! $items->appends($request->all())->links() !!}
-                        </td>
-                    </tr>
-                </tfoot>
             </table>
         </div>
     </div>
