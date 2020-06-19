@@ -16,78 +16,88 @@
                 </h4>
             </div>
 
-            <table class="table  table-hover color-table muted-table responsible" >
-                <thead>
-                    <tr>
-                        <th>Продукт</th>
-                        <th>Филиал</th>
-                        <th>Кол-во на складе</th>
-                        <th>Нужно на складе</th>
-                        <th>Кол-во докупить</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div class="container-fluid">
+                <div class="row bg-info text-white">
+                    <div class="col-4">Продукт</div>
+
+                    <div class="row col-8">
+                        <div class="col-6">Филиал</div>
+                        <div class="col-2">Кол-во на складе</div>
+                        <div class="col-2">Нужно на складе</div>
+                        <div class="col-2">Кол-во докупить</div>
+                    </div>
+
+                </div>
+                <div class="row">
+
                     @foreach ($items as $i)
+                        <div class="card col-12" style="box-shadow:0px 5px 20px rgba(0, 0, 0, 0.2)">
+                            <div class="card-body">
 
-                        <tr class=" footable-odd" >
-                            <td rowspan="{{ count($ar_branch) + 1 }}" class="text-center" >{{ $i->name }} ({{ $i->sys_num }})</td>
-                        </tr>
+                                <div class="row">
+                                    <div class="col-4">
+                                        {{ $i->name }} ({{ $i->sys_num }})
+                                    </div>
 
-                        @php
-                            $has_el = false;
-                        @endphp
+                                    @php
+                                        $has_el = false;
+                                    @endphp
 
-                        @foreach ($ar_branch as $id=>$name)
+                                    <div class="col-8">
+                                        @foreach ($ar_branch as $id=>$name)
 
-                            @if ($request->branch_name && $request->branch_name != $name)
-                                @continue
-                            @endif
+                                            @if ($request->branch_name && $request->branch_name != $name)
+                                                @continue
+                                            @endif
 
-                            @php
-                                $count_pos = $i->relPositions()->where('branch_id', $id)->where('status_id', App\Model\SysPositionStatus::ACTIVE)->count();
-                                $balans = $count_pos - $i->min_stock_count;
-                            @endphp
+                                            @php
+                                                $count_pos = $i->relPositions()->where('branch_id', $id)->where('status_id', App\Model\SysPositionStatus::ACTIVE)->count();
+                                                $balans = $count_pos - $i->min_stock_count;
+                                            @endphp
 
-                            @if ($request->hidden_null && $count_pos == 0)
-                                @continue
-                            @endif
+                                            @if ($request->hidden_null && $count_pos == 0)
+                                                @continue
+                                            @endif
 
-                            @if ($request->balans_diff == 'plus' && $balans < 0)
-                                @continue
-                            @elseif ($request->balans_diff == 'minus' && $balans >= 0)
-                                @continue
-                            @endif
+                                            @if ($request->balans_diff == 'plus' && $balans < 0)
+                                                @continue
+                                            @elseif ($request->balans_diff == 'minus' && $balans >= 0)
+                                                @continue
+                                            @endif
 
-                            <tr class="footable-even {{ $balans >= 0 ? 'table-success' : 'table-danger' }}">
-                                <td >{{ $name }}</td>
-                                <td>{{ $count_pos }}</td>
-                                <td>{{ $i->min_stock_count }}</td>
-                                <td>{{ $balans >= 0 ? 'не нужно' :  -$balans }}</td>
-                            </tr>
+                                            <div class="row" style="background-color:{{ $balans >= 0 ? '#c3e6cb' : '#f5c6cb' }};border-bottom: solid 1px #fff; padding:5px;">
+                                                <div class="col-6">{{ $name }}</div>
+                                                <div class="col-2 text-center" title="Кол-во на складе">{{ $count_pos }}</div>
+                                                <div class="col-2 text-center" title="Нужно на складе">{{ $i->min_stock_count }}</div>
+                                                <div class="col-2 text-center" title="Кол-во докупить">{{ $balans >= 0 ? 'не нужно' :  -$balans }}</div>
+                                            </div>
 
-                            @php
-                                $has_el = true;
-                            @endphp
+                                            @php
+                                                $has_el = true;
+                                            @endphp
 
-                        @endforeach
+                                        @endforeach
+                                    </div>
 
-                        @if (!$has_el)
-                            <tr class="footable-even table-info">
-                                <td colspan="4" class="text-center" >Нет элементов по выбранному запросу</td>
-                            </tr>
-                        @endif
-
+                                @if (!$has_el)
+                                    <div class="row">
+                                        <div class="col-8 text-center">Нет элементов по выбранному запросу</div>
+                                    </div>
+                                @endif
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
 
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="4">
-                            {!! $items->appends($request->all())->links() !!}
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        {!! $items->appends($request->all())->links() !!}
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
