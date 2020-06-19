@@ -30,10 +30,13 @@
                 <thead>
                     <tr>
                         <th>id</th>
+                        <th>Ассортимент</th>
                         <th>Системный номер</th>
-                        <th>Сумма</th>
+                        <th>Филиал</th>
+                        <th>Себестоимость</th>
+                        <th>Оприходование</th>
                         <th>Срок годности</th>
-                        <th></th>
+                        <th>Дата создания</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,9 +44,14 @@
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                             <td>{{ $i->id }}</td>
                             <td>{{ $i->relProduct->name }}</td>
-                            <td>{{ $i->relProduct->price_retail }}</td>
-                            <td>{{ $i->relPosition->expired_at }}</td>
-                            <td></td>
+                            <td>{{ $i->relProduct->sys_num }}</td>
+                            <td>{{ $i->relBranch->name }}</td>
+                            <td>{{ $i->relPosition->price_cost }}</td>
+                            <td>
+                                <a href="{{ action('Stock\IncomeFromCompanyController@getView',$i->relPosition->income_id)  }}" class="text-blue"> # {{ $i->relPosition->income_id }} </a>
+                            </td>
+                            <td>{{ $i->relPosition->expired_at ? $i->relPosition->expired_at : 'нет срока годности' }}</td>
+                            <td>{{ $i->created_at }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -64,7 +72,7 @@
                 @endif
 
                 @if ($item->status_id == 3)
-                    <a href="#" class="btn btn-block btn-secondary" style="margin-bottom: 10px;">
+                    <a href="{{ action('Stock\DeletionController@return', $item) }}" class="btn btn-block btn-secondary" style="margin-bottom: 10px;">
                         Вернуть со списания
                     </a>
                 @endif

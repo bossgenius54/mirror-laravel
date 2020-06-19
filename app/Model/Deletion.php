@@ -15,6 +15,10 @@ class Deletion extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
+    function relDeletePosition(){
+        return $this->hasMany('App\Model\DeletionPosition', 'deletion_id');
+    }
+
     function relCompany(){
         return $this->belongsTo('App\Model\Company', 'company_id');
     }

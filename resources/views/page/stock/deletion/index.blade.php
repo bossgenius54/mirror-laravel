@@ -21,9 +21,10 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>Наименование</th>
+                        <th>Наименование (Заметка)</th>
                         <th>Статус</th>
-                        <th>Филиал</th>
+                        <th>Кол-во товаров</th>
+                        <th>Общая сумма</th>
                         <th>Дата списания</th>
                         <th>Создатель</th>
                         <th></th>
@@ -31,11 +32,20 @@
                 </thead>
                 <tbody>
                     @foreach ($items as $i)
+
+                        @php
+                            $total_sum = 0;
+                            foreach($i->relDeletePosition as $p){
+                                $total_sum += $p->relPosition->price_cost;
+                            }
+                        @endphp
+
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                             <td>{{ $i->id }}</td>
-                            <td>{{ $i->name }}</td>
+                            <td>{{ $i->name }} {{ $i->note ? ('('.$i->note.')') : '' }}</td>
                             <td>{{ $i->relStatus->name }}</td>
-                            <td>{{ $i->relBranch->name }}</td>
+                            <td>{{ $i->relDeletePosition->count() }}</td>
+                            <td>{{ $total_sum }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>{{ $i->relCreatedUser->name }}</td>
                             <td>
@@ -49,11 +59,14 @@
                                                 Посмотреть списанные позиции
                                             </a>
                                         @endcan
-                                        @can('delete', $i)
-                                            <a class="dropdown-item js_accept_change_status" href="{{ '' }}">
-                                                Подтвердить
-                                            </a>
-                                        @endcan
+                                        @if ($i->status_id == App\Model\DeletionStatus::IN_WORK)
+                                            @can('delete', $i)
+                                                <a class="dropdown-item js_accept_change_status" href="{{ action('Stock\DeletionController@confirm', $i) }}">
+                                                    Подтвердить
+                                                </a>
+                                            @endcan
+                                        @endif
+
                                     </div>
                                 </div>
                             </td>

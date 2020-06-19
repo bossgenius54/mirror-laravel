@@ -6,24 +6,23 @@
 @section('content')
 
 <div class="row">
-    <div class="col-10">
+    <div class="col-12">
         <form action="{{ $post_create }}" method="POST" class="delete_form">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">
                     {{ $title }}
-
-
-
                 </h4>
 
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <input type="text" class="form-control " placeholder="Наименование" name="name" value="" required>
+                        <input type="text" class="form-control deletion-name" placeholder="Наименование" name="name" value="" required>
                     </div>
+                </div>
 
-                    <div class="form-group col-md-12">
-                        <textarea class="form-control " placeholder="Заметки" name="note" required></textarea>
+                <div class="row">
+                    <div class="form-group col-md-5">
+                        <textarea class="form-control " placeholder="Заметки" name="note"></textarea>
                     </div>
                 </div>
 
@@ -42,7 +41,7 @@
                     <tr>
                         <th>id</th>
                         <th>Ассортимент</th>
-                        <th>Серийный номер</th>
+                        <th>Системный номер</th>
                         <th>Филиал</th>
                         <th>Себестоимость</th>
                         <th>Срок годности</th>
@@ -55,8 +54,8 @@
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                             <td>{{ $i->id }}</td>
                             <td>{{ $i->relProduct->name }}</td>
-                            <td>{{ $i->relProduct->sys_num }} ({{ $i->relProduct->sys_num }})</td>
-                            <td>{{ isset($ar_branch[$i->branch_id]) ? $ar_branch[$i->branch_id] : 'не указано' }}</td>
+                            <td>{{ $i->relProduct->sys_num }}</td>
+                            <td>{{ $i->relBranch->name }}</td>
                             <td>{{ $i->price_cost }}</td>
                             <td>{{ $i->expired_at ? $i->expired_at : 'бессрочна' }}</td>
                             <td>{{ $i->created_at }}</td>
@@ -133,6 +132,13 @@
 
             $('.send-btn').on('click',function(){
                 let form = $('.delete_form');
+
+                let name = $('.deletion-name').val();
+
+                if(name == ''){
+                    alert('Заполните поле "Наименование "');
+                    return false;
+                }
 
                 form.submit();
             });

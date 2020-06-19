@@ -118,7 +118,8 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
         Route::group(['prefix' => 'deletion'], function () {
             Route::get('list', 'DeletionController@getIndex')->middleware('can:list,App\Model\Deletion');
             Route::get('view/{item}', 'DeletionController@getView')->middleware('can:list,App\Model\Deletion');
-            Route::get('confirm-item/{item}', 'DeletionController@confirm')->middleware('can:list,App\Model\Deletion');
+            Route::get('confirm-item/{item}', 'DeletionController@confirm')->middleware('can:delete,App\Model\Deletion');
+            Route::get('return/{item}', 'DeletionController@return')->middleware('can:delete,App\Model\Deletion');
             Route::get('create', 'DeletionController@getCreate')->middleware('can:delete,App\Model\Deletion');
             Route::post('confirm', 'DeletionController@postConfirm')->middleware('can:delete,App\Model\Deletion');
             Route::post('create', 'DeletionController@postCreate')->middleware('can:delete,App\Model\Deletion');

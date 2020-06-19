@@ -11,6 +11,30 @@
                     <div class="col-md-10 row">
 
                         <div class="form-group col-md-3">
+                            <select name="name" class="form-control" >
+                                <option value="">Наименование</option>
+                                @foreach ($product_names as $id => $in)
+                                    <option value="{{ $in->id }}" {{ $request->name == $in->id ? 'selected' : '' }}>{{ $in->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <select name="sys_num" class="form-control" >
+                                <option value="">Системный номер</option>
+                                @foreach ($product_sys_num as $id => $in)
+                                    <option value="{{ $in->id }}" {{ $request->sys_num == $in->id ? 'selected' : '' }}>{{ $in->sys_num }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <select name="status_id" class="form-control" >
+                                <option value="">Статус позиции</option>
+                                @foreach ($ar_status as $status)
+                                    <option value="{{ $status->id }}" {{ $request->status_id == $status->id ? 'selected' : '' }}>{{ $status->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
                             <select name="income_id" class="form-control" >
                                 <option value="">Оприхование</option>
                                 @foreach ($ar_incomes as $id => $in)

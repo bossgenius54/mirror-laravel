@@ -19,7 +19,9 @@
                     </a>
 
                     <span class="pull-right" style="color:blue; margin-right: 20px; line-height:40px;">
-                        Выбрано - <span class="count">0</span> шт
+                        Выбрано -
+                        <input type="number" class="count form-control" value="0" style="display: inline-block;width:100px;" /> шт
+                        из {{ $items->count() }}
                     </span>
                 </h4>
 
@@ -32,10 +34,11 @@
             <table class="table  table-hover color-table muted-table" >
                 <thead>
                     <tr>
-                        <th>id</th>
+                        <th>#</th>
                         <th>Ассортимент</th>
-                        <th>Серийный номер</th>
+                        <th>Системный номер</th>
                         <th>Филиал</th>
+                        <th>Статус</th>
                         <th>Себестоимость</th>
                         <th>Срок годности</th>
                         <th>Создан</th>
@@ -45,17 +48,24 @@
                 <tbody>
                     @foreach ($items as $i)
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
-                            <td>{{ $i->id }}</td>
-                            <td>{{ $i->relProduct->name }}</td>
-                            <td>{{ $i->relProduct->sys_num }} ({{ $i->relProduct->sys_num }})</td>
+                            <td>{{ $loop->index + 1 }}</td>
+                            <td title="id: {{ $i->id }}" data-toggle="tooltip" data-placement="top">{{ $i->relProduct->name }}</td>
+                            <td>{{ $i->relProduct->sys_num }}</td>
                             <td>{{ isset($ar_branch[$i->branch_id]) ? $ar_branch[$i->branch_id] : 'не указано' }}</td>
+                            <td>{{ $i->relStatus->name }}</td>
                             <td>{{ $i->price_cost }}</td>
                             <td>{{ $i->expired_at ? $i->expired_at : 'бессрочна' }}</td>
                             <td>{{ $i->created_at }}</td>
                             <td>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="position-{{$i->id}}" name="position_id[]" value="{{ $i->id }}" >
-                                    <label for="position-{{$i->id}}">Добавить</label>
+                                <div class="form-check form-check-inline"
+                                title="{{ $i->status_id == $motion_id ? ('Закончите перемещение #'.$i->motion_id) : ($i->status_id == $reserve_id ? ('Зарезервирован в заказе #'.$i->order_id) : '') }}"
+                                data-toggle="tooltip" data-placement="top" >
+                                    <input class="form-check-input-positions"
+                                            type="checkbox" id="{{$i->id}}"
+                                            name="position_id[]"
+                                            value="{{ $i->id }}"
+                                            {{ $i->status_id == $motion_id ? 'disabled' : ($i->status_id == $reserve_id ? 'disabled':'') }}>
+                                    <label for="{{$i->id}}">Добавить</label>
                                 </div>
                             </td>
                         </tr>
@@ -128,7 +138,7 @@
             });
 
             let selected = [];
-            $('.form-check-input').change(function() {
+            $('.form-check-input-positions').change(function() {
                 if(this.checked) {
                     selected.push(this.value);
                     // alert(this.value);
@@ -136,19 +146,22 @@
                     selected = selected.filter( item => item != this.value )
                 }
 
-                console.log(selected);
-                $('.count').html(selected.length);
+                $('.count').val(selected.length);
             });
 
             $('.select-all').change(function() {
 
-                let inputs = $('.form-check-input');
+                let inputs = $('.form-check-input-positions');
 
                 if(this.checked) {
-                    inputs.prop('checked', true);
 
                     inputs.each(function () {
-                        selected.push($(this).val());
+
+                        if ( $(this).prop('checked') == false && $(this).prop('disabled') != true ){
+                            selected.push($(this).val());
+                            $(this).prop('checked', true);
+                        }
+
                     });
 
                 } else {
@@ -157,9 +170,7 @@
                     selected = [];
                 }
 
-
-                console.log(selected);
-                $('.count').html(selected.length);
+                $('.count').val(selected.length);
             });
 
             $('.send-btn').on('click', function() {
@@ -177,6 +188,35 @@
                 });
 
                 form.submit();
+
+            });
+
+            $('.count').change(function(){
+                let countRequest = parseInt($(this).val());
+                let countIsset = selected.length;
+                let countNeed = (countIsset - countRequest) > 0  ? ( countIsset - countRequest ) : ( countRequest -countIsset );
+                let inputs = $('.form-check-input-positions');
+                console.log(countNeed);
+
+                inputs.prop('checked', false);
+                selected = [];
+                let i;
+
+                for( i = 0; i < countRequest; i++ ){
+
+                    let id = inputs[i].value;
+                    let isDisabled = inputs[i].disabled;
+                    if (isDisabled != true){
+                        $('#'+id).prop('checked', true);
+                        selected.push(id);
+                    } else {
+                        countRequest += 1;
+                    }
+                }
+
+
+                $('.count').val(selected.length);
+                console.log(selected);
 
             });
 
