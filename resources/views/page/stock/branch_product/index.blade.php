@@ -17,7 +17,7 @@
             </div>
 
             <div class="container-fluid">
-                <div class="row bg-info text-white">
+                <div class="row bg-info text-white" style="padding: 5px;">
                     <div class="col-4">Продукт</div>
 
                     <div class="row col-8">
@@ -67,9 +67,9 @@
 
                                             <div class="row" style="background-color:{{ $balans >= 0 ? '#c3e6cb' : '#f5c6cb' }};border-bottom: solid 1px #fff; padding:5px;">
                                                 <div class="col-6">{{ $name }}</div>
-                                                <div class="col-2 text-center" title="Кол-во на складе">{{ $count_pos }}</div>
-                                                <div class="col-2 text-center" title="Нужно на складе">{{ $i->min_stock_count }}</div>
-                                                <div class="col-2 text-center" title="Кол-во докупить">{{ $balans >= 0 ? 'не нужно' :  -$balans }}</div>
+                                                <div class="col-2 text-center" title="Кол-во на складе" data-toggle="tooltip" data-placement="top">{{ $count_pos }}</div>
+                                                <div class="col-2 text-center" title="Нужно на складе" data-toggle="tooltip" data-placement="top">{{ $i->min_stock_count }}</div>
+                                                <div class="col-2 text-center" title="Кол-во докупить" data-toggle="tooltip" data-placement="top">{{ $balans >= 0 ? 'не нужно' :  -$balans }}</div>
                                             </div>
 
                                             @php
