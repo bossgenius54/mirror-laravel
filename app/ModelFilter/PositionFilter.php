@@ -76,11 +76,13 @@ class PositionFilter {
             return;
 
         $request = $this->request;
-        $this->items->whereHas('relProduct', function($q) use ($request){
-            $q->whereHas('relOptions', function($q) use ($request){
-                $q->where('option_id', $request->option);
+        foreach($this->request->option as $i){
+            $this->items->whereHas('relProduct', function($q) use ($i){
+                $q->whereHas('relOptions', function($q) use ($i){
+                    $q->where('option_id', $i);
+                });
             });
-        });
+        }
     }
 
     private  function filterStatusId(){

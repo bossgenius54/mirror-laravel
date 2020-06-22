@@ -18,7 +18,12 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <input type="text" class="form-control " placeholder="Системный номер" name="sys_num" value="{{ $request->sys_num }}" >
+                            <select name="name" class="form-control" >
+                                <option value="">Системный номер</option>
+                                @foreach ($sys_nums as $pr)
+                                    <option value="{{ $pr->name }}" {{ $request->sys_num == $pr->sys_num ? 'selected' : '' }}>{{ $pr->sys_num }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group col-md-4">
                             <select name="cat_id" class="form-control category-select" >
@@ -129,14 +134,14 @@
                 $('input').val('');
                 $('select').children('option').attr('selected', false);
                 $('select').children('option').first().attr('selected',true);
+                $('.filter-checkbox').prop('checked', false);
 
                 $('form').submit();
             });
 
             var lastOpenedOption = 0;
             $('.category-select').on('select2:select', function(e) {
-                console.log(e.params.data.id);
-                console.log(lastOpenedOption);
+                $('.filter-checkbox').prop('checked', false);
                 $('#p-option-'+lastOpenedOption).toggle();
                 $('#p-option-'+e.params.data.id).toggle();
                 lastOpenedOption = e.params.data.id;

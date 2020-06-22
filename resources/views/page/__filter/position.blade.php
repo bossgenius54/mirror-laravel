@@ -19,7 +19,12 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <input type="text" class="form-control " placeholder="Системный номер" name="sys_num" value="{{ $request->sys_num }}" >
+                            <select name="sys_num" class="form-control" >
+                                <option value="">Системный номер</option>
+                                @foreach ($sys_nums as $pr)
+                                    <option value="{{ $pr->sys_num }}" {{ $request->sys_num == $pr->sys_num ? 'selected' : '' }}>{{ $pr->sys_num }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group col-md-3">
                             <select name="cat_id" class="form-control category-select" >
@@ -68,7 +73,7 @@
                                             @endif
 
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" name="option[]" id="option-{{$option->id}}" value="{{$option->id}}" {{ $request->option != null ? ( in_array($option->id, $request->option) ? 'checked=true' : '' ) : '' }} >
+                                                <input class="form-check-input filter-checkbox" type="checkbox" name="option[]" id="option-{{$option->id}}" value="{{$option->id}}" {{ $request->option != null ? ( in_array($option->id, $request->option) ? 'checked=true' : '' ) : '' }} >
                                                 <label class="form-check-label" for="option-{{$option->id}}">{{$option->option_name}}</label>
                                             </div>
 

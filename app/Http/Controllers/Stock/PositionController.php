@@ -37,6 +37,7 @@ class PositionController extends Controller{
         $ar['ar_cat'] = LibProductCat::pluck('name', 'id')->toArray();
         $ar['p_options'] = LibProductCat::with('relProductOptions')->get();
         $ar['filter_names'] = ProductList::get($request)->latest()->get();
+        $ar['sys_nums'] = ProductList::get($request)->latest()->get();
 
         $ar['ar_status'] = SysPositionStatus::pluck('name', 'id')->toArray();
         // dd($ar['ar_status']);

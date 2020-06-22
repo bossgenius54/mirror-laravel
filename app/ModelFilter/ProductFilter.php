@@ -52,9 +52,12 @@ class ProductFilter {
         if (!$this->request->has('option') || !$this->request->option)
             return;
         $request = $this->request;
-        $this->items->whereHas('relOptions', function($q) use ($request){
-            $q->whereIn('option_id', $request->option);
-        });
+
+        foreach($this->request->option as $i){
+            $this->items->whereHas('relOptions', function($q) use ($i){
+                $q->where('option_id', $i);
+            });
+        }
     }
 
     private  function filterCatId(){

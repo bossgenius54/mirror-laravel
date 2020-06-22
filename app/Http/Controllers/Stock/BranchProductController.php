@@ -34,6 +34,7 @@ class BranchProductController extends Controller{
         $ar['p_options'] = LibProductCat::with('relProductOptions')->get();
 
         $ar['filter_names'] = ProductList::get($request)->latest()->get();
+        $ar['sys_nums'] = ProductList::get($request)->latest()->get();
         $ar['ar_branch'] = Branch::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
 
         $branch_array = [];

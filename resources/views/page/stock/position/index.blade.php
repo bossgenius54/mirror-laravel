@@ -125,14 +125,15 @@
                 $('input').val('');
                 $('select').children('option').attr('selected', false);
                 $('select').children('option').first().attr('selected',true);
+                $('.filter-checkbox').prop('checked', false);
 
                 $('form').submit();
             });
 
             var lastOpenedOption = 0;
             $('.category-select').on('select2:select', function(e) {
-                console.log(e.params.data.id);
-                console.log(lastOpenedOption);
+
+                $('.filter-checkbox').prop('checked', false);
                 $('#p-option-'+lastOpenedOption).toggle();
                 $('#p-option-'+e.params.data.id).toggle();
                 lastOpenedOption = e.params.data.id;

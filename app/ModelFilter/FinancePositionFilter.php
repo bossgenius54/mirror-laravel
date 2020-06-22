@@ -26,9 +26,10 @@ class FinancePositionFilter {
         $this->request = $request;
         $this->items = $items;
 
+        $this->filterName();
+        $this->filterSysNum();
         $this->filterBranch();
-        $this->filterProduct();
-        $this->filterSysname();
+        $this->filterCatId();
         $this->filterByOption();
         $this->filterDate();
         $this->filterForManager();
@@ -36,6 +37,36 @@ class FinancePositionFilter {
 
     function getResult(){
         return $this->items;
+    }
+
+    private  function filterName(){
+        if (!$this->request->has('name') || !$this->request->name)
+            return;
+
+        $request = $this->request;
+        $this->items->whereHas('relProduct', function($q) use ($request){
+            $q->where('name', 'like', '%'.$request->name.'%');
+        });
+    }
+
+    private  function filterSysNum(){
+        if (!$this->request->has('sys_num') || !$this->request->sys_num)
+            return;
+
+        $request = $this->request;
+        $this->items->whereHas('relProduct', function($q) use ($request){
+            $q->where('sys_num', 'like', '%'.$request->sys_num.'%');
+        });
+    }
+
+    private  function filterCatId(){
+        if (!$this->request->has('cat_id') || !$this->request->cat_id)
+            return;
+
+        $request = $this->request;
+        $this->items->whereHas('relProduct', function($q) use ($request){
+            $q->where('cat_id', $request->cat_id);
+        });
     }
 
     private  function filterForManager(){
@@ -50,12 +81,13 @@ class FinancePositionFilter {
         if (!$this->request->has('option') || !$this->request->option)
             return;
 
-        $request = $this->request;
-        $this->items->whereHas('relProduct', function($q) use ($request){
-            $q->whereHas('relOptions', function($q) use ($request){
-                $q->where('option_id', $request->option);
+        foreach($this->request->option as $i){
+            $this->items->whereHas('relProduct', function($q) use ($i){
+                $q->whereHas('relOptions', function($q) use ($i){
+                    $q->where('option_id', $i);
+                });
             });
-        });
+        }
     }
 
     private  function filterBranch(){
@@ -64,23 +96,6 @@ class FinancePositionFilter {
 
         $request = $this->request;
         $this->items->where('branch_id',$this->request->branch_id);
-    }
-
-    private  function filterProduct(){
-        if (!$this->request->has('product_id') || !$this->request->product_id)
-            return;
-
-        $request = $this->request;
-        $this->items->whereHas('relProduct', function($q) use ($request){
-            $q->where('id', $request->product_id);
-        });
-    }
-
-    private function filterSysname(){
-        if (!$this->request->has('position_sys_num') || !$this->request->position_sys_num)
-            return;
-
-        $this->items->where('position_sys_num', 'like', '%'.$this->request->position_sys_num.'%');
     }
 
     private function filterDate(){

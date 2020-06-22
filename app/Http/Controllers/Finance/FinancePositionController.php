@@ -12,6 +12,7 @@ use App\Model\Product;
 use App\ModelList\FinancePositionList;
 
 use App\ModelFilter\FinancePositionFilter;
+use App\ModelList\ProductList;
 use Illuminate\Support\Facades\Auth;
 
 class FinancePositionController extends Controller{
@@ -29,6 +30,7 @@ class FinancePositionController extends Controller{
         $ar['items'] = $items->with('relBranch', 'relProduct')->latest()->paginate(24);
         $ar['items_filter'] = Product::where('company_id', $user->company_id)->pluck('name', 'id')->toArray();
         $ar['ar_branch'] = Branch::where('company_id',$user->company_id)->pluck('name', 'id')->toArray();
+        $ar['filter_names'] = ProductList::get($request)->latest()->get();
         $ar['user'] = $user;
 
         $ar['ar_cat'] = LibProductCat::pluck('name', 'id')->toArray();

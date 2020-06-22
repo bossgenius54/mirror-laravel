@@ -21,6 +21,23 @@
                             </div>
                         @endcan
 
+                        <div class="form-group col-md-4">
+                            <select name="name" class="form-control" >
+                                <option value="">Наименование</option>
+                                @foreach ($filter_names as $pr)
+                                    <option value="{{ $pr->name }}" {{ $request->name == $pr->name ? 'selected' : '' }}>{{ $pr->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <select name="sys_num" class="form-control" >
+                                <option value="">Системный номер</option>
+                                @foreach ($filter_names as $pr)
+                                    <option value="{{ $pr->sys_num }}" {{ $request->sys_num == $pr->sys_num ? 'selected' : '' }}>{{ $pr->sys_num }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="form-group col-md-3">
                             <select name="cat_id" class="form-control category-select" >
                                 <option value="">Категория</option>
@@ -69,7 +86,7 @@
                                             @endif
 
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" name="option[]" id="option-{{$option->id}}" value="{{$option->id}}" {{ $request->option != null ? ( in_array($option->id, $request->option) ? 'checked=true' : '' ) : '' }} >
+                                                <input class="form-check-input filter-checkbox" type="checkbox" name="option[]" id="option-{{$option->id}}" value="{{$option->id}}" {{ $request->option != null ? ( in_array($option->id, $request->option) ? 'checked=true' : '' ) : '' }} >
                                                 <label class="form-check-label" for="option-{{$option->id}}">{{$option->option_name}}</label>
                                             </div>
 
@@ -125,14 +142,14 @@
                 $('input').val('');
                 $('select').children('option').attr('selected', false);
                 $('select').children('option').first().attr('selected',true);
+                $('.filter-checkbox').prop('checked', false);
 
                 $('form').submit();
             });
 
             var lastOpenedOption = 0;
             $('.category-select').on('select2:select', function(e) {
-                console.log(e.params.data.id);
-                console.log(lastOpenedOption);
+                $('.filter-checkbox').prop('checked', false);
                 $('#p-option-'+lastOpenedOption).toggle();
                 $('#p-option-'+e.params.data.id).toggle();
                 lastOpenedOption = e.params.data.id;

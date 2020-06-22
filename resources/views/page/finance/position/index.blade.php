@@ -12,10 +12,10 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">
-                    {{ $title }}  
+                    {{ $title }}
                 </h4>
             </div>
-            
+
             <table class="table  table-hover color-table muted-table" >
                 <thead>
                     <tr>
@@ -33,7 +33,7 @@
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                             <td>{{ $i->relBranch ? $i->relBranch->name : '' }}</td>
                             <td>{{ $i->relProduct ? $i->relProduct->name : '' }}</td>
-                            <td>{{ $i->position_sys_num }}</td>
+                            <td>{{ $i->relProduct->sys_num }}</td>
                             <td>{{ $i->price_before }}</td>
                             <td>{{ $i->price_after }}</td>
                             <td>{{ $i->price_total }}</td>
