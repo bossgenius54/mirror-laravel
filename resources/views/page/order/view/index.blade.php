@@ -211,14 +211,29 @@
 
             function addItemsToModal(result){
                 let table = $('.modal-tbody');
+                let nullElems = [];
                 table.html('');
 
                 console.log(result.items);
 
                 if( result.items.length > 0){
                     result.items.forEach(element => {
-                        table.append("<tr id='tr-"+element.id+"'><td>"+element.id+"</td><td>"+element.rel_product.name+"</td><td>"+element.rel_product.sys_num+"</td><td>"+element.rel_product.price_retail+"</td><td>"+element.rel_product.price_opt+"</td><td>"+element.expired_at+"</td><td><div class=\"form-check form-check-inline col-md-2\"><input class=\"form-check-input positions-inputs \" type=\"checkbox\" id=\"position-"+element.id+"\" value='"+element.id+"'><label class=\"form-check-label\" for=\"position-"+element.id+"\">Добавить</label></div></td><td></td></tr>");
+
+                        if (element.expired_at != null){
+                            table.append("<tr id='tr-"+element.id+"'><td>"+element.id+"</td><td>"+element.rel_product.name+"</td><td>"+element.rel_product.sys_num+"</td><td>"+element.rel_product.price_retail+"</td><td>"+element.rel_product.price_opt+"</td><td>"+element.expired_at+"</td><td><div class=\"form-check form-check-inline col-md-2\"><input class=\"form-check-input positions-inputs \" type=\"checkbox\" id=\"position-"+element.id+"\" value='"+element.id+"'><label class=\"form-check-label\" for=\"position-"+element.id+"\">Добавить</label></div></td><td></td></tr>");
+                        } else {
+                            nullElems.push(element);
+                        }
                     });
+
+                    console.log(nullElems);
+
+                    if (nullElems.length > 0){
+                        nullElems.forEach(element => {
+                            table.append("<tr id='tr-"+element.id+"'><td>"+element.id+"</td><td>"+element.rel_product.name+"</td><td>"+element.rel_product.sys_num+"</td><td>"+element.rel_product.price_retail+"</td><td>"+element.rel_product.price_opt+"</td><td>"+element.expired_at+"</td><td><div class=\"form-check form-check-inline col-md-2\"><input class=\"form-check-input positions-inputs \" type=\"checkbox\" id=\"position-"+element.id+"\" value='"+element.id+"'><label class=\"form-check-label\" for=\"position-"+element.id+"\">Добавить</label></div></td><td></td></tr>");
+                        });
+                    }
+
                 } else {
                         table.append("<tr><td colspan='7'>По заданным параметрам нет элементов, обновите фильтр или отключите его</td></tr>");
                 }

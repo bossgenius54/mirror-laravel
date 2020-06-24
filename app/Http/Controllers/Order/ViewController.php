@@ -77,7 +77,8 @@ class ViewController extends Controller{
 
         $ar = [];
 
-        $ar['items'] = $items->with('relProduct')->where([ 'status_id' => SysPositionStatus::ACTIVE, 'branch_id' => $item->branch_id ])->take($request->count * 10)->get();
+        $ar['items'] = $items->with('relProduct')->where([ 'status_id' => SysPositionStatus::ACTIVE, 'branch_id' => $item->branch_id ])
+                                                ->orderByRaw("expired_at",'ASC')->get();
 
         return response()->json([
             'items' => $ar['items']
