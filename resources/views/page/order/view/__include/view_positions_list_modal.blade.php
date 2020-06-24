@@ -1,5 +1,3 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#positionModal">Extra large modal</button>
-
 <div class="modal fade bs-example-modal-xl" id="positionModal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModal" aria-hidden="true" style="display: none;">
 
         <div class="modal-dialog modal-xl" style="max-width:1000px">
