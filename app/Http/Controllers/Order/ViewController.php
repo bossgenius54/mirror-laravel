@@ -32,6 +32,8 @@ class ViewController extends Controller{
         $ar['title'] = 'Просмотр элемента списка "'.$this->title.'"';
         $ar['item'] = $item;
         $ar['action'] = action('Order\ViewController@postUpdate', $item);
+        $ar['get_position'] = action('Order\ViewController@getPositions', $item);
+        $ar['addBasket'] = action('Order\PositionOrderController@basketAddProduct', $item);
 
         $ar['services'] = CompanyService::where('company_id', $item->company_id)->get();
         $ar['order_services'] = $item->relServices()->with('relService')->get();
@@ -75,32 +77,10 @@ class ViewController extends Controller{
 
         $ar = [];
 
-        $ar['title'] = 'Добавление позиции к заказу #' . $item->id;
-        $ar['filter_block'] = PositionFilter::getFilterBlock();
-        $ar['addBasket'] = action('Order\PositionOrderController@basketAddProduct', $item);
-        $ar['request'] = $request;
-
-        $ar['ar_cat'] = LibProductCat::pluck('name', 'id')->toArray();
-        $ar['p_options'] = LibProductCat::with('relProductOptions')->get();
-        $ar['filter_names'] = ProductList::get($request)->latest()->get();
-
-        $ar['order_item'] = $item;
-        $ar['get_position_action'] = action('Order\ViewController@jsonGetPositions');
-        $ar['items'] = $items->with('relProduct')->where([ 'status_id' => SysPositionStatus::ACTIVE ])->get();
-
-        return view('page.order.view.add_positions', $ar);
-
-    }
-
-    function jsonGetPositions (Request $request){
-
-        $ids = $request->ids;
-
-        $items = Position::with('relProduct')->whereIn('id', $ids)->get();
-        // dd($items);
+        $ar['items'] = $items->with('relProduct')->where([ 'status_id' => SysPositionStatus::ACTIVE, 'branch_id' => $item->branch_id ])->take($request->count * 10)->get();
 
         return response()->json([
-            'items' => $items
+            'items' => $ar['items']
         ]);
 
     }

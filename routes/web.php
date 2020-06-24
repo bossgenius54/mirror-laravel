@@ -39,8 +39,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
 
         Route::group(['prefix' => 'item'], function () {
             Route::get('view/{item}', 'ViewController@getView')->middleware('can:view,item');
-            Route::get('add_position/{item}', 'ViewController@getPositions')->middleware('can:view,item');
-            Route::post('get-positions', 'ViewController@jsonGetPositions');
+            Route::post('get-positions/{item}', 'ViewController@getPositions')->middleware('can:view,item');
             Route::post('update/{item}', 'ViewController@postUpdate')->middleware('can:update,item');
         });
 

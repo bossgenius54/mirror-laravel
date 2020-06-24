@@ -88,6 +88,7 @@ class PositionOrderController extends Controller{
 
     function basketAddProduct(Request $request, Order $item){
 
+        // dd($request->position_id);
         if( Position::whereIn('id',$request->position_id)->where('order_id', $item->id)->where('status_id', SysPositionStatus::RESERVE)->count() > 0 ){
             return redirect()->back()->with('error', 'Указанный товар уже есть');
         }

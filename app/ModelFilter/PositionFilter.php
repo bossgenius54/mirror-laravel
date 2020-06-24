@@ -34,6 +34,7 @@ class PositionFilter {
         $this->filterIncomeId();
         $this->filterDate();
         $this->filterExpired();
+        $this->productId();
     }
 
     function getResult(){
@@ -48,6 +49,16 @@ class PositionFilter {
         $request = $this->request;
         $this->items->whereHas('relProduct', function($q) use ($request){
             $q->where('name', 'like', '%'.$request->name.'%');
+        });
+    }
+
+    private  function productId(){
+        if (!$this->request->has('product_id') || !$this->request->product_id)
+            return;
+
+        $request = $this->request;
+        $this->items->whereHas('relProduct', function($q) use ($request){
+            $q->where('id', $request->product_id);
         });
     }
 
