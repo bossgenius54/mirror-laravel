@@ -17,6 +17,7 @@ use App\ModelFilter\DeletionPositionFilter;
 use App\ModelList\PositionList;
 use App\ModelList\DeletionPositionList;
 use Exception;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,17 +42,35 @@ class DeletionController extends Controller
     }
 
     function getCreate (Request $request){
-        $items = DeletionPositionList::get($request);
-        $items = DeletionPositionFilter::filter($request, $items);
-
         $ar = array();
+
+        if ($request->filtered && $request->filtered == 'true'){
+
+            $items = DeletionPositionList::get($request);
+            $items = DeletionPositionFilter::filter($request, $items);
+            $items->with('relProduct','relStatus')->latest()->get();
+            $count = $items->count();
+
+            if ( $count > 400 ){
+                $ar['items'] = $items->with('relProduct','relStatus')->latest()->take(400)->get();
+                $ar['msg'] = 'Количество позиций превышает  число максимально возможное на списание. В списке показаны только 400 позиций из ' . $count;
+            } else {
+                $ar['msg'] = '';
+                $ar['items'] = $items->with('relProduct','relStatus')->latest()->get();;
+            }
+
+
+        } else {
+            $ar['msg'] = '';
+            $ar['items'] = [];
+        }
+
         $ar['title'] = 'Добавление в список списания';
         $ar['request'] = $request;
         $ar['user'] = $request->user();
         $ar['confirm_action'] = action('Stock\DeletionController@postConfirm');
 
-        $ar['items'] = $items->with('relProduct','relStatus')->latest()->get();
-
+        // Filter block elements
         $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
         $ar['product_names'] = Product::where('company_id', $request->user()->company_id)->get();
         $ar['product_sys_num'] = Product::where('company_id', $request->user()->company_id)->get();
@@ -66,7 +85,7 @@ class DeletionController extends Controller
         $ar['motion_id'] = SysPositionStatus::IN_MOTION;
         $ar['reserve_id'] = SysPositionStatus::RESERVE;
         $ar['p_options'] = LibProductCat::with('relProductOptions')->get();
-        // dd($ar['ar_status']);
+        // dd($ar['items']);
 
         return view('page.stock.deletion.create', $ar);
     }
@@ -81,6 +100,7 @@ class DeletionController extends Controller
         if( $request->position_ids && count($request->position_ids) > 0 ){
             $ar['items'] = Position::with('relBranch')->whereIn('id', $request->position_ids)->get();
             $ar['post_create'] = action('Stock\DeletionController@postCreate');
+            $ar['back'] = action('Stock\DeletionController@getCreate');
         } else {
             return redirect()->back()->with('error', 'Выбранные элементы не найдены, перепроверьте и отправьте еще раз');
         }
@@ -128,8 +148,12 @@ class DeletionController extends Controller
 
         $ar['title'] = 'Список позиции на списании';
         $ar['request'] = $request;
+        $ar['backList'] = action("Stock\DeletionController@getIndex");
 
         $ar['item'] = $item;
+        $ar['creator'] = Auth::user($item->user_id);
+        $ar['role'] = Auth::user($item->user_id)->getTypeName();
+        // dd($ar);
         $ar['positions'] = DeletionPosition::with('relProduct', 'relPosition', 'relBranch')->where('deletion_id', $item->id)->get();
         // dd($ar);
 
@@ -185,6 +209,6 @@ class DeletionController extends Controller
             return redirect()->back()->with('error', $e->getMessage(), $request);
         }
 
-        return redirect()->back()->with('msg', 'Списание подтверждено' );
+        return redirect()->action("Stock\DeletionController@getIndex")->with('msg', 'Списанные позиции возвращены на склад' );
     }
 }

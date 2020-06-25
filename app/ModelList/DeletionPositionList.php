@@ -4,6 +4,7 @@ namespace App\ModelList;
 use Illuminate\Http\Request;
 
 use App\Model\Position;
+use App\Model\SysPositionStatus;
 use App\Model\SysUserType;
 
 class DeletionPositionList {
@@ -30,11 +31,20 @@ class DeletionPositionList {
         $this->items = $items;
     }
 
+    private function getByStatus(){
+        $this->items->whereIn('status_id',  [
+                                                SysPositionStatus::ACTIVE,
+                                                SysPositionStatus::IN_MOTION,
+                                                SysPositionStatus::RESERVE
+                                            ]);
+    }
+
     function start(Request $request){
         $this->request = $request;
         $this->user = $request->user();
 
         $this->getItems();
+        $this->getByStatus();
     }
 
     function getResult(){

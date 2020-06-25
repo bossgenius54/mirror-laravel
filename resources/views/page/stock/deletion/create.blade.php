@@ -21,7 +21,7 @@
                     <span class="pull-right" style="color:blue; margin-right: 20px; line-height:40px;">
                         Выбрано -
                         <input type="number" class="count form-control" value="0" style="display: inline-block;width:100px;" /> шт
-                        из {{ $items->count() }}
+                        из {{ $items ? $items->count() : '0' }}
                     </span>
                 </h4>
 
@@ -46,7 +46,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($items as $i)
+                    @forelse ($items as $i)
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                             <td>{{ $loop->index + 1 }}</td>
                             <td title="id: {{ $i->id }}" data-toggle="tooltip" data-placement="top">{{ $i->relProduct->name }}</td>
@@ -58,18 +58,31 @@
                             <td>{{ $i->created_at }}</td>
                             <td>
                                 <div class="form-check form-check-inline"
-                                title="{{ $i->status_id == $motion_id ? ('Закончите перемещение #'.$i->motion_id) : ($i->status_id == $reserve_id ? ('Зарезервирован в заказе #'.$i->order_id) : '') }}"
+                                title="{{ $i->status_id == $motion_id ? ('Завершите перемещение № '.$i->motion_id) : ($i->status_id == $reserve_id ? ('Зарезервирован в заказе № '.$i->order_id) : '') }}"
                                 data-toggle="tooltip" data-placement="top" >
                                     <input class="form-check-input-positions"
                                             type="checkbox" id="{{$i->id}}"
                                             name="position_id[]"
+                                            {{ $request->position_ids ? (in_array($i->id, $request->position_ids) ? 'checked' : '') : '' }}
                                             value="{{ $i->id }}"
                                             {{ $i->status_id == $motion_id ? 'disabled' : ($i->status_id == $reserve_id ? 'disabled':'') }}>
                                     <label for="{{$i->id}}">Добавить</label>
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+
+                    @empty
+                        @if ($request->filtered != 'true')
+                            <tr>
+                                <td colspan="9" class="text-center text-danger">Для списания примените параметры фильтра</td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td colspan="9"  class="text-center text-info">Элементов нет</td>
+                            </tr>
+                        @endif
+
+                    @endforelse
                 </tbody>
             </table>
 
@@ -176,6 +189,20 @@
             $('.send-btn').on('click', function() {
                 let form = $('.confirm');
 
+                if (selected.length < 1){
+
+                    let inputs = $('.form-check-input-positions');
+
+                    inputs.each(function () {
+
+                        if ( $(this).prop('checked') == true && $(this).prop('disabled') != true ){
+                            selected.push($(this).val());
+                        }
+
+                    });
+
+                }
+
                 selected.forEach(function(id) {
                     console.log(id);
 
@@ -202,20 +229,19 @@
                 selected = [];
                 let i;
 
-                for( i = 0; i < countRequest; i++ ){
+                countRequest = countRequest > inputs.length ? inputs.length : countRequest;
 
-                    let id = inputs[i].value;
-                    let isDisabled = inputs[i].disabled;
-                    if (isDisabled != true){
-                        $('#'+id).prop('checked', true);
-                        selected.push(id);
-                    } else {
-                        countRequest += 1;
+                inputs.each(function () {
+
+                    if ( $(this).prop('checked') == false && $(this).prop('disabled') != true && countRequest != 0 ){
+                        $('#'+$(this).val()).prop('checked', true);
+                        selected.push($(this).val());
+                        countRequest -= 1;
                     }
-                }
 
+                });
 
-                $('.count').val(selected.length);
+                $(this).val(selected.length);
                 console.log(selected);
 
             });

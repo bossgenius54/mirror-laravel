@@ -6,9 +6,20 @@
                 <h4 class="m-b-0 text-white">Форма фильтрации</h4>
             </div>
             <div class="card-body">
+
+                @if ($msg && $msg != '')
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ $msg }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
                 <form class="form-material row" >
 
                     <div class="col-md-10 row">
+                        <input type="hidden" name="filtered" value="true" />
 
                         <div class="form-group col-md-3">
                             <select name="name" class="form-control" >

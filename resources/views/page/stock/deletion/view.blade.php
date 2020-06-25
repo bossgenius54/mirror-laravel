@@ -11,6 +11,16 @@
     <div class="col-8">
         <div class="card">
             <div class="card-body">
+                <div class="row">
+                    <div class="col-2">
+                        <a href="{{ $backList }}" type="submit" class="btn btn-rounded" style="">
+                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
                 <h4 class="card-title">
                     {{ $title }}
 
@@ -40,6 +50,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $total_sum = 0;
+                    @endphp
                     @foreach ($positions as $i)
                         <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
                             <td>{{ $i->id }}</td>
@@ -53,6 +66,10 @@
                             <td>{{ $i->relPosition->expired_at ? $i->relPosition->expired_at : 'нет срока годности' }}</td>
                             <td>{{ $i->created_at }}</td>
                         </tr>
+
+                        @php
+                            $total_sum += $i->relPosition->price_cost;
+                        @endphp
                     @endforeach
                 </tbody>
             </table>
@@ -66,38 +83,38 @@
                 </h4>
 
                 @if ($item->status_id != 3 && $item->status_id != 4)
-                    <a href="{{ action('Stock\DeletionController@confirm', $item) }}" class="btn btn-block btn-secondary" style="margin-bottom: 10px;">
+                    <a href="{{ action('Stock\DeletionController@confirm', $item) }}" class="btn btn-block btn-warning" style="margin-bottom: 10px;">
                         Подтвердить списание
                     </a>
                 @endif
 
                 @if ($item->status_id == 3)
-                    <a href="{{ action('Stock\DeletionController@return', $item) }}" class="btn btn-block btn-secondary" style="margin-bottom: 10px;">
-                        Вернуть со списания
+                    <a href="#" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal_return_position" style="margin-bottom: 10px;">
+                        Отменить списание
                     </a>
                 @endif
             </div>
 
         </div>
+
+        @include('page.stock.deletion.__include.main_info')
     </div>
 </div>
 
-<div class="modal fade bs-example-modal-sm" id="modal_change_status" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
-    <form action="" class="js_change_status_form">
+<div class="modal fade bs-example-modal-sm" id="modal_return_position" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="mySmallModalLabel">Окно подтверждения списания позиции</h4>
+                    <h4 class="modal-title" id="mySmallModalLabel">Окно подтверждения отмены списания</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
-                <div class="modal-body" style="text-align: center;">Вы уверены что хотите списать позиции?</div>
+                <div class="modal-body" style="text-align: center;">Вы уверены что хотите вернуть позиции со списания?</div>
                 <div class="modal-footer" style="justify-content: space-around;">
                     <button type="button" class="btn btn-default waves-effect col-md-5" data-dismiss="modal">Нет</button>
-                    <button type="submit" class="btn btn-success waves-effect waves-light col-md-5">Да</button>
+                    <a href="{{ action('Stock\DeletionController@return', $item) }}" class="btn btn-success waves-effect waves-light col-md-5">Да</a>
                 </div>
             </div>
         </div>
-    </form>
 </div>
 @endsection
 
