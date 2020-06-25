@@ -118,7 +118,6 @@
                 let filterCheckBox = $('.filter-checkbox');
 
                 let filterData = {};
-                filterData.count = $('#pos_count').val();
                 filterData.product_id = $('#product_id').val();
 
                 if ( filterCheckBox.prop('checked') == true ){
@@ -142,6 +141,10 @@
                     });
 
                     $('#positionModal').modal('toggle');
+
+                    $('#expired_first').val('');
+                    $('#second_date').val('');
+
                 } else {
                     alert('Выберите продукт');
                 }
