@@ -134,11 +134,11 @@ class PositionFilter {
         if (!$this->request->has('expired_first') || !$this->request->expired_first)
             return;
 
-        if(!$this->request->has('expired_second') || !$this->request->second)
+        if(!$this->request->has('second_date') || !$this->request->second_date)
         {
             $this->items->where('expired_at', $this->request->expired_first);
         } else {
-            $this->items->whereBetween(DB::raw('DATE(expired_at)'), array($this->request->first_date, $this->request->second_date));
+            $this->items->whereBetween(DB::raw('DATE(expired_at)'), array($this->request->expired_first, $this->request->second_date));
         }
     }
 

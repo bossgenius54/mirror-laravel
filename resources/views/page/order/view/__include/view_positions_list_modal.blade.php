@@ -5,7 +5,6 @@
 
                 <div class="modal-header">
                     <h4 class="modal-title" id="modalTitle">Окно выбора позиции</h4>
-                    <span class="text-muted">Выбрано - <span class="count">0</span></span>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
 
@@ -17,10 +16,10 @@
                                     <th>id</th>
                                     <th>Ассортимент</th>
                                     <th>Системный номер</th>
-                                    <th>Стоимость (₸)<br/> Розница </th>
-                                    <th>Стоимость (₸)<br/> Оптовая</th>
+                                    <th>Стоимость<br/> Розница </th>
+                                    <th>Стоимость<br/> Оптовая</th>
                                     <th>Срок годности</th>
-                                    <th>Выбор</th>
+                                    <th>Выбрано - <span class="count">0</span> из <span class="total_count"></span></th>
                                     <th></th>
                                 </tr>
                             </thead>

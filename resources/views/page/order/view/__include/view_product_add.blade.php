@@ -110,10 +110,6 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group col-md-2">
-                <label>Кол-во</label>
-                <input type="number" class="form-control " name="pos_count" id="pos_count" value="1" required  >
-            </div>
             <div class="form-check form-check-inline col-md-2">
                 <input class="form-check-input filter-checkbox" type="checkbox" name="filter" id="filter" >
                 <label class="form-check-label" for="filter">Фильтровать</label>
@@ -128,7 +124,7 @@
                         <div class="row">
                             <div class="form-group col-md-3">
                                 <label for="first_date">Срок годности</label>
-                                <input type="date" class="form-control " id="expired_first" placeholder="Дата" name="expired_at" value="{{ $request->first_date }}" >
+                                <input type="date" class="form-control " id="expired_first" placeholder="Дата" name="expired_first" value="{{ $request->first_date }}" >
                                 <a class="" data-toggle="collapse" href="#collapseSecondDate" role="button" aria-expanded="false" aria-controls="collapseExample">
                                     Вторая дата
                                 </a>
@@ -136,13 +132,9 @@
 
                             <div class="form-group col-md-3 collapse" id="collapseSecondDate">
                                 <label for="second_date">Дата до</label>
-                                <input type="date" class="form-control " id="expired_second" placeholder="Дата" name="second_date" value="{{ $request->second_date }}" >
+                                <input type="date" class="form-control " id="second_date" placeholder="Дата" name="second_date" value="{{ $request->second_date }}" >
                             </div>
 
-                            <div class="form-group col-md-3" id="collapseSecondDate">
-                                <label for="second_date">Себестоимость</label>
-                                <input type="text" class="form-control " id="price_cost" placeholder="Цена за позицию" name="second_date" value="{{ $request->second_date }}" >
-                            </div>
                         </div>
 
                     </div>

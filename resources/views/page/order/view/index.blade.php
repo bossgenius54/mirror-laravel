@@ -110,6 +110,11 @@
             $('.filter-action').on('click', function(e) {
                 e.preventDefault();
 
+                $('#confirm').css("display", "block");
+                $('#send').css('display', 'none');
+                $('#modalTitle').text('Окно выбора позиции');
+                $('.modal-tbody').html('<th><td colspan="7">Подождите...</td></th>');
+
                 let filterCheckBox = $('.filter-checkbox');
 
                 let filterData = {};
@@ -118,7 +123,7 @@
 
                 if ( filterCheckBox.prop('checked') == true ){
                     filterData.expired_first = $('#expired_first').val();
-                    filterData.expired_second = $('#expired_second').val();
+                    filterData.second_date = $('#second_date').val();
                 }
 
                 console.log(filterData);
@@ -211,10 +216,14 @@
 
             function addItemsToModal(result){
                 let table = $('.modal-tbody');
+                let total_count = $('.total_count');
+                let count = $('.count');
                 let nullElems = [];
                 table.html('');
 
                 console.log(result.items);
+                total_count.html(result.items.length);
+                count.html('0');
 
                 if( result.items.length > 0){
                     result.items.forEach(element => {
