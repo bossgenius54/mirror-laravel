@@ -75,12 +75,15 @@ class DeletionPositionFilter {
         if (!$this->request->has('option') || !$this->request->option)
             return;
 
-        $request = $this->request;
-        $this->items->whereHas('relProduct', function($q) use ($request){
-            $q->whereHas('relOptions', function($q) use ($request){
-                $q->where('option_id', $request->option);
+        // dd($this->request->option);
+        foreach($this->request->option as $option){
+
+            $this->items->whereHas('relProduct', function($q) use ($option){
+                $q->whereHas('relOptions', function($q) use ($option){
+                    $q->where('option_id', $option);
+                });
             });
-        });
+        }
     }
 
     private  function filterStatusId(){
