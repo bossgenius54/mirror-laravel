@@ -15,7 +15,7 @@
                     {{ $title }}
 
                     <form action="{{ action('Report\SaleReportController@getExcel') }}" method="GET">
-                        <input type="hidden" name="filtered" value="true" />
+                        <input type="hidden" name="filtered" value="{{$request->filtered}}" />
                         <input type="hidden" name="name" value="{{$request->name}}" />
                         <input type="hidden" name="sys_num" value="{{$request->sys_num}}" />
                         <input type="hidden" name="branch_id" value="{{$request->branch_id}}" />
@@ -23,7 +23,10 @@
                         <input type="hidden" name="created_at_second" value="{{$request->created_at_second}}" />
                         <input type="hidden" name="cat_id" value="{{$request->cat_id}}" />
 
-                        <button type="submit" class="btn btn-sm btn-success btn-rounded pull-right" >
+                        <button type="submit"
+                                {{$request->filtered && $request->filtered == 'true' ? '' : 'disabled'  }}
+                                {{!$request->filtered && $request->filtered != 'true' ? ("title=\"Отфильтруйте!\"") : ''  }}
+                                class="btn btn-sm btn-success btn-rounded pull-right" >
                             Загрузить Excel
                         </button>
                     </form>

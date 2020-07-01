@@ -86,17 +86,19 @@ class SaleReportController extends Controller
 
         $ar['title'] = $this->title;
 
-        if ( !$request->filtered && $request->filtered != 'true' ){
+        // dd(!isset($request->filtered));
+        if ( !isset($request->filtered) && $request->filtered != 'true' ){
             return redirect()->action('Report\SaleReportController@getExcel')->with('error', 'Перед загрузкой, отфильтруйте элементы!');
+        } else {
+            $date1 = new Date($request->created_at_first);
+            $date1 = $date1->format('d.m.Y');
+
+            $date2 = new Date($request->created_at_second);
+            $date2 = $date2->format('d.m.Y');
+
+            $date = $date1 . '-' . $date2;
+            return Excel::download(new SalesReportExportView($request), 'Отчет_по_продажам_'. $date .'.xlsx');
         }
 
-        $date1 = new Date($request->created_at_first);
-        $date1 = $date1->format('d.m.Y');
-
-        $date2 = new Date($request->created_at_second);
-        $date2 = $date2->format('d.m.Y');
-
-        $date = $date1 . '-' . $date2;
-        return Excel::download(new SalesReportExportView($request), 'Отчет_по_продажам_'. $date .'.xlsx');
     }
 }
