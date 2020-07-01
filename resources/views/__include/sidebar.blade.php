@@ -4,7 +4,7 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="nav-devider"></li>
-                
+
                 @can('list', App\Model\View\Individ::class)
                     <li>
                         <a class="" href="{{ action('Lib\IndividController@getIndex') }}">
@@ -15,7 +15,7 @@
                         </a>
                     </li>
                 @endcan
-                
+
                 @can('list', App\Model\Order::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Order\ListOrderController@getIndex') }}">
@@ -36,7 +36,7 @@
                         </a>
                     </li>
                 @endcan
-                
+
                 @can('list', App\Model\Formula::class)
                     <li>
                         <a class="waves-effect waves-dark" href="{{ action('Common\FormulaController@getIndex') }}">
@@ -56,7 +56,7 @@
                         || $user->can('list', App\Model\Outcome::class) || $user->can('list', App\Model\View\IncomeReturned::class)
                         || $user->can('list', App\Model\Motion::class) || $user->can('list', App\Model\Position::class)
                         || $user->can('list', App\Model\Product::class) )
-                
+
                     <li class="nav-small-cap">Склад</li>
 
                 @endif
@@ -133,12 +133,12 @@
                         </a>
                     </li>
                 @endcan
-                
+
 
                 @if( $user->can('list', App\Model\FinanceService::class) || $user->can('list', App\Model\FinancePosition::class) )
-                
+
                     <li class="nav-small-cap">Финансы</li>
-                
+
                 @endif
 
                 @can('list', App\Model\FinanceService::class)
@@ -157,6 +157,108 @@
                             <i class="fa fa-dollar"></i>
                             <span class="hide-menu">
                                 По позициям
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+
+                <li class="nav-small-cap">Отчеты</li>
+
+
+                @can('list', App\Model\Order::class)
+                    <li>
+                        <a class="" href="{{ action('Report\SaleReportController@getIndex') }}">
+                            <i class="mdi mdi-cart-plus"></i>
+                            <span class="hide-menu">
+                                По продажам
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('list', App\Model\Order::class)
+                    <li>
+                        <a class="" href="{{ '#' }}">
+                            <i class="mdi mdi-cart-plus"></i>
+                            <span class="hide-menu">
+                                О прибыли
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('list', App\Model\View\IncomeReturned::class)
+                    <li>
+                        <a class="" href="{{ '#' }}">
+                            <i class="mdi mdi-cart-plus"></i>
+                            <span class="hide-menu">
+                                По возвратам
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('list', App\Model\View\IncomeReturned::class)
+                    <li>
+                        <a class="" href="{{ '#' }}">
+                            <i class="mdi mdi-cart-plus"></i>
+                            <span class="hide-menu">
+                                По кассе
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('list', App\Model\View\BranchProduct::class)
+                    <li>
+                        <a class="" href="{{ '#' }}">
+                            <i class="mdi mdi-cart-plus"></i>
+                            <span class="hide-menu">
+                                По закупкам
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('list', App\Model\Motion::class)
+                    <li>
+                        <a class="" href="{{ '#' }}">
+                            <i class="mdi mdi-cart-plus"></i>
+                            <span class="hide-menu">
+                                По перемещению
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('list', App\Model\View\IncomeFromCompany::class)
+                    <li>
+                        <a class="" href="{{ '#' }}">
+                            <i class="mdi mdi-cart-plus"></i>
+                            <span class="hide-menu">
+                                По оприходованию
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('list', App\Model\Motion::class)
+                    <li>
+                        <a class="" href="{{ '#' }}">
+                            <i class="mdi mdi-cart-plus"></i>
+                            <span class="hide-menu">
+                                По персоналу
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('list', App\Model\Motion::class)
+                    <li>
+                        <a class="" href="{{ '#' }}">
+                            <i class="mdi mdi-cart-plus"></i>
+                            <span class="hide-menu">
+                                По клиентам
                             </span>
                         </a>
                     </li>

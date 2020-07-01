@@ -8,9 +8,13 @@ class OrderPosition extends Model{
     protected $table = 'order_position';
     protected $fillable = ['product_id', 'order_id', 'pos_count', 'pos_cost', 'total_sum'];
     use DateHelper;
-    
+
     function relProduct(){
         return $this->belongsTo('App\Model\Product', 'product_id');
+    }
+
+    function relOrder(){
+        return $this->belongsTo('App\Model\Order', 'order_id');
     }
 
 }

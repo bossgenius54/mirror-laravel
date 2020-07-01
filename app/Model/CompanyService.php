@@ -8,6 +8,8 @@ class CompanyService extends Model{
     protected $table = 'company_services';
     protected $fillable = ['company_id', 'name', 'price'];
     use DateHelper;
-    
 
+    function relOrderService(){
+        return $this->hasMany('App\Model\OrderService', 'service_id');
+    }
 }
