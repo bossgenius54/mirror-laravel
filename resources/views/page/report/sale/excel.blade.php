@@ -1,34 +1,48 @@
 <table>
+    @php
+        $title_style = "text-align: center; background: #1976d2; color: #ffffff;font-size:12px;font-family:'Calibri';";
+        $simple_text_style = "text-align: center; background: #ffffff; color: #000000;font-size:10px;border:1px solid #c5c5c5;font-family:'Calibri'";
+        $total_style = "background: #ffc107; color:#ffffff;font-family:'Calibri'";
+        $date_format = "d.m.Y";
+    @endphp
 
     <tr><td></td></tr>
     <tr><td></td></tr>
     <tr>
-        <td colspan="12" style="text-align: center; background: #1976d2; color: #ffffff; font-size:16px;">
-            <b>{{ $title }}</b>
+        <td colspan="12" style=" {{ $title_style }}  font-size:16px;">
+            {{ $title }}
         </td>
     </tr>
 
     {{-- Header information about report --}}
     <tr>
-        <td style=" background: #1976d2; color: #ffffff;"><b>Период:</b></td>
-        <td>{{ $request->created_at_first ? ($request->created_at_first . ' - ' . $request->created_at_second) : '' }}</td>
+        <td style=" {{ $title_style }} ">Период:</td>
+        @php
+            $created_at_first = $request->created_at_first ? (new Date($request->created_at_first)) : '';
+            $created_at_second = $request->created_at_second ? (new Date($request->created_at_second)) : '';
+        @endphp
+        <td colspan="9">{{ $request->created_at_first ? ($created_at_first->format($date_format) . ' - ' . $created_at_second->format($date_format)) : '' }}</td>
     </tr>
     <tr>
-        <td style=" background: #1976d2; color: #ffffff;"><b>Филиал:</b></td>
-        @foreach($ar_branch as $id => $name)
-            <td colspan="2">
-                    @if($request->branch_id && $request->branch_id == $id)
-                        <span style="background: #1976d2; color: #ffffff;"> {{ $name }} </span>
-                    @elseif(!$request->branch_id)
-                        <span style="background: #1976d2; color: #ffffff;"> {{ $name }} </span>
-                    @endif
-            </td>
-        @endforeach
+        <td style=" {{ $title_style }} ">Филиал:</td>
+        <td colspan="11">
+            @foreach($ar_branch as $id => $name)
+                        @if($request->branch_id && $request->branch_id == $id)
+                            {{ $name }}
+                        @elseif(!$request->branch_id)
+                            @if ($loop->last)
+                                {{ $name }}
+                                @continue
+                            @endif
+                            {{ $name }},
+                        @endif
+            @endforeach
+        </td>
 
     </tr>
     <tr>
-        <td style=" background: #1976d2; color: #ffffff;"><b>Создатель:</b></td>
-        <td colspan="5">
+        <td style=" {{ $title_style }} ">Создатель:</td>
+        <td colspan="11">
             {{ $user->name . ' (' . $user_roles[$user->type_id] . ')' }}
         </td>
 
@@ -39,21 +53,21 @@
     @if($request->filtered && $request->filtered == 'true' )
 
         <tr>
-            <td colspan="12" style="text-align: center; background: #1976d2; color: #ffffff;font-size:16px;">
-                <b>По позициям</b>
+            <td colspan="12" style=" {{ $title_style }} ">
+                По позициям
             </td>
         </tr>
 
         <tr>
-            <td style="text-align: center; background: #1976d2; color: #ffffff;"> <b>#</b> </td>
-            <td style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Филиал</b> </td>
-            <td colspan="2" style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Категория</b> </td>
-            <td colspan="2" style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Ассортимент</b> </td>
-            <td colspan="2" style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Системный номер</b> </td>
-            <td style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Дата продажи</b> </td>
-            <td style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Тип продаж</b> </td>
-            <td style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Кол-во товара</b> </td>
-            <td style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Сумма продаж</b> </td>
+            <td style=" {{ $title_style }} " width="20"> # </td>
+            <td style=" {{ $title_style }} " width="20"> Филиал </td>
+            <td colspan="2" style=" {{ $title_style }} " width="20"> Категория </td>
+            <td colspan="2" style=" {{ $title_style }} " width="20"> Ассортимент </td>
+            <td colspan="2" style=" {{ $title_style }} " width="20"> Системный номер </td>
+            <td style=" {{ $title_style }} " width="20"> Дата продажи </td>
+            <td style=" {{ $title_style }} " width="20"> Тип продаж </td>
+            <td style=" {{ $title_style }} " width="20"> Кол-во товара </td>
+            <td style=" {{ $title_style }} " width="20"> Сумма продаж </td>
         </tr>
         @php
             $p_total_count = 0;
@@ -61,17 +75,17 @@
         @endphp
 
         @foreach ($p_items as $pi)
-            <tr><td></td></tr>
+            <tr><td colspan="12"></td></tr>
 
             <tr>
-                <td style="text-align: center; background: #ffffff; color: #000;"> <b># {{$loop->index + 1}} </b></td>
-                <td style="text-align: center; background: #ffffff; color: #000;">  </td>
-                <td colspan="2" style="text-align: center; background: #ffffff; color: #000;"> <b>{{ $pi->relCategory->name }} </b></td>
-                <td colspan="2" style="text-align: center; background: #ffffff; color: #000;"> <b>{{ $pi->name }} </b></td>
-                <td colspan="2" style="text-align: center; background: #ffffff; color: #000;"> <b>{{ $pi->sys_num }}</b> </td>
-                <td style="text-align: center; background: #ffffff; color: #000;"> <b>-</b> </td>
-                <td style="text-align: center; background: #ffffff; color: #000;"> <b>-</b> </td>
-                <td style="text-align: center; background: #ffffff; color: #000;">
+                <td style=" {{ $simple_text_style }} "> <b># {{$loop->index + 1}}</b> </td>
+                <td style=" {{ $simple_text_style }} ">  </td>
+                <td colspan="2" style=" {{ $simple_text_style }} "> <b>{{ $pi->relCategory->name }}</b> </td>
+                <td colspan="2" style=" {{ $simple_text_style }} "> <b>{{ $pi->name }}</b> </td>
+                <td colspan="2" style=" {{ $simple_text_style }} "> <b>{{ $pi->sys_num }}</b> </td>
+                <td style=" {{ $simple_text_style }} "> <b>-</b> </td>
+                <td style=" {{ $simple_text_style }} "> <b>-</b> </td>
+                <td style=" {{ $simple_text_style }} ">
                     @php
                         $pi_pos_count = 0;
                         foreach ($pi->relOrderPosition as $pi_opos) {
@@ -81,7 +95,7 @@
                     @endphp
                     <b>{{ $pi_pos_count }}</b>
                 </td>
-                <td style="text-align: center; background: #ffffff; color: #000;">
+                <td style=" {{ $simple_text_style }} ">
                     @php
                         $total_pi_sum = 0;
                         foreach ($pi->relOrderPosition as $pi_opos) {
@@ -96,52 +110,52 @@
 
             @foreach ($pi->relOrderPosition as $pi_opos)
                 <tr>
-                    <td style="text-align: center; background: #ffffff; color: #000;"> </td>
-                    <td style="text-align: center; background: #ffffff; color: #000;"> {{ $ar_branch[$pi_opos->relOrder->branch_id] }} </td>
+                    <td style=" {{ $simple_text_style }} "> </td>
+                    <td style=" {{ $simple_text_style }} "> {{ $ar_branch[$pi_opos->relOrder->branch_id] }} </td>
 
-                    <td colspan="2" style="text-align: center; background: #ffffff; color: #000;"> </td>
-                    <td colspan="2" style="text-align: center; background: #ffffff; color: #000;"> {{ $pi->name }} </td>
-                    <td colspan="2" style="text-align: center; background: #ffffff; color: #000;"> {{ $pi->sys_num }} </td>
+                    <td colspan="2" style=" {{ $simple_text_style }} "> </td>
+                    <td colspan="2" style=" {{ $simple_text_style }} "> {{ $pi->name }} </td>
+                    <td colspan="2" style=" {{ $simple_text_style }} "> {{ $pi->sys_num }} </td>
                     @php
                         $date = new Date($pi_opos->created_at);
                     @endphp
-                    <td style="text-align: center; background: #ffffff; color: #000;"> {{ $date->format('d/m/Y') }} </td>
-                    <td style="text-align: center; background: #ffffff; color: #000;"> {{ $pi_opos->relOrder->is_retail ? 'Розница' : 'Оптом' }} </td>
-                    <td style="text-align: center; background: #ffffff; color: #000;"> {{ $pi_opos->pos_count }} </td>
-                    <td style="text-align: center; background: #ffffff; color: #000;"> {{ $pi_opos->total_sum }} </td>
+                    <td style=" {{ $simple_text_style }} "> {{ $date->format($date_format) }} </td>
+                    <td style=" {{ $simple_text_style }} "> {{ $pi_opos->relOrder->is_retail ? 'Розница' : 'Оптом' }} </td>
+                    <td style=" {{ $simple_text_style }} "> {{ $pi_opos->pos_count }} </td>
+                    <td style=" {{ $simple_text_style }} "> {{ $pi_opos->total_sum }} </td>
                 </tr>
             @endforeach
 
         @endforeach
         <tr>
             <td colspan="9"></td>
-            <td style="background: #ffc107; color:#ffffff;"> <b>Итог:</b> </td>
-            <td style="background: #ffc107; color:#ffffff;"> {{ $p_total_count}} шт </td>
-            <td style="background: #ffc107; color:#ffffff;"> {{ $p_total_sum }} тг. </td>
+            <td style=" {{ $total_style }} "> Итог: </td>
+            <td style=" {{ $total_style }} "> {{ $p_total_count}} шт </td>
+            <td style=" {{ $total_style }} "> {{ $p_total_sum }} тг. </td>
         </tr>
 
     @endif
     {{-- End Order Positions Table --}}
 
-    <tr><td></td></tr>
+    <tr><td colspan="12"></td></tr>
 
     {{-- Table Order Service--}}
     @if($request->filtered && $request->filtered == 'true' )
         <tr>
-            <td colspan="12" style="text-align: center; background: #1976d2; color: #ffffff;font-size:16px;">
-                <b>По услугам</b>
+            <td colspan="12" style=" {{ $title_style }} ">
+                По услугам
             </td>
         </tr>
 
         <tr>
-            <td style="text-align: center; background: #1976d2; color: #ffffff;"><b>#</b> </td>
-            <td colspan="2" style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Филиал</b> </td>
-            <td colspan="3" style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Услуга</b> </td>
-            <td colspan="2" style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Стоимость услуги</b> </td>
-            <td style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Дата продажи</b> </td>
-            <td style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Тип продаж</b> </td>
-            <td style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Кол-во</b> </td>
-            <td style="text-align: center; background: #1976d2; color: #ffffff;"> <b>Сумма продаж</b> </td>
+            <td style=" {{ $title_style }} "># </td>
+            <td colspan="2" style=" {{ $title_style }} "> Филиал </td>
+            <td colspan="3" style=" {{ $title_style }} "> Услуга </td>
+            <td colspan="2" style=" {{ $title_style }} "> Стоимость услуги </td>
+            <td style=" {{ $title_style }} "> Дата продажи </td>
+            <td style=" {{ $title_style }} "> Тип продаж </td>
+            <td style=" {{ $title_style }} "> Кол-во </td>
+            <td style=" {{ $title_style }} "> Сумма продаж </td>
         </tr>
         @php
             $s_total_count = 0;
@@ -149,16 +163,16 @@
         @endphp
 
         @foreach ($s_items as $si)
-            <tr><td></td></tr>
+            <tr><td colspan="12"></td></tr>
 
-            <tr style="text-align: center; background: #ffffff; color: #000000;">
-                <td style="text-align: center; background: #ffffff; color: #000000;"> <b># {{$loop->index + 1}}</b> </td>
-                <td colspan="2" style="text-align: center; background: #ffffff; color: #000000;">  </td>
-                <td colspan="3" style="text-align: center; background: #ffffff; color: #000000;"> <b>{{ $si->name }}</b> </td>
-                <td colspan="2" style="text-align: center; background: #ffffff; color: #000000;"> <b>{{ $si->price }}</b> </td>
-                <td style="text-align: center; background: #ffffff; color: #000000;"> <b>-</b> </td>
-                <td style="text-align: center; background: #ffffff; color: #000000;"> <b>-</b> </td>
-                <td style="text-align: center; background: #ffffff; color: #000000;">
+            <tr style=" {{ $simple_text_style }} ">
+                <td style=" {{ $simple_text_style }} "> <b># {{$loop->index + 1}}</b> </td>
+                <td colspan="2" style=" {{ $simple_text_style }} ">  </td>
+                <td colspan="3" style=" {{ $simple_text_style }} "> <b>{{ $si->name }}</b> </td>
+                <td colspan="2" style=" {{ $simple_text_style }} "> <b>{{ $si->price }}</b> </td>
+                <td style=" {{ $simple_text_style }} "> <b>-</b> </td>
+                <td style=" {{ $simple_text_style }} "> <b>-</b> </td>
+                <td style=" {{ $simple_text_style }} ">
                     @php
                         $si_service_count = 0;
                         foreach ($si->relOrderService as $si_opos) {
@@ -168,7 +182,7 @@
                     @endphp
                     <b>{{ $si_service_count }}</b>
                 </td>
-                <td style="text-align: center; background: #ffffff; color: #000000;">
+                <td style=" {{ $simple_text_style }} ">
                     @php
                         $total_si_sum = 0;
                         foreach ($si->relOrderService as $si_opos) {
@@ -182,18 +196,18 @@
             </tr>
 
             @foreach ($si->relOrderService as $pi_opos)
-                <tr style="text-align: center; background: #ffffff; color: #000;">
+                <tr style=" {{ $simple_text_style }} ">
                     <td> </td>
-                    <td colspan="2"> {{ $ar_branch[$pi_opos->relOrder->branch_id] }} </td>
-                    <td colspan="3"> {{ $si->name }} </td>
-                    <td colspan="2"> - </td>
+                    <td colspan="2" style=" {{ $simple_text_style }} "> {{ $ar_branch[$pi_opos->relOrder->branch_id] }} </td>
+                    <td colspan="3" style=" {{ $simple_text_style }} "> {{ $si->name }} </td>
+                    <td colspan="2" style=" {{ $simple_text_style }} "> - </td>
                     @php
                         $date = new Date($pi_opos->created_at);
                     @endphp
-                    <td> {{ $date->format('d/m/Y') }} </td>
-                    <td> {{ $pi_opos->relOrder->is_retail ? 'Розница' : 'Оптом' }} </td>
-                    <td> {{ $pi_opos->service_count }} </td>
-                    <td> {{ $pi_opos->total_sum }} </td>
+                    <td style=" {{ $simple_text_style }} "> {{ $date->format($date_format) }} </td>
+                    <td style=" {{ $simple_text_style }} "> {{ $pi_opos->relOrder->is_retail ? 'Розница' : 'Оптом' }} </td>
+                    <td style=" {{ $simple_text_style }} "> {{ $pi_opos->service_count }} </td>
+                    <td style=" {{ $simple_text_style }} "> {{ $pi_opos->total_sum }} </td>
 
                 </tr>
             @endforeach
@@ -201,9 +215,9 @@
         @endforeach
         <tr style="text-align: center;">
             <td colspan="9"></td>
-            <td style="background: #ffc107; color:#ffffff;"><b> Итог: </b></td>
-            <td style="background: #ffc107; color:#ffffff;"> {{ $s_total_count}} шт </td>
-            <td style="background: #ffc107; color:#ffffff;"> {{ $s_total_sum }} тг. </td>
+            <td style=" {{ $total_style }} "> Итог: </td>
+            <td style=" {{ $total_style }} "> {{ $s_total_count}} шт </td>
+            <td style=" {{ $total_style }} "> {{ $s_total_sum }} тг. </td>
         </tr>
 
     @endif
@@ -211,30 +225,30 @@
 
     {{-- Summary --}}
 
-    <tr><td></td></tr>
+    <tr><td colspan="12"></td></tr>
 
     <tr>
         <td colspan="8"></td>
-        <td style="color: #1976d2; font-size: 14px;"> <b>Итог:</b> </td>
-        <td style="color: #1976d2; font-size: 12px;"> Сумма продаж </td>
+        <td style="color: #1976d2; font-size: 12px;"> <b>Итог:</b> </td>
+        <td style="color: #1976d2; font-size: 10px;"> Сумма продаж </td>
     </tr>
 
     <tr>
         <td colspan="8"></td>
-        <td style="color: #1976d2; font-size: 12px;"> По позициям: </td>
-        <td style="color: #1976d2;"> {{ $p_total_sum }} тг. </td>
+        <td style="color: #1976d2; font-size: 10px;"> По позициям: </td>
+        <td style="color: #1976d2; font-size: 10px;"> {{ $p_total_sum }} тг. </td>
     </tr>
 
     <tr>
         <td colspan="8"></td>
-        <td style="color: #1976d2; font-size: 12px;"> По услугам: </td>
-        <td style="color: #1976d2;"> {{ $s_total_sum }} тг. </td>
+        <td style="color: #1976d2; font-size: 10px;"> По услугам: </td>
+        <td style="color: #1976d2; font-size: 10px;"> {{ $s_total_sum }} тг. </td>
     </tr>
 
     <tr>
         <td colspan="8"></td>
-        <td style="color: #1976d2; font-size: 14px;"> <b>Общая сумма:</b> </td>
-        <td style="color: #1976d2;"> {{ $p_total_sum + $s_total_sum }} тг. </td>
+        <td style="color: #1976d2; font-size: 12px;"> <b>Общая сумма:</b> </td>
+        <td style="color: #1976d2; font-size: 10px;"> <b>{{ $p_total_sum + $s_total_sum }} тг.</b> </td>
     </tr>
     {{-- End Summary --}}
 
