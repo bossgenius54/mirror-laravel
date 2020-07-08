@@ -127,7 +127,7 @@
                                 @php
                                     $date = new Date($pi_opos->created_at);
                                 @endphp
-                                <div class="col-md-1 p-1"> {{ $date->format('d/m/Y') }} </div>
+                                <div class="col-md-1 p-1"> {{ $date->format("d.m.Y") }} </div>
                                 <div class="col-md-1 p-1"> {{ $pi_opos->relOrder->is_retail ? 'Розница' : 'Оптом' }} </div>
                                 <div class="col-md-1 p-1"> {{ $pi_opos->pos_count }} </div>
                                 <div class="col-md-1 p-1"> {{ $pi_opos->total_sum }} </div>
@@ -224,7 +224,7 @@
                                 @php
                                     $date = new Date($pi_opos->created_at);
                                 @endphp
-                                <div class="col-md-1 p-1"> {{ $date->format('d/m/Y') }} </div>
+                                <div class="col-md-1 p-1"> {{ $date->format("d.m.Y") }} </div>
                                 <div class="col-md-1 p-1"> {{ $pi_opos->relOrder->is_retail ? 'Розница' : 'Оптом' }} </div>
                                 <div class="col-md-1 p-1"> {{ $pi_opos->service_count }} </div>
                                 <div class="col-md-1 p-1"> {{ $pi_opos->total_sum }} </div>

@@ -1,6 +1,6 @@
 <table>
     @php
-        $title_style = "text-align: center; background: #1976d2; color: #ffffff;font-size:12px;font-family:'Calibri';";
+        $title_style = "text-align: center; background: #0B5394; color: #ffffff;font-size:12px;font-family:'Calibri';";
         $simple_text_style = "text-align: center; background: #ffffff; color: #000000;font-size:10px;border:1px solid #c5c5c5;font-family:'Calibri'";
         $total_style = "background: #ffc107; color:#ffffff;font-family:'Calibri'";
         $date_format = "d.m.Y";
@@ -9,7 +9,7 @@
     <tr><td></td></tr>
     <tr><td></td></tr>
     <tr>
-        <td colspan="12" style=" {{ $title_style }}  font-size:16px;">
+        <td colspan="12" style=" {{ $title_style }} ">
             {{ $title }}
         </td>
     </tr>
@@ -229,26 +229,26 @@
 
     <tr>
         <td colspan="8"></td>
-        <td style="color: #1976d2; font-size: 12px;"> <b>Итог:</b> </td>
-        <td style="color: #1976d2; font-size: 10px;"> Сумма продаж </td>
+        <td style="color: #0B5394; font-size: 12px;"> <b>Итог:</b> </td>
+        <td style="color: #0B5394; font-size: 10px;"> Сумма продаж </td>
     </tr>
 
     <tr>
         <td colspan="8"></td>
-        <td style="color: #1976d2; font-size: 10px;"> По позициям: </td>
-        <td style="color: #1976d2; font-size: 10px;"> {{ $p_total_sum }} тг. </td>
+        <td style="color: #0B5394; font-size: 10px;"> По позициям: </td>
+        <td style="color: #0B5394; font-size: 10px;"> {{ $p_total_sum }} тг. </td>
     </tr>
 
     <tr>
         <td colspan="8"></td>
-        <td style="color: #1976d2; font-size: 10px;"> По услугам: </td>
-        <td style="color: #1976d2; font-size: 10px;"> {{ $s_total_sum }} тг. </td>
+        <td style="color: #0B5394; font-size: 10px;"> По услугам: </td>
+        <td style="color: #0B5394; font-size: 10px;"> {{ $s_total_sum }} тг. </td>
     </tr>
 
     <tr>
         <td colspan="8"></td>
-        <td style="color: #1976d2; font-size: 12px;"> <b>Общая сумма:</b> </td>
-        <td style="color: #1976d2; font-size: 10px;"> <b>{{ $p_total_sum + $s_total_sum }} тг.</b> </td>
+        <td style="color: #0B5394; font-size: 12px;"> <b>Общая сумма:</b> </td>
+        <td style="color: #0B5394; font-size: 10px;"> <b>{{ $p_total_sum + $s_total_sum }} тг.</b> </td>
     </tr>
     {{-- End Summary --}}
 
