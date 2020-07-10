@@ -22,6 +22,7 @@ class LoginController extends Controller{
 
         $ar = array();
         $ar['title'] = 'Форма входа';
+        $ar['previous'] = str_replace( env('APP_URL'), '', url()->previous() );
         $ar['action'] = action('LoginController@postLogin');
 
         return view('login', $ar);
@@ -35,8 +36,12 @@ class LoginController extends Controller{
         $user->update(['had_enter' => 1]);
         SysAuthLog::createNote($user);
 
+        if( $request->back_url && $request->back_url != '/login'  ){
+            return redirect()->to($request->back_url);
+        }
+
         return redirect()->to('/');
-    }  
+    }
 
     function getLogout(){
         Auth::logout();

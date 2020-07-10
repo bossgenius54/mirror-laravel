@@ -31,7 +31,7 @@
     <!-- ============================================================== -->
     <div class="preloader">
         <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> 
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
         </svg>
     </div>
     <!-- ============================================================== -->
@@ -43,15 +43,17 @@
             <div class="login-box card">
                 <div class="card-body">
                     <form class="form-horizontal form-material" id="loginform" action="{{ $action }}" method="post">
+                        <input type="hidden" name="back_url" value="{{$previous}}" />
+
                         <h3 class="box-title m-b-20">Форма входа</h3>
                         <div class="form-group ">
                             <div class="col-xs-12">
-                                <input type="email" name="email" class="form-control" placeholder="Email" required > 
+                                <input type="email" name="email" class="form-control" placeholder="Email" required >
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input type="password" name="password" class="form-control" placeholder="Password" required> 
+                                <input type="password" name="password" class="form-control" placeholder="Password" required>
                             </div>
                         </div>
                         <div class="form-group text-center m-t-20">
