@@ -178,7 +178,7 @@
 
                 @can('list', App\Model\Order::class)
                     <li>
-                        <a class="" href="{{ '#' }}">
+                        <a class="" href="{{ action('Report\ProfitReportController@getIndex') }}">
                             <i class="mdi mdi-cart-plus"></i>
                             <span class="hide-menu">
                                 О прибыли

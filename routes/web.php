@@ -334,10 +334,15 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
     });
 
     Route::group(['prefix' => 'report', 'namespace' => 'Report'], function () {
-        /// service
+
         Route::group(['prefix' => 'sale'], function () {
             Route::get('/', 'SaleReportController@getIndex')->middleware('can:list,App\Model\Order');
             Route::get('excel', 'SaleReportController@getExcel')->middleware('can:list,App\Model\Order');
+        });
+
+        Route::group(['prefix' => 'profit'], function () {
+            Route::get('/', 'ProfitReportController@getIndex')->middleware('can:list,App\Model\Order');
+            Route::get('excel', 'ProfitReportController@getExcel')->middleware('can:list,App\Model\Order');
         });
 
     });
