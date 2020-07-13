@@ -32,4 +32,17 @@ class Income extends Model{
     function relCreatedUser(){
         return $this->belongsTo('App\User', 'user_id');
     }
+
+    function relIncomePositions(){
+        return $this->hasMany('App\Model\IncomePosition', 'income_id');
+    }
+
+    function relIncomeService(){
+        return $this->hasMany('App\Model\IncomeService', 'income_id');
+    }
+
+    function relOrder(){
+        return $this->belongsTo('App\Model\Order', 'order_id');
+    }
+
 }

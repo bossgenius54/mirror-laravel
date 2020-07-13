@@ -189,7 +189,7 @@
 
                 @can('list', App\Model\View\IncomeReturned::class)
                     <li>
-                        <a class="" href="{{ '#' }}">
+                        <a class="" href="{{ action('Report\IncomeReturnedReportController@getIndex') }}">
                             <i class="mdi mdi-cart-plus"></i>
                             <span class="hide-menu">
                                 По возвратам
