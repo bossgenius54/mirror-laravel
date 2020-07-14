@@ -59,7 +59,13 @@ class ProductCountReportController extends Controller
 
         $ar['title'] = $this->title;
 
-        return Excel::download(new ProductCountExport($request), 'Отчет_по_закупам.xlsx');
+        // dd(!isset($request->filtered));
+        if ( !isset($request->filtered) && $request->filtered != 'true' ){
+            return redirect()->action('Report\CashReportController@getIndex')->with('error', 'Перед загрузкой, отфильтруйте элементы!');
+        } else {
+
+            return Excel::download(new ProductCountExport($request), $this->title .'.xlsx');
+        }
 
     }
 }

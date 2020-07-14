@@ -15,6 +15,7 @@
                     {{ $title }}
 
                     <form action="{{ action('Report\ProductCountReportController@getExcel') }}" method="GET">
+                        <input type="hidden" name="filtered" value="{{$request->filtered}}" />
                         <input type="hidden" name="name" value="{{$request->name}}" />
                         <input type="hidden" name="branch_name" value="{{$request->branch_name}}" />
                         <input type="hidden" name="hidden_null" value="{{$request->hidden_null}}" />
