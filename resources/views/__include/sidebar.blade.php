@@ -211,7 +211,7 @@
 
                 @can('list', App\Model\View\BranchProduct::class)
                     <li>
-                        <a class="" href="{{ '#' }}">
+                        <a class="" href="{{  action('Report\ProductCountReportController@getIndex')  }}">
                             <i class="mdi mdi-cart-plus"></i>
                             <span class="hide-menu">
                                 По закупкам

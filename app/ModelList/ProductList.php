@@ -21,7 +21,7 @@ class ProductList {
     private function getItems(){
         $items = Product::where('id', '>', 0);
         if ($this->user->company_id)
-            $items->where('company_id', $this->user->company_id);
+            $items->where('company_id', $this->user->company_id)->with('relCategory');
 
         $this->items = $items;
     }
