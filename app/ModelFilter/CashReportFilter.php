@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class IncomeReturnedReportFilter extends Model
+class CashReportFilter extends Model
 {
     private $items = null;
     private $request = null;
 
     static function getFilterBlock(){
-        return 'page.report.income_returned.filter';
+        return 'page.report.cash.filter';
     }
 
     static function filter(Request $request, $items){
-        $el = new IncomeReturnedReportFilter();
+        $el = new CashReportFilter();
         $el->start($request, $items);
 
         return  $el->getResult();
@@ -40,7 +40,12 @@ class IncomeReturnedReportFilter extends Model
         if (!$this->request->has('name') || !$this->request->name)
             return;
 
-        $this->items->where('name', 'like', '%'.$this->request->name.'%');
+        $request = $this->request;
+        $this->items->whereHas('relPositions', function($q) use ($request){
+            $q->whereHas('relProduct',function($e) use ($request){
+                $e->where('name', 'like', '%'.$request->name.'%');
+            });
+        });;
     }
 
     private  function filterBranch(){
@@ -55,11 +60,9 @@ class IncomeReturnedReportFilter extends Model
         if (!$this->request->has('cat_id') || !$this->request->cat_id)
             return;
         $request = $this->request;
-        $this->items->whereHas('relIncomePosition', function($q) use ($request){
-            $q->whereHas('relPosition', function($r) use ($request){
-                $r->whereHas('relProduct',function($e) use ($request){
-                    $e->where('cat_id', $request->cat_id);
-                });
+        $this->items->whereHas('relPositions', function($q) use ($request){
+            $q->whereHas('relProduct',function($e) use ($request){
+                $e->where('cat_id', $request->cat_id);
             });
         });;
     }
@@ -69,7 +72,8 @@ class IncomeReturnedReportFilter extends Model
             return;
 
         $request = $this->request;
-        $this->items->whereBetween(DB::raw('DATE(created_at)'), array($request->created_at_first, $request->created_at_second) );
+        $this->items->whereBetween(DB::raw('DATE(updated_at)'), array($request->created_at_first, $request->created_at_second) );
     }
 }
+
 
