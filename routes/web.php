@@ -360,6 +360,11 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('excel', 'ProductCountReportController@getExcel')->middleware('can:list,App\Model\Order');
         });
 
+        Route::group(['prefix' => 'motion'], function () {
+            Route::get('/', 'MotionReportController@getIndex')->middleware('can:list,App\Model\Order');
+            Route::get('excel', 'MotionReportController@getExcel')->middleware('can:list,App\Model\Order');
+        });
+
     });
 
 

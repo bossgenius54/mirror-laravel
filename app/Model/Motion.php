@@ -20,4 +20,12 @@ class Motion extends Model{
     function relCreatedUser(){
         return $this->belongsTo('App\User', 'user_id');
     }
+
+    function relMotionPosition(){
+        return $this->hasMany('App\Model\MotionPosition', 'motion_id');
+    }
+
+    function relStatus(){
+        return $this->belongsTo('App\Model\SysMotionStatus', 'status_id');
+    }
 }
