@@ -244,7 +244,7 @@
 
                 @can('list', App\Model\Motion::class)
                     <li>
-                        <a class="" href="{{ '#' }}">
+                        <a class="" href="{{ action('Report\ClientReportController@getIndex') }}">
                             <i class="mdi mdi-cart-plus"></i>
                             <span class="hide-menu">
                                 По клиентам

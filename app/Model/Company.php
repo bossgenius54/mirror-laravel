@@ -34,4 +34,8 @@ class Company extends Model{
         return $this->hasMany('App\Model\Client', 'client_company_id');
     }
 
+    function relOrder(){
+        return $this->hasMany('App\Model\Order', 'from_company_id');
+    }
+
 }

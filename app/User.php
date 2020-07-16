@@ -34,7 +34,7 @@ class User extends Authenticatable
     public function getTypeName(){
         $type = SysUserType::find( $this->type_id);
         $name = ($type ? $type->name : '');
-        
+
         $branch = $this->relBranch;
         if ($branch)
             $name .= '<br/><small><i>'.$branch->name.'</i></small>';
@@ -56,5 +56,9 @@ class User extends Authenticatable
         $name = ($type ? $type->name : '');
 
         return $name;
+    }
+
+    function relOrder(){
+        return $this->hasMany('App\Model\Order', 'from_user_id');
     }
 }

@@ -370,6 +370,11 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('excel', 'StaffReportController@getExcel')->middleware('can:list,App\Model\Order');
         });
 
+        Route::group(['prefix' => 'client'], function () {
+            Route::get('/', 'ClientReportController@getIndex')->middleware('can:list,App\Model\Order');
+            Route::get('excel', 'ClientReportController@getExcel')->middleware('can:list,App\Model\Order');
+        });
+
     });
 
 
