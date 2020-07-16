@@ -255,7 +255,7 @@
 
                 @can('list', App\Model\View\IncomeFromCompany::class)
                     <li>
-                        <a class="" href="{{ action('Report\StaffReportController@getIndex') }}">
+                        <a class="" href="{{ action('Report\IncomeFromCompanyReportController@getIndex') }}">
                             <i class="mdi mdi-cart-plus"></i>
                             <span class="hide-menu">
                                 По оприходованию

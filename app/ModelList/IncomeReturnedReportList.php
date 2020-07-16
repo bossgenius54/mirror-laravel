@@ -3,6 +3,7 @@
 namespace App\ModelList;
 
 use App\Model\Income;
+use App\Model\SysIncomeType;
 use App\Model\View\IncomeReturned;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class IncomeReturnedReportList extends Model
     private function getItems(){
         $request = $this->request;
 
-        $items = IncomeReturned::where('company_id', $this->user->company_id)
+        $items = IncomeReturned::where('company_id', $this->user->company_id)->whereIn('type_id',[SysIncomeType::RETURN_COMPANY,SysIncomeType::RETURN_PERSON])
                         ->with(['relIncomePositions' => function($q) use ($request) {
                             // dd($request);
                             $q->with(['relPosition' => function($rp) {

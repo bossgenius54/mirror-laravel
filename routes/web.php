@@ -375,6 +375,11 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('excel', 'ClientReportController@getExcel')->middleware('can:list,App\Model\Order');
         });
 
+        Route::group(['prefix' => 'income_from_company'], function () {
+            Route::get('/', 'IncomeFromCompanyReportController@getIndex')->middleware('can:list,App\Model\View\IncomeFromCompany');
+            Route::get('excel', 'IncomeFromCompanyReportController@getExcel')->middleware('can:list,App\Model\View\IncomeFromCompany');
+        });
+
     });
 
 
