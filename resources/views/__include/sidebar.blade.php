@@ -231,20 +231,9 @@
                     </li>
                 @endcan
 
-                @can('list', App\Model\View\IncomeFromCompany::class)
-                    <li>
-                        <a class="" href="{{ '#' }}">
-                            <i class="mdi mdi-cart-plus"></i>
-                            <span class="hide-menu">
-                                По оприходованию
-                            </span>
-                        </a>
-                    </li>
-                @endcan
-
                 @can('list', App\Model\Motion::class)
                     <li>
-                        <a class="" href="{{ '#' }}">
+                        <a class="" href="{{ action('Report\StaffReportController@getIndex') }}">
                             <i class="mdi mdi-cart-plus"></i>
                             <span class="hide-menu">
                                 По персоналу
@@ -259,6 +248,17 @@
                             <i class="mdi mdi-cart-plus"></i>
                             <span class="hide-menu">
                                 По клиентам
+                            </span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('list', App\Model\View\IncomeFromCompany::class)
+                    <li>
+                        <a class="" href="{{ action('Report\StaffReportController@getIndex') }}">
+                            <i class="mdi mdi-cart-plus"></i>
+                            <span class="hide-menu">
+                                По оприходованию
                             </span>
                         </a>
                     </li>

@@ -365,6 +365,11 @@ Route::group(['prefix' => '', 'middleware' => ['auth.user']], function () {
             Route::get('excel', 'MotionReportController@getExcel')->middleware('can:list,App\Model\Order');
         });
 
+        Route::group(['prefix' => 'staff'], function () {
+            Route::get('/', 'StaffReportController@getIndex')->middleware('can:list,App\Model\Order');
+            Route::get('excel', 'StaffReportController@getExcel')->middleware('can:list,App\Model\Order');
+        });
+
     });
 
 
