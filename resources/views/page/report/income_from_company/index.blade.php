@@ -107,7 +107,7 @@
 
                         @foreach ($income_items as $ii)
 
-                            @if ($ii->relCreatedUser->id == $manager->id )
+                            @if ($ii->relCreatedUser && $ii->relCreatedUser->id == $manager->id )
                                 <div class="row  text-center font-weight-bold">
                                     <div class="col-md-1 p-1"> {{ $loop->index + 1 }} </div>
                                     <div class="col-md-2 p-1"> №{{ $ii->id}} </div>

@@ -24,7 +24,7 @@ class IncomeFromCompanyReportList extends Model
     private function getItems(){
         $request = $this->request;
 
-        $items = IncomeFromCompany::where('company_id', $this->user->company_id)->whereIn('type_id',[SysIncomeType::FROM_COMPANY])
+        $items = IncomeFromCompany::where('company_id', $this->user->company_id)->where('type_id',SysIncomeType::FROM_COMPANY)
                                 ->with(['relIncomePositions' => function($q) use ($request) {
                                     $q->with(['relPosition' => function($rp) {
                                         $rp->with('relProduct');

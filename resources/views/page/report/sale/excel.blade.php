@@ -163,55 +163,59 @@
         @endphp
 
         @foreach ($s_items as $si)
-            <tr><td colspan="12"></td></tr>
+            @php
+                $si_service_count = 0;
+                foreach ($si->relOrderService as $si_opos) {
+                    $si_service_count += $si_opos->service_count;
+                }
+                $s_total_count += $si_service_count;
+            @endphp
 
-            <tr style=" {{ $simple_text_style }} ">
-                <td style=" {{ $simple_text_style }} "> <b># {{$loop->index + 1}}</b> </td>
-                <td colspan="2" style=" {{ $simple_text_style }} ">  </td>
-                <td colspan="3" style=" {{ $simple_text_style }} "> <b>{{ $si->name }}</b> </td>
-                <td colspan="2" style=" {{ $simple_text_style }} "> <b>{{ $si->price }}</b> </td>
-                <td style=" {{ $simple_text_style }} "> <b>-</b> </td>
-                <td style=" {{ $simple_text_style }} "> <b>-</b> </td>
-                <td style=" {{ $simple_text_style }} ">
-                    @php
-                        $si_service_count = 0;
-                        foreach ($si->relOrderService as $si_opos) {
-                            $si_service_count += $si_opos->service_count;
-                        }
-                        $s_total_count += $si_service_count;
-                    @endphp
-                    <b>{{ $si_service_count }}</b>
-                </td>
-                <td style=" {{ $simple_text_style }} ">
-                    @php
-                        $total_si_sum = 0;
-                        foreach ($si->relOrderService as $si_opos) {
-                            $total_si_sum += $si_opos->total_sum;
-                        }
-                        $s_total_sum += $total_si_sum;
-                    @endphp
-                    <b>{{ $total_si_sum }}</b>
-                </td>
+            @if ($si_service_count > 0)
 
-            </tr>
+                <tr><td colspan="12"></td></tr>
 
-            @foreach ($si->relOrderService as $pi_opos)
                 <tr style=" {{ $simple_text_style }} ">
-                    <td> </td>
-                    <td colspan="2" style=" {{ $simple_text_style }} "> {{ $ar_branch[$pi_opos->relOrder->branch_id] }} </td>
-                    <td colspan="3" style=" {{ $simple_text_style }} "> {{ $si->name }} </td>
-                    <td colspan="2" style=" {{ $simple_text_style }} "> - </td>
-                    @php
-                        $date = new Date($pi_opos->created_at);
-                    @endphp
-                    <td style=" {{ $simple_text_style }} "> {{ $date->format($date_format) }} </td>
-                    <td style=" {{ $simple_text_style }} "> {{ $pi_opos->relOrder->is_retail ? 'Розница' : 'Оптом' }} </td>
-                    <td style=" {{ $simple_text_style }} "> {{ $pi_opos->service_count }} </td>
-                    <td style=" {{ $simple_text_style }} "> {{ $pi_opos->total_sum }} </td>
+                    <td style=" {{ $simple_text_style }} "> <b># {{$loop->index + 1}}</b> </td>
+                    <td colspan="2" style=" {{ $simple_text_style }} ">  </td>
+                    <td colspan="3" style=" {{ $simple_text_style }} "> <b>{{ $si->name }}</b> </td>
+                    <td colspan="2" style=" {{ $simple_text_style }} "> <b>{{ $si->price }}</b> </td>
+                    <td style=" {{ $simple_text_style }} "> <b>-</b> </td>
+                    <td style=" {{ $simple_text_style }} "> <b>-</b> </td>
+                    <td style=" {{ $simple_text_style }} ">
+                        <b>{{ $si_service_count }}</b>
+                    </td>
+                    <td style=" {{ $simple_text_style }} ">
+                        @php
+                            $total_si_sum = 0;
+                            foreach ($si->relOrderService as $si_opos) {
+                                $total_si_sum += $si_opos->total_sum;
+                            }
+                            $s_total_sum += $total_si_sum;
+                        @endphp
+                        <b>{{ $total_si_sum }}</b>
+                    </td>
 
                 </tr>
-            @endforeach
 
+                @foreach ($si->relOrderService as $pi_opos)
+                    <tr style=" {{ $simple_text_style }} ">
+                        <td> </td>
+                        <td colspan="2" style=" {{ $simple_text_style }} "> {{ $ar_branch[$pi_opos->relOrder->branch_id] }} </td>
+                        <td colspan="3" style=" {{ $simple_text_style }} "> {{ $si->name }} </td>
+                        <td colspan="2" style=" {{ $simple_text_style }} "> - </td>
+                        @php
+                            $date = new Date($pi_opos->created_at);
+                        @endphp
+                        <td style=" {{ $simple_text_style }} "> {{ $date->format($date_format) }} </td>
+                        <td style=" {{ $simple_text_style }} "> {{ $pi_opos->relOrder->is_retail ? 'Розница' : 'Оптом' }} </td>
+                        <td style=" {{ $simple_text_style }} "> {{ $pi_opos->service_count }} </td>
+                        <td style=" {{ $simple_text_style }} "> {{ $pi_opos->total_sum }} </td>
+
+                    </tr>
+                @endforeach
+
+            @endif
         @endforeach
         <tr style="text-align: center;">
             <td colspan="9"></td>

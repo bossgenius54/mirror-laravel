@@ -115,11 +115,7 @@
                             <div class="row text-center">
                                 <div class="col-md-1 p-1"> </div>
 
-                                @if ( strlen($ar_branch[$pi_opos->relOrder->branch_id]) > 20 )
-                                    <div class="col-md-1 p-1" title="{{$ar_branch[$pi_opos->relOrder->branch_id]}}"> {{ substr( $ar_branch[$pi_opos->relOrder->branch_id], 0, 13 ) . '...' }} </div>
-                                @else
-                                    <div class="col-md-1 p-1"> {{ $ar_branch[$pi_opos->relOrder->branch_id] }} </div>
-                                @endif
+                                <div class="col-md-1 p-1"> {{ $ar_branch[$pi_opos->relOrder->branch_id] }} </div>
 
                                 <div class="col-md-2 p-1"> </div>
                                 <div class="col-md-2 p-1"> {{ $pi->name }} </div>
@@ -181,59 +177,64 @@
                     @endphp
 
                     @foreach ($s_items as $si)
-                        <div class="row text-center font-weight-bold">
-                            <div class="col-md-1 p-1"> # {{$loop->index + 1}} </div>
-                            <div class="col-md-2 p-1">  </div>
-                            <div class="col-md-3 p-1"> {{ $si->name }} </div>
-                            <div class="col-md-2 p-1"> {{ $si->price }} </div>
-                            <div class="col-md-1 p-1"> - </div>
-                            <div class="col-md-1 p-1"> - </div>
-                            <div class="col-md-1 p-1">
-                                @php
-                                    $si_service_count = 0;
-                                    foreach ($si->relOrderService as $si_opos) {
-                                        $si_service_count += $si_opos->service_count;
-                                    }
-                                    $s_total_count += $si_service_count;
-                                @endphp
-                                {{ $si_service_count }}
-                            </div>
-                            <div class="col-md-1 p-1">
-                                @php
-                                    $total_si_sum = 0;
-                                    foreach ($si->relOrderService as $si_opos) {
-                                        $total_si_sum += $si_opos->total_sum;
-                                    }
-                                    $s_total_sum += $total_si_sum;
-                                @endphp
-                                {{ $total_si_sum }}
-                            </div>
 
-                        </div>
+                        @php
+                            $si_service_count = 0;
+                            foreach ($si->relOrderService as $si_opos) {
+                                $si_service_count += $si_opos->service_count;
+                            }
+                            $s_total_count += $si_service_count;
+                        @endphp
 
-                        @foreach ($si->relOrderService as $pi_opos)
-                            <div class="row text-center">
-                                <div class="col-md-1 p-1"> </div>
-                                @if ( strlen($ar_branch[$pi_opos->relOrder->branch_id]) > 20 )
-                                    <div class="col-md-2 p-1" title="{{$ar_branch[$pi_opos->relOrder->branch_id]}}"> {{ substr( $ar_branch[$pi_opos->relOrder->branch_id], 0, 13 ) . '...' }} </div>
-                                @else
-                                    <div class="col-md-2 p-1"> {{ $ar_branch[$pi_opos->relOrder->branch_id] }} </div>
-                                @endif
+                        @if ($si_service_count > 0)
+
+                            <div class="row text-center font-weight-bold">
+                                <div class="col-md-1 p-1"> # {{$loop->index + 1}} </div>
+                                <div class="col-md-2 p-1">  </div>
                                 <div class="col-md-3 p-1"> {{ $si->name }} </div>
-                                <div class="col-md-2 p-1"> - </div>
-                                @php
-                                    $date = new Date($pi_opos->created_at);
-                                @endphp
-                                <div class="col-md-1 p-1"> {{ $date->format("d.m.Y") }} </div>
-                                <div class="col-md-1 p-1"> {{ $pi_opos->relOrder->is_retail ? 'Розница' : 'Оптом' }} </div>
-                                <div class="col-md-1 p-1"> {{ $pi_opos->service_count }} </div>
-                                <div class="col-md-1 p-1"> {{ $pi_opos->total_sum }} </div>
+                                <div class="col-md-2 p-1"> {{ $si->price }} </div>
+                                <div class="col-md-1 p-1"> - </div>
+                                <div class="col-md-1 p-1"> - </div>
+                                <div class="col-md-1 p-1">
+                                    {{ $si_service_count }}
+                                </div>
+                                <div class="col-md-1 p-1">
+                                    @php
+                                        $total_si_sum = 0;
+                                        foreach ($si->relOrderService as $si_opos) {
+                                            $total_si_sum += $si_opos->total_sum;
+                                        }
+                                        $s_total_sum += $total_si_sum;
+                                    @endphp
+                                    {{ $total_si_sum }}
+                                </div>
 
                             </div>
-                        @endforeach
 
-                        <hr/>
+                            @foreach ($si->relOrderService as $pi_opos)
+                                <div class="row text-center">
+                                    <div class="col-md-1 p-1"> </div>
+                                    @if ( strlen($ar_branch[$pi_opos->relOrder->branch_id]) > 20 )
+                                        <div class="col-md-2 p-1" title="{{$ar_branch[$pi_opos->relOrder->branch_id]}}"> {{ substr( $ar_branch[$pi_opos->relOrder->branch_id], 0, 13 ) . '...' }} </div>
+                                    @else
+                                        <div class="col-md-2 p-1"> {{ $ar_branch[$pi_opos->relOrder->branch_id] }} </div>
+                                    @endif
+                                    <div class="col-md-3 p-1"> {{ $si->name }} </div>
+                                    <div class="col-md-2 p-1"> - </div>
+                                    @php
+                                        $date = new Date($pi_opos->created_at);
+                                    @endphp
+                                    <div class="col-md-1 p-1"> {{ $date->format("d.m.Y") }} </div>
+                                    <div class="col-md-1 p-1"> {{ $pi_opos->relOrder->is_retail ? 'Розница' : 'Оптом' }} </div>
+                                    <div class="col-md-1 p-1"> {{ $pi_opos->service_count }} </div>
+                                    <div class="col-md-1 p-1"> {{ $pi_opos->total_sum }} </div>
 
+                                </div>
+                            @endforeach
+
+                            <hr/>
+
+                        @endif
                     @endforeach
                     <div class="row text-white text-center" style="border-bottom: 5px solid #1976d2;">
                         <div class="col-md-1 p-1">  </div>
