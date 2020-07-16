@@ -43,7 +43,7 @@ class ClientReportController extends Controller
         $ar['user'] = $user;
 
         // Filter block elements
-        $ar['filter_block'] = StaffReportFilter::getFilterBlock();
+        $ar['filter_block'] = ClientReportFilter::getFilterBlock();
         $ar['ar_branch'] = Branch::where('company_id', $request->user()->company_id)->pluck('name', 'id')->toArray();
         $ar['product_names'] = Product::where('company_id', $request->user()->company_id)->get();
         $ar['product_sys_num'] = Product::where('company_id', $request->user()->company_id)->get();
