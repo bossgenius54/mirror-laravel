@@ -27,6 +27,7 @@ class StaffReportFilter extends Model
         $this->items = $items;
 
         $this->filterName();
+        $this->filterSysNum();
         $this->filterCatId();
         $this->filterBranch();
         $this->filterCreatedAt();
