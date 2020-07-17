@@ -8,6 +8,16 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
 
+                <form action="{{$addBasket}}" method="POST" id="add-basket">
+
+                    <div class="modal-footer" style="justify-content: space-around;">
+                        <button type="button" class="btn btn-default waves-effect col-md-5" data-dismiss="modal" id="return">Отмена</button>
+                        <button type="button" class="btn btn-success waves-effect waves-light col-md-5" id="confirm">Добавить</button>
+                        <button type="button" class="btn btn-success waves-effect waves-light col-md-5" id="send" style="display: none;">Подтвердить</button>
+                    </div>
+
+                </form>
+
                 <div class="modal-body" style="text-align: center;">
                     <div class="table-responsive text-center">
                         <table class="table  table-hover color-table muted-table" >
@@ -34,17 +44,21 @@
                         </table>
                     </div>
                 </div>
-                <form action="{{$addBasket}}" method="POST" id="add-basket">
 
-                    <div class="modal-footer" style="justify-content: space-around;">
-                        <button type="button" class="btn btn-default waves-effect col-md-5" data-dismiss="modal" id="return">Отмена</button>
-                        <button type="button" class="btn btn-success waves-effect waves-light col-md-5" id="confirm">Добавить</button>
-                        <button type="button" class="btn btn-success waves-effect waves-light col-md-5" id="send" style="display: none;">Подтвердить</button>
-                    </div>
-
-                </form>
 
             </div>
         </div>
-
+        <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Нажмите, что бы вернутся в начало списка позиции" data-toggle="tooltip" data-placement="left">
+            В начало
+        </a>
+        <style>
+            .back-to-top {
+                cursor: pointer;
+                position: fixed;
+                font-size: 14px;
+                bottom: 20px;
+                right: 20px;
+                display:none;
+            }
+        </style>
 </div>
