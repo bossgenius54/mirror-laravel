@@ -161,8 +161,40 @@
                     selected = selected.filter( item => item != this.value )
                 }
 
-                $('.count').text(selected.length);
+                $('.count').val(selected.length);
             });
+
+            $('.count').change(function(){
+                let countRequest = parseInt($(this).val());
+                let countIsset = selected.length;
+                let countNeed = (countIsset - countRequest) > 0  ? ( countIsset - countRequest ) : ( countRequest -countIsset );
+                let inputs = $('.positions-inputs');
+                console.log(countNeed);
+
+                inputs.prop('checked', false);
+                selected = [];
+                let i;
+
+                countRequest = countRequest > inputs.length ? inputs.length : countRequest;
+
+                inputs.each(function () {
+
+                    if ( $(this).prop('checked') == false && $(this).prop('disabled') != true && countRequest != 0 ){
+                        $('#position-'+$(this).val()).prop('checked', true);
+                        selected.push($(this).val());
+                        countRequest -= 1;
+                    }
+
+                });
+
+                $(this).val(selected.length);
+                console.log(selected);
+
+            });
+            function topFunction() {
+                document.body.scrollTop = 0; // For Safari
+                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            }
 
             $('#confirm').on('click', function(){
                 let positionInputs = $('.positions-inputs');

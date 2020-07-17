@@ -19,7 +19,10 @@
                                     <th>Стоимость<br/> Розница </th>
                                     <th>Стоимость<br/> Оптовая</th>
                                     <th>Срок годности</th>
-                                    <th>Выбрано - <span class="count">0</span> из <span class="total_count"></span></th>
+                                    <th>
+                                        Выбрано - <input type="number" class="count form-control" value="0" style="display: inline-block;width:100px;" /> шт
+                                        <br>из <span class="total_count"></span>
+                                    </th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -35,7 +38,7 @@
 
                     <div class="modal-footer" style="justify-content: space-around;">
                         <button type="button" class="btn btn-default waves-effect col-md-5" data-dismiss="modal" id="return">Отмена</button>
-                        <button type="button" class="btn btn-success waves-effect waves-light col-md-5" id="confirm">Далее</button>
+                        <button type="button" class="btn btn-success waves-effect waves-light col-md-5" id="confirm">Добавить</button>
                         <button type="button" class="btn btn-success waves-effect waves-light col-md-5" id="send" style="display: none;">Подтвердить</button>
                     </div>
 
