@@ -84,7 +84,7 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
         </form>
     @else
-        <form class="form-material row" enctype="multipart/form-data" style="margin-top: 15px;">
+        <form class="form-material row" action="{{ action('Order\PositionOrderController@postAddProduct', $item) }}" method="post"  enctype="multipart/form-data" style="margin-top: 15px;">
             <div class="form-group col-md-4">
                 <label>Продукция</label>
                 <select name="product_id" class="form-control" id="product_id" required>
@@ -110,14 +110,30 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-check form-check-inline col-md-2">
-                <input class="form-check-input filter-checkbox" type="checkbox" name="filter" id="filter" >
-                <label class="form-check-label" for="filter">Фильтровать</label>
+            <div class="form-group col-md-2">
+                <label>Кол-во</label>
+                <input type="number" class="form-control " name="pos_count" id="pos_count" value="1" required  >
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
+                <label>Цена за единицу</label>
+                <input type="number" class="form-control" name="pos_cost" id="pos_cost"  required >
+            </div>
+            <div class="form-group col-md-2">
+                <label>Общая сумма</label>
+                <input type="number" class="form-control" id="pos_total_sum" readonly >
+            </div>
+            <div class="form-group col-md-2">
                 <label>&nbsp;</label>
-                <a href="#" class="btn btn-info btn-block filter-action">Показать список</a>
+                <button class="btn btn-info btn-block" type="submit">Добавить</button>
             </div>
+
+            <div class="form-group col-md-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input filter-checkbox" type="checkbox" name="filter" id="filter" >
+                    <label class="form-check-label" for="filter">Фильтровать</label>
+                </div>
+            </div>
+
             <div class="col-md-12">
                 <div class="collapse" id="filterBlock">
                     <div class="card card-body">
@@ -135,11 +151,16 @@
                                 <input type="date" class="form-control " id="second_date" placeholder="Дата" name="second_date" value="{{ $request->second_date }}" >
                             </div>
 
+                            <div class="form-group col-md-3">
+                                <label>&nbsp;</label>
+                                <a href="#" class="btn btn-info btn-block filter-action">Показать список</a>
+                            </div>
                         </div>
 
                     </div>
                 </div>
             </div>
+
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
         </form>
     @endif
