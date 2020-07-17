@@ -116,7 +116,7 @@
             </div>
             <div class="form-group col-md-2">
                 <label>Цена за единицу</label>
-                <input type="number" class="form-control" name="pos_cost" id="pos_cost"  required >
+                <input type="number" class="form-control" name="pos_cost" id="pos_cost" step="any" required >
             </div>
             <div class="form-group col-md-2">
                 <label>Общая сумма</label>
