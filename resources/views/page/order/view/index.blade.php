@@ -191,23 +191,6 @@
                 console.log(selected);
 
             });
-            $('#positionModal').scroll(function () {
-                if ($(this).scrollTop() > 50) {
-                    $('#back-to-top').fadeIn();
-                } else {
-                    $('#back-to-top').fadeOut();
-                }
-            });
-            // scroll body to 0px on click
-            $('#back-to-top').click(function () {
-                $('#back-to-top').tooltip('hide');
-                $('#positionModal').animate({
-                    scrollTop: 0
-                }, 800);
-                return false;
-            });
-
-            $('#back-to-top').tooltip('show');
 
 
             $('#confirm').on('click', function(){
@@ -262,6 +245,24 @@
                 $('.modal-tbody').html('<th><td colspan="7">Подождите...</td></th>');
                 selected = [];
             });
+
+            $('#positionModal').scroll(function () {
+                if ($(this).scrollTop() > 50) {
+                    $('#back-to-top').fadeIn();
+                } else {
+                    $('#back-to-top').fadeOut();
+                }
+            });
+
+            $('#back-to-top').click(function () {
+                $('#back-to-top').tooltip('hide');
+                $('#positionModal').animate({
+                    scrollTop: 0
+                }, 800);
+                return false;
+            });
+
+            $('#back-to-top').tooltip('show');
 
             function addItemsToModal(result){
                 let table = $('.modal-tbody');

@@ -20,7 +20,7 @@
 
                 <div class="modal-body" style="text-align: center;">
                     <div class="table-responsive text-center">
-                        <table class="table  table-hover color-table muted-table" >
+                        <table class="table  table-hover color-table muted-table position" >
                             <thead>
                                 <tr>
                                     <th>id</th>
