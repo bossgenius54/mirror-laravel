@@ -20,16 +20,16 @@
 
                 <div class="modal-body" style="text-align: center;">
                     <div class="table-responsive text-center">
-                        <table class="table  table-hover color-table muted-table position" >
+                        <table class="table  table-hover color-table muted-table position-table" >
                             <thead>
                                 <tr>
-                                    <th>id</th>
-                                    <th>Ассортимент</th>
-                                    <th>Системный номер</th>
-                                    <th>Стоимость<br/> Розница </th>
-                                    <th>Стоимость<br/> Оптовая</th>
-                                    <th>Срок годности</th>
-                                    <th>
+                                    <th class="align-middle">id</th>
+                                    <th class="align-middle">Ассортимент</th>
+                                    <th class="align-middle">Системный номер</th>
+                                    <th class="align-middle">Стоимость<br/> Розница </th>
+                                    <th class="align-middle">Стоимость<br/> Оптовая</th>
+                                    <th class="align-middle">Срок годности</th>
+                                    <th class="align-middle">
                                         Выбрано - <input type="number" class="count form-control" value="0" style="display: inline-block;width:100px;" /> шт
                                         <br>из <span class="total_count"></span>
                                     </th>
@@ -59,6 +59,9 @@
                 bottom: 20px;
                 right: 20px;
                 display:none;
+            }
+            .position-table, .position-table label {
+                font-size: 12px;
             }
         </style>
 </div>
