@@ -5,7 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Model\Order;
-
+use App\Model\OrderLog;
+use App\Model\OrderLogType;
 use App\ModelList\BranchList;
 use App\ModelList\CompanyList;
 use App\ModelList\IndividList;
@@ -43,6 +44,14 @@ class CreateOrderController extends Controller{
             $ar['created_user_id'] = $user->id;
 
             $item = Order::create($ar);
+
+            if($item){
+                $log = OrderLog::writeLog( $user, OrderLogType::CREATED_ORDER, $item, '');
+
+                $status = SysOrderStatus::find(SysOrderStatus::CREATED);
+                $note = '"' . $status->name . '"';
+                $log2 = OrderLog::writeLog( $user, OrderLogType::STATUS_GIVED, $item, $note);
+            }
 
             DB::commit();
         } catch (Exception $e) {

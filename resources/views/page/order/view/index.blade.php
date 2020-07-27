@@ -16,6 +16,8 @@
 
         @include('page.order.view.__include.view_positions_list_modal')
 
+        @include('page.order.view.__include.view_logs')
+
     </div>
     <div class="col-sm-4">
         <a href="?for_print=1" class="btn btn-block btn-outline-secondary" style="margin-bottom: 10px;">

@@ -8,6 +8,8 @@ use App\Model\Order;
 
 use App\Model\CompanyService;
 use App\Model\LibProductCat;
+use App\Model\OrderLog;
+use App\Model\OrderLogType;
 use App\Model\Position;
 use App\Model\Product;
 
@@ -21,6 +23,8 @@ use App\Services\Order\GetOrderFormula;
 
 use DB;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Jenssegers\Date\Date;
 
 class ViewController extends Controller{
     private $title = 'Заказы/Розница';
@@ -43,6 +47,10 @@ class ViewController extends Controller{
         $ar['order_products'] = $item->relProducts()->with('relProduct')->get();
         $ar['ar_order_product'] = $item->relProducts()->pluck('product_id')->toArray();
 
+        // log elems
+        $ar['logs'] = OrderLog::where('order_id', $item->id)->with(['relCreatedUser','relOrderLogType'])->get();
+        // ___
+
         $ar['can_status'] = SysOrderStatus::whereIn('id', $can_ar_status)->pluck('name', 'id')->toArray();
         $ar['can_status_class'] = SysOrderStatus::whereIn('id', $can_ar_status)->pluck('bootstrap_class', 'id')->toArray();
         $ar['user'] = $request->user();
@@ -56,9 +64,28 @@ class ViewController extends Controller{
     }
 
     function postUpdate(Request $request, Order $item){
+        $user = Auth::user();
+
         DB::beginTransaction();
         try {
             $ar = $request->all();
+
+            if($request->prepay_sum != $item->prepay_sum){
+                $note = '(Сумма: ' . $request->prepay_sum . ' тг)';
+                $log = OrderLog::writeLog( $user, OrderLogType::PREPAY, $item, $note);
+            }
+
+            if($request->name != $item->name){
+                $note = '"' . $request->name . '"';
+                $log = OrderLog::writeLog( $user, OrderLogType::NOTE, $item, $note);
+            }
+
+            if($request->may_finish_at != $item->may_finish_at){
+                $date = new Date($request->may_finish_at);
+                $note = '"' . $date->format('d.m.Y') . '"';
+                $log = OrderLog::writeLog( $user, OrderLogType::MAY_FINISH_AT, $item, $note);
+            }
+
             $item->update($ar);
 
             DB::commit();

@@ -5,7 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Model\Order;
-
+use App\Model\OrderLog;
+use App\Model\OrderLogType;
 use App\Model\SysPositionStatus;
 use App\Model\OrderPosition;
 use App\Model\Position;
@@ -16,12 +17,15 @@ use App\ModelFilter\PositionFilter;
 use App\ModelList\PositionList;
 use DB;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use SysPositionStatusAddSold;
 
 class PositionOrderController extends Controller{
     private $title = 'Заказы/Розница';
 
     function postAddProduct(Request $request, Order $item){
+        $user = Auth::user();
+
         if (OrderPosition::where(['order_id' => $item->id, 'product_id' => $request->product_id])->count() > 0)
             return redirect()->back()->with('error', 'Указанный товар уже есть');
 
@@ -52,6 +56,12 @@ class PositionOrderController extends Controller{
                 'total_sum' => ($item->total_sum + $order_product->total_sum)
             ]);
 
+            if($order_product){
+                $product = Product::find($order_product->product_id);
+                $note = '' . $product->name . '(' . $product->sys_num . ') (Кол-во: ' . $order_product->pos_count . ')(Сумма: ' . $order_product->total_sum . ')';
+                $log = OrderLog::writeLog( $user, OrderLogType::PRODUCT_ADD, $item, $note);
+            }
+
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -64,6 +74,8 @@ class PositionOrderController extends Controller{
     }
 
     function getDeleteProduct(Request $request, Order $item, OrderPosition $order_product){
+        $user = Auth::user();
+
         DB::beginTransaction();
         try {
             $item->update([
@@ -73,8 +85,12 @@ class PositionOrderController extends Controller{
             Position::where(['status_id' => SysPositionStatus::RESERVE, 'order_id'=> $item->id])
                     ->update(['status_id' => SysPositionStatus::ACTIVE, 'order_id' =>null]);
 
-            $order_product->delete();
 
+            if($order_product->delete()){
+                $product = Product::find($order_product->product_id);
+                $note = '' . $product->name . '(' . $product->sys_num . ') (Кол-во: ' . $order_product->pos_count . ')(Сумма: ' . $order_product->total_sum . ')';
+                $log = OrderLog::writeLog( $user, OrderLogType::PRODUCT_DELETED, $item, $note);
+            }
 
             DB::commit();
         } catch (Exception $e) {
@@ -87,6 +103,7 @@ class PositionOrderController extends Controller{
     }
 
     function basketAddProduct(Request $request, Order $item){
+        $user = Auth::user();
 
         // dd($request->position_id);
         if( Position::whereIn('id',$request->position_id)->where('order_id', $item->id)->where('status_id', SysPositionStatus::RESERVE)->count() > 0 ){
@@ -118,6 +135,12 @@ class PositionOrderController extends Controller{
                 $item->update([
                     'total_sum' => ($item->total_sum + $order_product->total_sum)
                 ]);
+
+                if($order_product){
+                    $product = Product::find($order_product->product_id);
+                    $note = '' . $product->name . '(' . $product->sys_num . ') (Кол-во: ' . $order_product->pos_count . ')(Сумма: ' . $order_product->total_sum . ')';
+                    $log = OrderLog::writeLog( $user, OrderLogType::PRODUCT_ADD, $item, $note);
+                }
             }
 
 
