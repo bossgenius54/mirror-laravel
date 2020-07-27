@@ -5,13 +5,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Hash;
 use App\Helper\UploadPhoto;
-
+use App\Model\ClientsLog;
+use App\Model\ClientsLogType;
 use App\Model\View\Individ;
 use App\Model\SysUserType;
 use App\ModelList\IndividList;
 
 use App\ModelFilter\UserFilter;
 use App\Services\SenderMail;
+use Illuminate\Support\Facades\Auth;
 
 class IndividController extends Controller{
     private $title = 'База клиентов';
@@ -59,7 +61,16 @@ class IndividController extends Controller{
             unset($ar['photo']);
 
         $item = Individ::create($ar);
-        
+
+        if($item){
+            $vars = [];
+            $vars['user'] = Auth::user();
+            $vars['client'] = $item;
+            $vars['type_id'] = ClientsLogType::CREATED_CLIENT;
+
+            $log = ClientsLog::writeLog($vars);
+        }
+
         return redirect()->action("Lib\IndividController@getIndex")->with('success', 'Добавлен элемент списка "'.$this->title.'" № '.$item->id);
     }
 
@@ -67,6 +78,11 @@ class IndividController extends Controller{
         $ar = array();
         $ar['title'] = 'Изменить элемент № '. $item->id.' списка "'.$this->title.'"';
         $ar['item'] = $item;
+
+        // log elems
+        $ar['logs'] = ClientsLog::where('client_id', $item->id)->with(['relCreatedUser','relOrder','relClient','relClientsLogType'])->get();
+        // ___
+
         $ar['action'] = action('Lib\IndividController@postUpdate', $item);
 
         return view('page.lib.individ.update', $ar);
@@ -79,13 +95,13 @@ class IndividController extends Controller{
 
         if ($request->has('password') && $request->password)
             $ar['password'] = Hash::make($ar['password']);
-        else 
-            unset($ar['password']);  
-        
+        else
+            unset($ar['password']);
+
         $ar['photo'] = UploadPhoto::upload($request->photo);
         if (!$ar['photo'])
             unset($ar['photo']);
-        
+
         $item->update($ar);
 
         return redirect()->action("Lib\IndividController@getIndex")->with('success', 'Изменен элемент списка "'.$this->title.'" № '.$item->id);
