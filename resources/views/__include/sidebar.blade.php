@@ -162,8 +162,8 @@
                     </li>
                 @endcan
 
+{{--
                 <li class="nav-small-cap">Отчеты</li>
-
 
                 @can('list', App\Model\Order::class)
                     <li>
@@ -262,7 +262,7 @@
                             </span>
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
 
                 @if( $user->can('list', App\Model\Company::class) || $user->can('list', App\Model\View\Doctor::class)
                         || $user->can('list', App\Model\View\Manager::class) || $user->can('list', App\Model\View\StockManager::class)
