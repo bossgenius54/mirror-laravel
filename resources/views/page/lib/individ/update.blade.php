@@ -96,7 +96,7 @@
                                 {{ $log->type_id == $create_client ? '' : ( $log->type_id == $receipt_writed ? ('#' . $log->relFormula->id) : ('(Заказ #' . $log->relOrder->id . ')') )  }}
                             </b>
                             <hr/>
-                            <p class="text-right">Инициатор: {{ $log->relCreatedUser->name }} ({!! $log->relCreatedUser->getTypeName() !!}) </p>
+                            <p class="text-right" style="line-height: 11px;">Инициатор: {{ $log->relCreatedUser->name }} ({!! $log->relCreatedUser->getTypeName() !!}) </p>
                         </div>
                     @endforeach
 
