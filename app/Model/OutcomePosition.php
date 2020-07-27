@@ -8,5 +8,9 @@ class OutcomePosition extends Model{
     protected $table = 'outcome_position';
     protected $fillable = ['outcome_id', 'product_id', 'position_id', 'branch_id', 'position_sys_num', 'price_cost', 'price_sell', 'expired_at'];
     use DateHelper;
-    
+
+    function relOutcome()
+    {
+        return $this->belongsTo('App\Model\Outcome', 'outcome_id');
+    }
 }
