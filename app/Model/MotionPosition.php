@@ -12,4 +12,8 @@ class MotionPosition extends Model{
     function relPosition(){
         return $this->belongsTo('App\Model\Position', 'position_sys_num');
     }
+
+    function relMotion(){
+        return $this->belongsTo('App\Model\Motion', 'motion_id');
+    }
 }

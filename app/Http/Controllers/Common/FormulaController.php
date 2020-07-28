@@ -2,6 +2,8 @@
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
+use App\Model\ClientsLog;
+use App\Model\ClientsLogType;
 use Illuminate\Http\Request;
 
 use App\Model\Formula;
@@ -10,6 +12,7 @@ use App\Model\SysUserType;
 use App\ModelFilter\FormulaFilter;
 use App\ModelList\FormulaList;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class FormulaController extends Controller{
     private $title = 'Рецепты';
@@ -52,6 +55,16 @@ class FormulaController extends Controller{
         $ar['user_id'] = $user->id;
         $ar['created_user_id'] = $request->user()->id;
         $item = Formula::create($ar);
+
+        if($item){
+            $vars = [];
+            $vars['user'] = Auth::user();
+            $vars['client'] = $user;
+            $vars['type_id'] = ClientsLogType::RECEIPT_WRITED;
+            $vars['receipt_id'] = $item->id;
+
+            $log = ClientsLog::writeLog($vars);
+        }
 
         // $user->update(['name' => $request->user_name]);
 

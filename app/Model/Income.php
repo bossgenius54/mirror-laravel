@@ -45,4 +45,7 @@ class Income extends Model{
         return $this->belongsTo('App\Model\Order', 'order_id');
     }
 
+    function relType(){
+        return $this->belongsTo('App\Model\SysIncomeType', 'type_id');
+    }
 }

@@ -2,6 +2,8 @@
 namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
+use App\Model\ClientsLog;
+use App\Model\ClientsLogType;
 use Illuminate\Http\Request;
 
 use App\Model\Order;
@@ -13,7 +15,7 @@ use App\ModelList\IndividList;
 
 use App\Model\SysOrderType;
 use App\Model\SysOrderStatus;
-
+use App\User;
 use DB;
 use Exception;
 
@@ -51,6 +53,14 @@ class CreateOrderController extends Controller{
                 $status = SysOrderStatus::find(SysOrderStatus::CREATED);
                 $note = '"' . $status->name . '"';
                 $log2 = OrderLog::writeLog( $user, OrderLogType::STATUS_GIVED, $item, $note);
+
+                $vars = [];
+                $vars['user'] = $user;
+                $vars['client'] = User::find($request->from_user_id);
+                $vars['type_id'] = ClientsLogType::CREATED_ORDER;
+                $vars['order'] = $item;
+
+                $log = ClientsLog::writeLog($vars);
             }
 
             DB::commit();

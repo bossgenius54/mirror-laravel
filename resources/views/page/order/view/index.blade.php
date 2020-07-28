@@ -16,7 +16,6 @@
 
         @include('page.order.view.__include.view_positions_list_modal')
 
-        @include('page.order.view.__include.view_logs')
 
     </div>
     <div class="col-sm-4">
@@ -27,6 +26,8 @@
         @include('page.order.view.__include.view_total_sum_status')
         @include('page.order.view.__include.view_formula_block')
         @include('page.order.view.__include.view_main')
+
+        @include('page.order.view.__include.view_logs')
     </div>
 </div>
 @endsection

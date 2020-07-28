@@ -34,45 +34,52 @@
                         <textarea class="form-control " placeholder="Заметки" name="note" readonly>{{ $item->note }}</textarea>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table  table-hover color-table muted-table table-responsive" >
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Ассортимент</th>
+                                    <th>Системный номер</th>
+                                    <th>Филиал</th>
+                                    <th>Себестоимость</th>
+                                    <th>Оприходование</th>
+                                    <th>Срок годности</th>
+                                    <th>Дата создания</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $total_sum = 0;
+                                @endphp
+                                @foreach ($positions as $i)
+                                    <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
+                                        <td>{{ $i->id }}</td>
+                                        <td>{{ $i->relProduct->name }}</td>
+                                        <td>{{ $i->relProduct->sys_num }}</td>
+                                        <td>{{ $i->relBranch->name }}</td>
+                                        <td>{{ $i->relPosition->price_cost }}</td>
+                                        <td>
+                                            <a href="{{ action('Stock\IncomeFromCompanyController@getView',$i->relPosition->income_id)  }}" class="text-blue"> # {{ $i->relPosition->income_id }} </a>
+                                        </td>
+                                        <td>{{ $i->relPosition->expired_at ? $i->relPosition->expired_at : 'нет срока годности' }}</td>
+                                        <td>{{ $i->created_at }}</td>
+                                    </tr>
+
+                                    @php
+                                        $total_sum += $i->relPosition->price_cost;
+                                    @endphp
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
-            <table class="table  table-hover color-table muted-table" >
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Ассортимент</th>
-                        <th>Системный номер</th>
-                        <th>Филиал</th>
-                        <th>Себестоимость</th>
-                        <th>Оприходование</th>
-                        <th>Срок годности</th>
-                        <th>Дата создания</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                        $total_sum = 0;
-                    @endphp
-                    @foreach ($positions as $i)
-                        <tr class=" {{ $loop->index % 2 === 0 ? 'footable-odd'  : 'footable-even' }}" >
-                            <td>{{ $i->id }}</td>
-                            <td>{{ $i->relProduct->name }}</td>
-                            <td>{{ $i->relProduct->sys_num }}</td>
-                            <td>{{ $i->relBranch->name }}</td>
-                            <td>{{ $i->relPosition->price_cost }}</td>
-                            <td>
-                                <a href="{{ action('Stock\IncomeFromCompanyController@getView',$i->relPosition->income_id)  }}" class="text-blue"> # {{ $i->relPosition->income_id }} </a>
-                            </td>
-                            <td>{{ $i->relPosition->expired_at ? $i->relPosition->expired_at : 'нет срока годности' }}</td>
-                            <td>{{ $i->created_at }}</td>
-                        </tr>
 
-                        @php
-                            $total_sum += $i->relPosition->price_cost;
-                        @endphp
-                    @endforeach
-                </tbody>
-            </table>
+
         </div>
     </div>
     <div class="col-4">

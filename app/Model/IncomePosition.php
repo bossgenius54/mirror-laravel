@@ -16,4 +16,8 @@ class IncomePosition extends Model{
     function relOutcomePosition(){
         return $this->hasOne('App\Model\OutcomePosition', 'position_sys_num', 'position_sys_num');
     }
+
+    function relIncome(){
+        return $this->belongsTo('App\Model\Income', 'income_id');
+    }
 }
