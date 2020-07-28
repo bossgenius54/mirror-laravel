@@ -47,7 +47,7 @@
 
                         } elseif ($log->relIncome) {
 
-                            $createdUser = $log->relIncome->relCreatedUser->name . ' (' . $log->relIncome->relCreatedUser->getTypeName() . ')';
+                            $createdUser = $log->relIncome->relCreatedUser ? ($log->relIncome->relCreatedUser->name . ' (' . $log->relIncome->relCreatedUser->getTypeName() . ')') : '';
                             $created_at = $log->relIncome->updated_at;
                             $text = $log->relIncome->relType->name . ' #' . $log->relIncome->id . ' ' . ($log->relIncome->relFromCompany ? $log->relIncome->relFromCompany->name : $log->relIncome->relFromUser->name) ;
 
