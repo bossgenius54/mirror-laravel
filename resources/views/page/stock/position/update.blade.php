@@ -64,7 +64,7 @@
                         <hr/>
                         Позиция <b style="font-weight: bold;">#{{ $item->id }} - {{ $product->name }} ( {{ $product->sys_num }} )</b>
                         <b style="font-weight: bold;">
-                            {{ $text }}
+                            {!! $text !!}
                         </b>
                         <hr/>
                         <p class="text-right" style="line-height: 11px;">Инициатор: {{ $createdUser }} </p>
