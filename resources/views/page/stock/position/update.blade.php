@@ -67,7 +67,7 @@
                             {!! $text !!}
                         </b>
                         <hr/>
-                        <p class="text-right" style="line-height: 11px;">Инициатор: {{ $createdUser }} </p>
+                        <p class="text-right" style="line-height: 11px;">Инициатор: {!! $createdUser !!} </p>
                     </div>
                 @endforeach
 
