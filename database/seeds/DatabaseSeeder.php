@@ -12,10 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            SysMotionStatus::class,
-            SysPositionStatusAddSold::class,
-            DeletionStatusSeeder::class,
-            OrderLogTypeSeeder::class,
+            ClientsLogTypeSeeder::class,
         ]);
     }
 }
